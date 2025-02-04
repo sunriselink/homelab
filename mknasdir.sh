@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+NAS_OWNER_GROUP=$(id -u nas):$(id -g nas)
+
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root"
+  exit 1
+fi
+
+if [ "$#" -eq 0 ]; then
+  echo "Illegal number of parameters"
+  exit 2
+fi
+
+for path in "$@"
+do
+  if [ ! -e "$path" ]; then
+    mkdir $path
+    chown $NAS_USER_GROUP $path
+    echo "$path: created"
+  elif [ -d "$path" ]; then
+    echo "$path: directory exists"
+  else
+    echo "$path: exists and is not a directory"
+    exit 3
+  fi
+done
