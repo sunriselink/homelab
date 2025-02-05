@@ -7,4 +7,5 @@ services:
       - 9000:9000
     volumes:
       - ./data:/data
+      - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
