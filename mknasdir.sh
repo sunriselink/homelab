@@ -2,7 +2,8 @@
 
 set -e
 
-NAS_OWNER_GROUP=$(id -u nas):$(id -g nas)
+NAS_USER=${NAS_USER:-nas}
+NAS_GROUP=$(id -g $NAS_USER)
 
 if [ "$EUID" -ne 0 ]; then
   echo "Please run as root"
@@ -18,7 +19,8 @@ for path in "$@"
 do
   if [ ! -e "$path" ]; then
     mkdir $path
-    chown $NAS_USER_GROUP $path
+    chgrp $NAS_GROUP $path
+    chmod g+w $path
     echo "$path: created"
   elif [ -d "$path" ]; then
     echo "$path: directory exists"
