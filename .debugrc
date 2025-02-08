@@ -3,8 +3,6 @@ export NAS_UID=$(id -u)
 export NAS_GID=$(id -g)
 export TZ=$(cat /etc/timezone)
 
-export RENDER_GID=$(stat -c '%g' /dev/dri/renderD128)
-
 export PATH_TO_MEDIA=/tmp/nas_debug/media
 
 mkdir -p /tmp/nas_debug
