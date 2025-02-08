@@ -19,8 +19,7 @@ for path in "$@"
 do
   if [ ! -e "$path" ]; then
     mkdir $path
-    chgrp $NAS_GROUP $path
-    chmod g+w $path
+    chown $NAS_USER:$NAS_GROUP $path
     echo "$path: created"
   elif [ -d "$path" ]; then
     echo "$path: directory exists"

@@ -1,0 +1,54 @@
+# https://docs.linuxserver.io/images/docker-nextcloud/
+# https://github.com/nextcloud/docker/blob/master/README.md
+
+services:
+  nextcloud:
+    image: nextcloud:30.0.5
+    container_name: nextcloud
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    environment:
+      TZ: ${TZ:?}
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: ${NEXTCLOUD_DB_NAME:?}
+      POSTGRES_USER: ${NEXTCLOUD_DB_USER:?}
+      POSTGRES_PASSWORD: ${NEXTCLOUD_DB_PASSWORD:?}
+    volumes:
+      - ./data:/var/www/html
+      - ./config:/var/www/html/config
+      - ./custom_apps:/var/www/html/custom_apps
+      - ./themes:/var/www/html/themes
+      - ${PATH_TO_DATA:?}:/var/www/html/data
+    ports:
+      - 8080:80
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17
+    container_name: nextcloud_db
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${NEXTCLOUD_DB_NAME:?}
+      POSTGRES_USER: ${NEXTCLOUD_DB_USER:?}
+      POSTGRES_PASSWORD: ${NEXTCLOUD_DB_PASSWORD:?}
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-q",
+          "-d",
+          "${NEXTCLOUD_DB_NAME:?}",
+          "-U",
+          "${NEXTCLOUD_DB_USER:?}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 60s

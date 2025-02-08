@@ -23,3 +23,16 @@ source .debugrc
 ```sh
 ./docker-compose-wrapper.sh jellyfin up -d
 ```
+
+## Nextcloud
+
+```sh
+sudo -E bash mknasdir.sh    \
+    nextcloud/config        \
+    nextcloud/custom_apps   \
+    nextcloud/data          \
+    nextcloud/postgres_data \
+    nextcloud/themes
+
+./docker-compose-wrapper.sh nextcloud up -d
+```
