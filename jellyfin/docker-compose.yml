@@ -1,0 +1,18 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:10.10.5
+    container_name: jellyfin
+    restart: unless-stopped
+    group_add:
+      - ${RENDER_GID:?}
+    ports:
+      - 8096:8096
+    environment:
+      - PUID=${NAS_UID:?}
+      - PGID=${NAS_GID:?}
+      - TZ=${TZ:?}
+    volumes:
+      - ./config:/config
+      - ${PATH_TO_MEDIA:?}:/media:ro
+    devices:
+      - /dev/dri:/dev/dri
