@@ -36,3 +36,13 @@ sudo -E bash mknasdir.sh    \
 
 ./docker-compose-wrapper.sh nextcloud up -d
 ```
+
+## Audiobookshelf
+
+```sh
+sudo -E bash mknasdir.sh    \
+    audiobookshelf/config   \
+    audiobookshelf/metadata
+
+./docker-compose-wrapper.sh audiobookshelf up -d
+```
