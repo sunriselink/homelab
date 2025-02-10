@@ -16,4 +16,5 @@ sudo -E bash ./mknasdir.sh          \
     /tmp/nas_debug/media            \
     /tmp/nas_debug/media/movies     \
     /tmp/nas_debug/media/tv         \
-    /tmp/nas_debug/media/audiobooks
+    /tmp/nas_debug/media/audiobooks \
+    /tmp/nas_debug/media/music
