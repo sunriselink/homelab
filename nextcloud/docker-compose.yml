@@ -1,4 +1,18 @@
 services:
+  init:
+    image: alpine
+    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
+    volumes:
+      - ${PATH_TO_ROOT:?}/nextcloud:/tmp/nextcloud
+      - ${PATH_TO_FILES:?}:/tmp/files
+    command:
+      - /tmp/nextcloud/data
+      - /tmp/nextcloud/config
+      - /tmp/nextcloud/custom_apps
+      - /tmp/nextcloud/themes
+      - /tmp/nextcloud/postgres_data
+      - /tmp/files
+
   nextcloud:
     image: nextcloud:30.0.5
     container_name: nextcloud
@@ -11,14 +25,16 @@ services:
       POSTGRES_USER: ${NEXTCLOUD_DB_USER:?}
       POSTGRES_PASSWORD: ${NEXTCLOUD_DB_PASSWORD:?}
     volumes:
-      - ./data:/var/www/html
-      - ./config:/var/www/html/config
-      - ./custom_apps:/var/www/html/custom_apps
-      - ./themes:/var/www/html/themes
-      - ${PATH_TO_DATA:?}:/var/www/html/data
+      - ${PATH_TO_ROOT:?}/nextcloud/data:/var/www/html
+      - ${PATH_TO_ROOT:?}/nextcloud/config:/var/www/html/config
+      - ${PATH_TO_ROOT:?}/nextcloud/custom_apps:/var/www/html/custom_apps
+      - ${PATH_TO_ROOT:?}/nextcloud/themes:/var/www/html/themes
+      - ${PATH_TO_FILES:?}:/var/www/html/data
     ports:
       - 8080:80
     depends_on:
+      init:
+        condition: service_completed_successfully
       postgres:
         condition: service_healthy
 
@@ -29,11 +45,14 @@ services:
     restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ./postgres_data:/var/lib/postgresql/data
+      - ${PATH_TO_ROOT:?}/nextcloud/postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${NEXTCLOUD_DB_NAME:?}
       POSTGRES_USER: ${NEXTCLOUD_DB_USER:?}
       POSTGRES_PASSWORD: ${NEXTCLOUD_DB_PASSWORD:?}
+    depends_on:
+      init:
+        condition: service_completed_successfully
     healthcheck:
       test:
         [

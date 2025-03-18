@@ -2,47 +2,23 @@
 
 ## First steps
 
-- Create a `nas` user
-- Add current user to `nas` group
-- Fill missing variables in `global.env`
+- Create a `nas` user (recommended)
+- Add current user to `nas` group (recommended)
+- Create `global.env` file from `global.env.example` and fill missing variables
+- Create `.env` files from `.env.example` for each stack and fill missing variables
 
-Or for debugging execute
+## Container management
 
-```sh
-source .debugrc
-```
-
-## Portainer
+### Local
 
 ```sh
-./docker-compose-wrapper.sh portainer up -d
+./docker-compose-wrapper.sh STACK_NAME COMPOSE_COMMANDS
 ```
 
-## Jellyfin
+### OpenMediaVault
 
-```sh
-./docker-compose-wrapper.sh jellyfin up -d
-```
+Go to `Services -> Compose -> Files` (`Edit global environment file` button) and place all from `global.env` into text field.
 
-## Nextcloud
+### Portainer
 
-```sh
-sudo -E bash mknasdir.sh    \
-    nextcloud/config        \
-    nextcloud/custom_apps   \
-    nextcloud/data          \
-    nextcloud/postgres_data \
-    nextcloud/themes
-
-./docker-compose-wrapper.sh nextcloud up -d
-```
-
-## Audiobookshelf
-
-```sh
-sudo -E bash mknasdir.sh    \
-    audiobookshelf/config   \
-    audiobookshelf/metadata
-
-./docker-compose-wrapper.sh audiobookshelf up -d
-```
+`global.env` file will need to be loaded into Portainer for each stack (unfortunately).
