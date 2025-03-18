@@ -15,8 +15,8 @@ services:
     container_name: audiobookshelf
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
-    ports:
-      - 13378:80
+    networks:
+      - proxy
     environment:
       TZ: ${TZ:?}
     volumes:
@@ -26,3 +26,7 @@ services:
     depends_on:
       init:
         condition: service_completed_successfully
+
+networks:
+  proxy:
+    external: true

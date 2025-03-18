@@ -1,0 +1,32 @@
+services:
+  # Init container when rootless mode is used
+  init:
+    image: alpine
+    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
+    volumes:
+      - ${PATH_TO_ROOT:?}/service-name:/tmp/service-name
+    command:
+      - /tmp/service-name/data
+      - /tmp/service-name/config
+
+  service-name:
+    image: service-image-name:version
+    container_name: service_container_name
+    restart: unless-stopped
+    # Rootless mode (if needed)
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    networks:
+      - proxy
+    environment:
+      # Use local time via ENV
+      TZ: ${TZ:?}
+    volumes:
+      # Use local time via mount /etc/localtime
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+networks:
+  proxy:
+    external: true

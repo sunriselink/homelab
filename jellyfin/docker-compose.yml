@@ -3,8 +3,8 @@ services:
     image: lscr.io/linuxserver/jellyfin:10.10.5
     container_name: jellyfin
     restart: unless-stopped
-    ports:
-      - 8096:8096
+    networks:
+      - proxy
     environment:
       PUID: ${NAS_UID:?}
       PGID: ${NAS_GID:?}
@@ -14,3 +14,7 @@ services:
       - ${PATH_TO_MEDIA:?}:/data:ro
     devices:
       - /dev/dri:/dev/dri
+
+networks:
+  proxy:
+    external: true

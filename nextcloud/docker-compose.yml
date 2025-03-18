@@ -18,6 +18,9 @@ services:
     container_name: nextcloud
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
+    networks:
+      - default
+      - proxy
     environment:
       TZ: ${TZ:?}
       POSTGRES_HOST: postgres
@@ -30,8 +33,6 @@ services:
       - ${PATH_TO_ROOT:?}/nextcloud/custom_apps:/var/www/html/custom_apps
       - ${PATH_TO_ROOT:?}/nextcloud/themes:/var/www/html/themes
       - ${PATH_TO_FILES:?}:/var/www/html/data
-    ports:
-      - 8080:80
     depends_on:
       init:
         condition: service_completed_successfully
@@ -68,3 +69,7 @@ services:
       timeout: 5s
       retries: 3
       start_period: 60s
+
+networks:
+  proxy:
+    external: true

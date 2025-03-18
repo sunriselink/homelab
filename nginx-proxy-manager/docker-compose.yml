@@ -1,0 +1,22 @@
+services:
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:2.12.3
+    container_name: nginx_proxy_manager
+    restart: unless-stopped
+    networks:
+      - proxy
+    ports:
+      - 80:80
+      - 443:443
+      - 81:81
+    environment:
+      PUID: ${NAS_UID:?}
+      PGID: ${NAS_GID:?}
+    volumes:
+      - ${PATH_TO_ROOT:?}/nginx-proxy-manager/data:/data
+      - ${PATH_TO_ROOT:?}/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+      - /etc/localtime:/etc/localtime:ro
+
+networks:
+  proxy:
+    external: true
