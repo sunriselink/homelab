@@ -22,7 +22,7 @@ services:
     volumes:
       - ${PATH_TO_ROOT:?}/audiobookshelf/config:/config
       - ${PATH_TO_ROOT:?}/audiobookshelf/metadata:/metadata
-      - ${PATH_TO_MEDIA:?}/audiobooks:/audiobooks:ro
+      - ${PATH_TO_MEDIA:?}/audiobooks:/audiobooks
     depends_on:
       init:
         condition: service_completed_successfully
