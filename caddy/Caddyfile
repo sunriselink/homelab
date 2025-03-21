@@ -1,0 +1,15 @@
+http://audiobookshelf.{$HOST_INTERNAL} {
+    reverse_proxy audiobookshelf:80
+}
+
+http://jellyfin.{$HOST_INTERNAL} {
+    reverse_proxy jellyfin:8096
+}
+
+http://nextcloud.{$HOST_INTERNAL} {
+    reverse_proxy nextcloud:80
+}
+
+http://portainer.{$HOST_INTERNAL} {
+    reverse_proxy portainer:9000
+}

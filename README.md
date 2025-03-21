@@ -23,12 +23,3 @@ Go to `Services -> Compose -> Files` (`Edit global environment file` button) and
 ### Portainer
 
 `global.env` file will need to be loaded into Portainer for each stack (unfortunately).
-
-## Default users
-
-### Nginx Proxy Manager
-
-```
-Email: admin@example.com
-Password: changeme
-```
