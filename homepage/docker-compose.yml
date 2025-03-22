@@ -1,0 +1,23 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:v1.0.4
+    container_name: homepage
+    restart: unless-stopped
+    networks:
+      - proxy
+    environment:
+      PUID: ${NAS_UID:?}
+      PGID: ${NAS_GID:?}
+      TZ: ${TZ:?}
+      HOMEPAGE_ALLOWED_HOSTS: homepage.${HOST_INTERNAL:?}
+      HOMEPAGE_VAR_HOST_INTERNAL: ${HOST_INTERNAL:?}
+      HOMEPAGE_VAR_JELLYFIN_API_KEY: ${JELLYFIN_API_KEY:?}
+      HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY: ${AUDIOBOOKSHELF_API_KEY:?}
+      HOMEPAGE_VAR_NEXTCLOUD_API_KEY: ${NEXTCLOUD_API_KEY:?}
+    volumes:
+      - ${PATH_TO_ROOT:?}/homepage/config:/app/config
+      - ${PATH_TO_ROOT:?}/homepage/images:/app/public/images
+
+networks:
+  proxy:
+    external: true

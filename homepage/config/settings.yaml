@@ -1,0 +1,6 @@
+title: My NAS
+theme: dark
+color: slate
+background: /images/background.jpg
+headerStyle: clean
+cardBlur: sm

@@ -1,0 +1,38 @@
+- Media:
+  - Jellyfin:
+      icon: jellyfin.png
+      href: http://jellyfin.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      description: The Free Software Media System
+      widget:
+        type: jellyfin
+        url: http://jellyfin.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        key: "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}"
+        enableBlocks: true
+        enableNowPlaying: false
+
+  - Audiobookshelf:
+      icon: audiobookshelf.png
+      href: http://audiobookshelf.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      description: Self-hosted audiobook and podcast server
+      widget:
+        type: audiobookshelf
+        url: http://audiobookshelf.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        key: "{{HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY}}"
+
+- Cloud:
+  - Nextcloud:
+      icon: nextcloud.png
+      href: http://nextcloud.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      description: Open source content collaboration platform
+      widget:
+        type: nextcloud
+        url: http://nextcloud.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        key: "{{HOMEPAGE_VAR_NEXTCLOUD_API_KEY}}"
+
+- Admin:
+  - Caddy:
+      icon: caddy.png
+      description: The Ultimate Server with Automatic HTTPS
+      widget:
+        type: caddy
+        url: http://caddy.{{HOMEPAGE_VAR_HOST_INTERNAL}}
