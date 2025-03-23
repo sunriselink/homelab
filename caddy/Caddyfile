@@ -23,7 +23,3 @@ http://jellyfin.{$HOST_INTERNAL} {
 http://nextcloud.{$HOST_INTERNAL} {
     reverse_proxy nextcloud:80
 }
-
-http://portainer.{$HOST_INTERNAL} {
-    reverse_proxy portainer:9000
-}
