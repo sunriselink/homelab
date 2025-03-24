@@ -4,3 +4,5 @@ color: slate
 background: /images/background.jpg
 headerStyle: clean
 cardBlur: sm
+disableCollapse: true
+showStats: true
