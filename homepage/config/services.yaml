@@ -23,6 +23,50 @@
         url: http://audiobookshelf.{{HOMEPAGE_VAR_HOST_INTERNAL}}
         key: "{{HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY}}"
 
+  - Radarr:
+      icon: radarr.png
+      href: http://radarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      description: Movie collection manager
+      server: docker
+      container: arr_stack_radarr
+      widget:
+        type: radarr
+        url: http://radarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        key: "{{HOMEPAGE_VAR_RADARR_API_KEY}}"
+
+  - Sonarr:
+      icon: sonarr.png
+      href: http://sonarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      description: TV shows collection manager
+      server: docker
+      container: arr_stack_sonarr
+      widget:
+        type: sonarr
+        url: http://sonarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        key: "{{HOMEPAGE_VAR_SONARR_API_KEY}}"
+
+  - Lidarr:
+      icon: lidarr.png
+      href: http://lidarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      description: Music collection manager
+      server: docker
+      container: arr_stack_lidarr
+      widget:
+        type: lidarr
+        url: http://lidarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        key: "{{HOMEPAGE_VAR_LIDARR_API_KEY}}"
+
+  - Prowlarr:
+      icon: prowlarr.png
+      href: http://prowlarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      description: Indexer manager/proxy
+      server: docker
+      container: arr_stack_prowlarr
+      widget:
+        type: prowlarr
+        url: http://prowlarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        key: "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}"
+
 - Cloud:
   - Nextcloud:
       icon: nextcloud.png

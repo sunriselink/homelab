@@ -23,3 +23,19 @@ Go to `Services -> Compose -> Files` (`Edit global environment file` button) and
 ### Portainer
 
 `global.env` file will need to be loaded into Portainer for each stack (unfortunately).
+
+## More information
+
+### qBittorrent
+
+Default user
+
+```
+Username: admin
+Password: <view container logs>
+```
+
+Settings
+1. WebUI > Use alternative WebUI: checked
+2. WebUI > Files location: `/vuetorrent`
+3. Downloads > Default Save Path: `/data/downloads` (important)

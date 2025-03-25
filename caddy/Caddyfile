@@ -23,3 +23,23 @@ http://jellyfin.{$HOST_INTERNAL} {
 http://nextcloud.{$HOST_INTERNAL} {
     reverse_proxy nextcloud:80
 }
+
+http://radarr.{$HOST_INTERNAL} {
+    reverse_proxy radarr:7878
+}
+
+http://sonarr.{$HOST_INTERNAL} {
+    reverse_proxy sonarr:8989
+}
+
+http://lidarr.{$HOST_INTERNAL} {
+    reverse_proxy lidarr:8686
+}
+
+http://prowlarr.{$HOST_INTERNAL} {
+    reverse_proxy prowlarr:9696
+}
+
+http://qbittorrent.{$HOST_INTERNAL} {
+    reverse_proxy qbittorrent:8080
+}
