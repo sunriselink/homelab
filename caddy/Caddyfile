@@ -43,3 +43,7 @@ http://prowlarr.{$HOST_INTERNAL} {
 http://qbittorrent.{$HOST_INTERNAL} {
     reverse_proxy qbittorrent:8080
 }
+
+http://filebrowser.{$HOST_INTERNAL} {
+    reverse_proxy filebrowser:80
+}

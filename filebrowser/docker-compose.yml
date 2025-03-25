@@ -1,0 +1,32 @@
+services:
+  init:
+    image: alpine
+    entrypoint: /tmp/filebrowser/init.sh
+    working_dir: /tmp/filebrowser
+    environment:
+      PUID: ${NAS_UID:?}
+      PGID: ${NAS_GID:?}
+    volumes:
+      - ${PATH_TO_ROOT:?}/filebrowser:/tmp/filebrowser
+      - ${PATH_TO_MEDIA:?}:/tmp/media
+
+  # https://hub.docker.com/r/filebrowser/filebrowser/tags
+  filebrowser:
+    image: filebrowser/filebrowser:v2.32.0
+    container_name: filebrowser
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    networks:
+      - proxy
+    volumes:
+      - ${PATH_TO_ROOT:?}/filebrowser/database:/database
+      - ${PATH_TO_ROOT:?}/filebrowser/settings.json:/.filebrowser.json:ro
+      - ${PATH_TO_MEDIA:?}:/srv/media
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+networks:
+  proxy:
+    external: true
