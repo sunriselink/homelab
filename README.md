@@ -22,7 +22,7 @@ Go to `Services -> Compose -> Files` (`Edit global environment file` button) and
 
 ### Portainer
 
-`global.env` file will need to be loaded into Portainer for each stack (unfortunately).
+`global.env` file will need to be loaded into Portainer for each stack (unfortunately). See https://github.com/orgs/portainer/discussions/9867
 
 ## More information
 
