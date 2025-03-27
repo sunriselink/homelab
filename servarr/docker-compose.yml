@@ -22,7 +22,7 @@ services:
       PGID: ${NAS_GID:?}
       TZ: ${TZ:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/arr-stack/radarr:/config
+      - ${PATH_TO_ROOT:?}/servarr/radarr:/config
       - ${PATH_TO_MEDIA:?}:/data
     depends_on:
       init:
@@ -44,7 +44,7 @@ services:
       PGID: ${NAS_GID:?}
       TZ: ${TZ:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/arr-stack/sonarr:/config
+      - ${PATH_TO_ROOT:?}/servarr/sonarr:/config
       - ${PATH_TO_MEDIA:?}:/data
     depends_on:
       init:
@@ -66,7 +66,7 @@ services:
       PGID: ${NAS_GID:?}
       TZ: ${TZ:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/arr-stack/lidarr:/config
+      - ${PATH_TO_ROOT:?}/servarr/lidarr:/config
       - ${PATH_TO_MEDIA:?}:/data
     depends_on:
       init:
@@ -88,7 +88,7 @@ services:
       PGID: ${NAS_GID:?}
       TZ: ${TZ:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/arr-stack/prowlarr:/config
+      - ${PATH_TO_ROOT:?}/servarr/prowlarr:/config
 
   # https://github.com/linuxserver/docker-qbittorrent/pkgs/container/qbittorrent
   qbittorrent:
@@ -104,7 +104,7 @@ services:
       WEBUI_PORT: 8080
       DOCKER_MODS: ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.23.1
     volumes:
-      - ${PATH_TO_ROOT:?}/arr-stack/qbittorrent:/config
+      - ${PATH_TO_ROOT:?}/servarr/qbittorrent:/config
       - ${PATH_TO_MEDIA:?}/downloads:/data/downloads
     depends_on:
       init:
