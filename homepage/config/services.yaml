@@ -3,8 +3,6 @@
       icon: jellyfin.png
       href: http://jellyfin.{{HOMEPAGE_VAR_HOST_INTERNAL}}
       description: The Free Software Media System
-      server: docker
-      container: jellyfin
       widget:
         type: jellyfin
         url: http://jellyfin.{{HOMEPAGE_VAR_HOST_INTERNAL}}
@@ -16,8 +14,6 @@
       icon: audiobookshelf.png
       href: http://audiobookshelf.{{HOMEPAGE_VAR_HOST_INTERNAL}}
       description: Self-hosted audiobook and podcast server
-      server: docker
-      container: audiobookshelf
       widget:
         type: audiobookshelf
         url: http://audiobookshelf.{{HOMEPAGE_VAR_HOST_INTERNAL}}
@@ -27,8 +23,6 @@
       icon: radarr.png
       href: http://radarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
       description: Movie collection manager
-      server: docker
-      container: servarr_radarr
       widget:
         type: radarr
         url: http://radarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
@@ -38,8 +32,6 @@
       icon: sonarr.png
       href: http://sonarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
       description: TV shows collection manager
-      server: docker
-      container: servarr_sonarr
       widget:
         type: sonarr
         url: http://sonarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
@@ -49,8 +41,6 @@
       icon: lidarr.png
       href: http://lidarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
       description: Music collection manager
-      server: docker
-      container: servarr_lidarr
       widget:
         type: lidarr
         url: http://lidarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
@@ -60,8 +50,6 @@
       icon: prowlarr.png
       href: http://prowlarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
       description: Indexer manager/proxy
-      server: docker
-      container: servarr_prowlarr
       widget:
         type: prowlarr
         url: http://prowlarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
@@ -72,8 +60,6 @@
       icon: nextcloud.png
       href: http://nextcloud.{{HOMEPAGE_VAR_HOST_INTERNAL}}
       description: Open source content collaboration platform
-      server: docker
-      container: nextcloud
       widget:
         type: nextcloud
         url: http://nextcloud.{{HOMEPAGE_VAR_HOST_INTERNAL}}
@@ -83,8 +69,6 @@
   - Caddy:
       icon: caddy.png
       description: The Ultimate Server with Automatic HTTPS
-      server: docker
-      container: caddy
       widget:
         type: caddy
         url: http://caddy.{{HOMEPAGE_VAR_HOST_INTERNAL}}
