@@ -28,7 +28,7 @@
       href: http://radarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
       description: Movie collection manager
       server: docker
-      container: arr_stack_radarr
+      container: servarr_radarr
       widget:
         type: radarr
         url: http://radarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
@@ -39,7 +39,7 @@
       href: http://sonarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
       description: TV shows collection manager
       server: docker
-      container: arr_stack_sonarr
+      container: servarr_sonarr
       widget:
         type: sonarr
         url: http://sonarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
@@ -50,7 +50,7 @@
       href: http://lidarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
       description: Music collection manager
       server: docker
-      container: arr_stack_lidarr
+      container: servarr_lidarr
       widget:
         type: lidarr
         url: http://lidarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
@@ -61,7 +61,7 @@
       href: http://prowlarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
       description: Indexer manager/proxy
       server: docker
-      container: arr_stack_prowlarr
+      container: servarr_prowlarr
       widget:
         type: prowlarr
         url: http://prowlarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
