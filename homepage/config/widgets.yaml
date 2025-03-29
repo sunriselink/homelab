@@ -1,0 +1,10 @@
+- glances:
+    url: http://glances.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+    version: 4
+    cpu: true
+    mem: true
+    cputemp: true
+    uptime: true
+    disk: /
+    diskUnits: bytes
+    expanded: true

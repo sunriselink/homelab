@@ -47,3 +47,7 @@ http://qbittorrent.{$HOST_INTERNAL} {
 http://filebrowser.{$HOST_INTERNAL} {
     reverse_proxy filebrowser:80
 }
+
+http://glances.{$HOST_INTERNAL} {
+    reverse_proxy glances:61208
+}
