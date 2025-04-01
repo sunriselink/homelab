@@ -22,7 +22,29 @@ Go to `Services -> Compose -> Files` (`Edit global environment file` button) and
 
 ### Portainer
 
+Run Portainer via command
+
+```sh
+./docker-compose-wrapper.sh container-management/portainer up -d
+```
+
 `global.env` file will need to be loaded into Portainer for each stack (unfortunately). See https://github.com/orgs/portainer/discussions/9867
+
+### Dockge
+
+Run Dockge via command
+
+```sh
+./docker-compose-wrapper.sh container-management/dockge up -d
+```
+
+For fix "exited" status just run script
+
+```sh
+./container-management/dockge/fix-exited-status.sh
+```
+
+See https://github.com/louislam/dockge/issues/177
 
 ## More information
 

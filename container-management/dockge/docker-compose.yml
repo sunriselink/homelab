@@ -1,0 +1,17 @@
+services:
+  # https://hub.docker.com/r/louislam/dockge/tags
+  dockge:
+    image: louislam/dockge:1.5.0
+    container_name: dockge
+    restart: unless-stopped
+    ports:
+      - 5001:5001
+    env_file:
+      - ${PATH_TO_ROOT:?}/global.env
+    environment:
+      DOCKGE_STACKS_DIR: ${PATH_TO_ROOT:?}
+    volumes:
+      - ./data:/app/data
+      - ${PATH_TO_ROOT:?}:${PATH_TO_ROOT:?}:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/localtime:/etc/localtime:ro

@@ -51,3 +51,7 @@ http://filebrowser.{$HOST_INTERNAL} {
 http://glances.{$HOST_INTERNAL} {
     reverse_proxy glances:61208
 }
+
+http://dozzle.{$HOST_INTERNAL} {
+    reverse_proxy dozzle:8080
+}

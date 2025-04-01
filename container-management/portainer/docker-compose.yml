@@ -6,6 +6,6 @@ services:
     ports:
       - 9000:9000
     volumes:
-      - ${PATH_TO_ROOT:?}/portainer/data:/data
+      - ./data:/data
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro

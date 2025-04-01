@@ -73,6 +73,11 @@
         type: caddy
         url: http://caddy.{{HOMEPAGE_VAR_HOST_INTERNAL}}
 
+  - Dozzle:
+      icon: dozzle.png
+      href: http://dozzle.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      description: Simple Container Monitoring and Logging
+
 - Monitoring:
   - CPU Usage:
       widget:
