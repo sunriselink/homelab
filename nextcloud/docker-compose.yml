@@ -11,7 +11,7 @@ services:
       - /tmp/nextcloud/custom_apps
       - /tmp/nextcloud/themes
       - /tmp/nextcloud/postgres_data
-      - /tmp/files
+      - /tmp/files/nextcloud
 
   # https://hub.docker.com/_/nextcloud/tags
   nextcloud:
@@ -33,7 +33,7 @@ services:
       - ${PATH_TO_ROOT:?}/nextcloud/config:/var/www/html/config
       - ${PATH_TO_ROOT:?}/nextcloud/custom_apps:/var/www/html/custom_apps
       - ${PATH_TO_ROOT:?}/nextcloud/themes:/var/www/html/themes
-      - ${PATH_TO_FILES:?}:/var/www/html/data
+      - ${PATH_TO_FILES:?}/nextcloud:/var/www/html/data
     depends_on:
       init:
         condition: service_completed_successfully
