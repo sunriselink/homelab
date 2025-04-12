@@ -4,27 +4,35 @@ services:
     image: alpine
     entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
     volumes:
-      - ${PATH_TO_ROOT:?}/service-name:/tmp/service-name
+      - ${PATH_TO_ROOT:?}/<service-name>:/tmp/<service-name>
     command:
-      - /tmp/service-name/data
-      - /tmp/service-name/config
+      - /tmp/<service-name>/data
+      - /tmp/<service-name>/config
 
-  service-name:
-    image: service-image-name:version
-    container_name: service_container_name
+  <service-name>:
+    image: <service-name>:<service-version>
+    container_name: <service-name>
     restart: unless-stopped
     # Rootless mode (if needed)
     user: ${NAS_UID:?}:${NAS_GID:?}
+    # Use Reverse Proxy network (if needed)
     networks:
       - proxy
     environment:
       # Use local time via ENV
       TZ: ${TZ:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/service-name/data:/data
-      - ${PATH_TO_ROOT:?}/service-name/config:/config
+      - ${PATH_TO_ROOT:?}/<service-name>/data:/data
+      - ${PATH_TO_ROOT:?}/<service-name>/config:/config
       # Use local time via mount /etc/localtime
       - /etc/localtime:/etc/localtime:ro
+    labels:
+      # Reverse Proxy settings
+      - traefik.enable=true
+      # Use "local-secure,external-secure" to enable access from the internet
+      - traefik.http.routers.<service-name>.entrypoints=local-secure
+      - traefik.http.routers.<service-name>.rule=Host(`<service-name>.${ROOT_DOMAIN:?}`)
+      - traefik.http.services.<service-name>.loadbalancer.server.port=<service-port>
     depends_on:
       init:
         condition: service_completed_successfully

@@ -1,0 +1,16 @@
+services:
+  # https://github.com/linuxserver/docker-duckdns/pkgs/container/duckdns
+  duckdns:
+    image: lscr.io/linuxserver/duckdns:version-2acaed7c
+    container_name: duckdns
+    restart: unless-stopped
+    environment:
+      PUID: ${NAS_UID:?}
+      PGID: ${NAS_GID:?}
+      TZ: ${TZ:?}
+      SUBDOMAINS: ${DUCKDNS_SUBDOMAINS:?}
+      TOKEN: ${DUCKDNS_TOKEN:?}
+      UPDATE_IP: ipv4
+      LOG_FILE: false
+    volumes:
+      - ${PATH_TO_ROOT:?}/duckdns/config:/config

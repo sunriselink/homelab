@@ -10,8 +10,8 @@ services:
       PUID: ${NAS_UID:?}
       PGID: ${NAS_GID:?}
       TZ: ${TZ:?}
-      HOMEPAGE_ALLOWED_HOSTS: homepage.${HOST_INTERNAL:?}
-      HOMEPAGE_VAR_HOST_INTERNAL: ${HOST_INTERNAL:?}
+      HOMEPAGE_ALLOWED_HOSTS: homepage.${ROOT_DOMAIN:?}
+      HOMEPAGE_VAR_ROOT_DOMAIN: ${ROOT_DOMAIN:?}
       HOMEPAGE_VAR_JELLYFIN_API_KEY: ${JELLYFIN_API_KEY:?}
       HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY: ${AUDIOBOOKSHELF_API_KEY:?}
       HOMEPAGE_VAR_NEXTCLOUD_API_KEY: ${NEXTCLOUD_API_KEY:?}
@@ -22,6 +22,11 @@ services:
     volumes:
       - ${PATH_TO_ROOT:?}/homepage/config:/app/config
       - ${PATH_TO_ROOT:?}/homepage/images:/app/public/images
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.homepage.entrypoints=local-secure
+      - traefik.http.routers.homepage.rule=Host(`homepage.${ROOT_DOMAIN:?}`)
+      - traefik.http.services.homepage.loadbalancer.server.port=3000
 
 networks:
   proxy:

@@ -1,0 +1,64 @@
+services:
+  # https://hub.docker.com/_/traefik/tags
+  traefik:
+    image: traefik:v3.3.5
+    container_name: traefik
+    restart: unless-stopped
+    networks:
+      - proxy
+    command:
+      - --api.dashboard
+      - --api.insecure
+
+      - --log.level=${LOG_LEVEL:?}
+
+      - --entrypoints.local.address=:80
+      - --entrypoints.local.http.redirections.entrypoint.to=local-secure
+
+      - --entrypoints.local-secure.address=:443
+      - --entrypoints.local-secure.http.middlewares=security-headers@file
+      - --entrypoints.local-secure.http.tls.certresolver=duckdns-resolver
+      - --entrypoints.local-secure.http.tls.domains[0].main=*.${ROOT_DOMAIN:?}
+
+      - --entrypoints.external.address=:81
+      - --entrypoints.external.http.redirections.entrypoint.to=local-secure # 81 -> 443 -> 444 (from router)
+
+      - --entrypoints.external-secure.address=:444
+      - --entrypoints.external-secure.http.middlewares=security-headers@file
+      - --entrypoints.external-secure.http.tls.certresolver=duckdns-resolver
+      - --entrypoints.external-secure.http.tls.domains[0].main=*.${ROOT_DOMAIN:?}
+
+      - --providers.docker
+      - --providers.docker.endpoint=unix:///var/run/docker.sock
+      - --providers.docker.exposedbydefault=false
+      - --providers.docker.network=proxy
+
+      - --providers.file.filename=/config.yml
+
+      - --certificatesresolvers.duckdns-resolver.acme.email=${ACME_EMAIL:?}
+      - --certificatesresolvers.duckdns-resolver.acme.storage=/letsencrypt/acme.json
+      - --certificatesresolvers.duckdns-resolver.acme.dnschallenge.provider=duckdns
+    environment:
+      DUCKDNS_TOKEN: ${DUCKDNS_TOKEN:?}
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+      - 444:444
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    volumes:
+      - ${PATH_TO_ROOT:?}/traefik/letsencrypt:/letsencrypt
+      - ${PATH_TO_ROOT:?}/traefik/config.yml:/config.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik-dashboard.entrypoints=local-secure
+      - traefik.http.routers.traefik-dashboard.rule=Host(`traefik.${ROOT_DOMAIN:?}`)
+      - traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080
+
+networks:
+  proxy:
+    external: true

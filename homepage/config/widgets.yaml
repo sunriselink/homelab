@@ -1,5 +1,5 @@
 - glances:
-    url: http://glances.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+    url: https://glances.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
     version: 4
     cpu: true
     mem: true

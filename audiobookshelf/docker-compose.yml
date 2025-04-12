@@ -24,6 +24,11 @@ services:
       - ${PATH_TO_ROOT:?}/audiobookshelf/config:/config
       - ${PATH_TO_ROOT:?}/audiobookshelf/metadata:/metadata
       - ${PATH_TO_MEDIA:?}/audiobooks:/audiobooks
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.audiobookshelf.entrypoints=local-secure,external-secure
+      - traefik.http.routers.audiobookshelf.rule=Host(`audiobookshelf.${ROOT_DOMAIN:?}`)
+      - traefik.http.services.audiobookshelf.loadbalancer.server.port=80
     depends_on:
       init:
         condition: service_completed_successfully

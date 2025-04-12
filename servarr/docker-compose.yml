@@ -24,6 +24,11 @@ services:
     volumes:
       - ${PATH_TO_ROOT:?}/servarr/radarr:/config
       - ${PATH_TO_MEDIA:?}:/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.radarr.entrypoints=local-secure
+      - traefik.http.routers.radarr.rule=Host(`radarr.${ROOT_DOMAIN:?}`)
+      - traefik.http.services.radarr.loadbalancer.server.port=7878
     depends_on:
       init:
         condition: service_completed_successfully
@@ -46,6 +51,11 @@ services:
     volumes:
       - ${PATH_TO_ROOT:?}/servarr/sonarr:/config
       - ${PATH_TO_MEDIA:?}:/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sonarr.entrypoints=local-secure
+      - traefik.http.routers.sonarr.rule=Host(`sonarr.${ROOT_DOMAIN:?}`)
+      - traefik.http.services.sonarr.loadbalancer.server.port=8989
     depends_on:
       init:
         condition: service_completed_successfully
@@ -68,6 +78,11 @@ services:
     volumes:
       - ${PATH_TO_ROOT:?}/servarr/lidarr:/config
       - ${PATH_TO_MEDIA:?}:/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.lidarr.entrypoints=local-secure
+      - traefik.http.routers.lidarr.rule=Host(`lidarr.${ROOT_DOMAIN:?}`)
+      - traefik.http.services.lidarr.loadbalancer.server.port=8686
     depends_on:
       init:
         condition: service_completed_successfully
@@ -89,6 +104,11 @@ services:
       TZ: ${TZ:?}
     volumes:
       - ${PATH_TO_ROOT:?}/servarr/prowlarr:/config
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.prowlarr.entrypoints=local-secure
+      - traefik.http.routers.prowlarr.rule=Host(`prowlarr.${ROOT_DOMAIN:?}`)
+      - traefik.http.services.prowlarr.loadbalancer.server.port=9696
 
   # https://github.com/linuxserver/docker-qbittorrent/pkgs/container/qbittorrent
   qbittorrent:
@@ -106,6 +126,11 @@ services:
     volumes:
       - ${PATH_TO_ROOT:?}/servarr/qbittorrent:/config
       - ${PATH_TO_MEDIA:?}/downloads:/data/downloads
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.qbittorrent.entrypoints=local-secure
+      - traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.${ROOT_DOMAIN:?}`)
+      - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
     depends_on:
       init:
         condition: service_completed_successfully

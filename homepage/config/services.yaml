@@ -1,94 +1,105 @@
 - Media:
   - Jellyfin:
       icon: jellyfin.png
-      href: http://jellyfin.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      href: https://jellyfin.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: The Free Software Media System
       widget:
         type: jellyfin
-        url: http://jellyfin.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        url: https://jellyfin.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         key: "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}"
         enableBlocks: true
         enableNowPlaying: false
 
   - Audiobookshelf:
       icon: audiobookshelf.png
-      href: http://audiobookshelf.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      href: https://audiobookshelf.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Self-hosted audiobook and podcast server
       widget:
         type: audiobookshelf
-        url: http://audiobookshelf.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        url: https://audiobookshelf.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         key: "{{HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY}}"
 
   - Radarr:
       icon: radarr.png
-      href: http://radarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      href: https://radarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Movie collection manager
       widget:
         type: radarr
-        url: http://radarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        url: https://radarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         key: "{{HOMEPAGE_VAR_RADARR_API_KEY}}"
 
   - Sonarr:
       icon: sonarr.png
-      href: http://sonarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      href: https://sonarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: TV shows collection manager
       widget:
         type: sonarr
-        url: http://sonarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        url: https://sonarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         key: "{{HOMEPAGE_VAR_SONARR_API_KEY}}"
 
   - Lidarr:
       icon: lidarr.png
-      href: http://lidarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      href: https://lidarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Music collection manager
       widget:
         type: lidarr
-        url: http://lidarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        url: https://lidarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         key: "{{HOMEPAGE_VAR_LIDARR_API_KEY}}"
 
   - Prowlarr:
       icon: prowlarr.png
-      href: http://prowlarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      href: https://prowlarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Indexer manager/proxy
       widget:
         type: prowlarr
-        url: http://prowlarr.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        url: https://prowlarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         key: "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}"
+
+  - qBittorrent:
+      icon: qbittorrent.png
+      href: https://qbittorrent.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+      description: BitTorrent client
 
 - Cloud:
   - Nextcloud:
       icon: nextcloud.png
-      href: http://nextcloud.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      href: https://nextcloud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Open source content collaboration platform
       widget:
         type: nextcloud
-        url: http://nextcloud.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        url: https://nextcloud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         key: "{{HOMEPAGE_VAR_NEXTCLOUD_API_KEY}}"
 
+  - Filebrowser:
+      icon: filebrowser.png
+      href: https://filebrowser.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+      description: Web File Browser
+
 - Admin:
-  - Caddy:
-      icon: caddy.png
-      description: The Ultimate Server with Automatic HTTPS
+  - Traefik:
+      icon: traefik.png
+      description: The Cloud Native Application Proxy
+      href: https://traefik.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       widget:
-        type: caddy
-        url: http://caddy.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        type: traefik
+        url: https://traefik.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
 
   - Dozzle:
       icon: dozzle.png
-      href: http://dozzle.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+      href: https://dozzle.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Simple Container Monitoring and Logging
 
 - Monitoring:
   - CPU Usage:
       widget:
         type: glances
-        url: http://glances.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        url: https://glances.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         metric: cpu
         version: 4
 
   - Memory Usage:
       widget:
         type: glances
-        url: http://glances.{{HOMEPAGE_VAR_HOST_INTERNAL}}
+        url: https://glances.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         metric: memory
         version: 4

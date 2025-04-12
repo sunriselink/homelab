@@ -7,6 +7,12 @@
 - Create `global.env` file from `global.env.example` and fill missing variables
 - Create `.env` files from `.env.example` for each stack and fill missing variables
 - Create Network for Reverse Proxy via command `docker network create proxy`
+- Set up port forwarding on your router
+    - `:80 -> <nas ip>:81`
+    - `:443 -> <nas ip>:444`
+- Set up static DNS on your router
+    - `${ROOT_DOMAIN} -> <nas ip>`
+    - `*.${ROOT_DOMAIN} -> <nas ip>`
 
 ## Container management
 
@@ -45,6 +51,8 @@ For fix "exited" status just run script
 ```
 
 See https://github.com/louislam/dockge/issues/177
+
+When file `global.env` changes, restart Dockge container
 
 ## More information
 
