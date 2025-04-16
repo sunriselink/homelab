@@ -90,16 +90,14 @@
       description: Simple Container Monitoring and Logging
 
 - Monitoring:
-  - CPU Usage:
+  - Beszel:
+      icon: beszel.png
+      href: https://beszel.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/system/{{HOMEPAGE_VAR_BESZEL_SYSTEM_NAME}}
+      description: Simple, lightweight server monitoring
       widget:
-        type: glances
-        url: https://glances.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        metric: cpu
-        version: 4
-
-  - Memory Usage:
-      widget:
-        type: glances
-        url: https://glances.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        metric: memory
-        version: 4
+        type: beszel
+        url: https://beszel.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        username: "{{HOMEPAGE_VAR_BESZEL_USERNAME}}"
+        password: "{{HOMEPAGE_VAR_BESZEL_PASSWORD}}"
+        systemId: "{{HOMEPAGE_VAR_BESZEL_SYSTEM_NAME}}"
+        version: 2
