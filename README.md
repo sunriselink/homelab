@@ -89,3 +89,10 @@ Host / IP: /beszel_socket/beszel.sock
 ```
 
 Copy key from "Public Key" into "KEY" variable (`beszel/.env`) and restart stack.
+
+### Nextcloud
+
+```sh
+# Set serverinfo token
+./nextcloud/exec.sh occ config:app:set serverinfo token --value <token value>
+```
