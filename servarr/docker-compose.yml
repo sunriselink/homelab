@@ -93,7 +93,7 @@ services:
 
   # https://github.com/linuxserver/docker-prowlarr/pkgs/container/prowlarr
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:1.32.2
+    image: lscr.io/linuxserver/prowlarr:1.33.3
     container_name: servarr_prowlarr
     restart: unless-stopped
     networks:

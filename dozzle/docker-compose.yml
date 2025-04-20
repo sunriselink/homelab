@@ -1,7 +1,7 @@
 services:
   # https://hub.docker.com/r/amir20/dozzle/tags
   dozzle:
-    image: amir20/dozzle:v8.12.0
+    image: amir20/dozzle:v8.12.8
     container_name: dozzle
     restart: unless-stopped
     networks:
