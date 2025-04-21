@@ -19,7 +19,7 @@
 ### Local
 
 ```sh
-./docker-compose-wrapper.sh STACK_NAME COMPOSE_COMMANDS
+./compose.sh STACK_NAME COMPOSE_COMMANDS
 ```
 
 ### OpenMediaVault
@@ -31,7 +31,7 @@ Go to `Services -> Compose -> Files` (`Edit global environment file` button) and
 Run Portainer via command
 
 ```sh
-./docker-compose-wrapper.sh container-management/portainer up -d
+./compose.sh container-management/portainer up -d
 ```
 
 `global.env` file will need to be loaded into Portainer for each stack (unfortunately). See https://github.com/orgs/portainer/discussions/9867
@@ -41,7 +41,7 @@ Run Portainer via command
 Run Dockge via command
 
 ```sh
-./docker-compose-wrapper.sh container-management/dockge up -d
+./compose.sh container-management/dockge up -d
 ```
 
 For fix "exited" status just run script
