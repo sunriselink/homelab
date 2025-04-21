@@ -1,7 +1,7 @@
 services:
   # https://hub.docker.com/_/traefik/tags
   traefik:
-    image: traefik:v3.3.5
+    image: traefik:v3.3.6
     container_name: traefik
     restart: unless-stopped
     networks:
@@ -28,7 +28,6 @@ services:
       - --entrypoints.external-secure.http.tls.certresolver=duckdns-resolver
       - --entrypoints.external-secure.http.tls.domains[0].main=*.${ROOT_DOMAIN:?}
 
-      - --providers.docker
       - --providers.docker.endpoint=unix:///var/run/docker.sock
       - --providers.docker.exposedbydefault=false
       - --providers.docker.network=proxy
