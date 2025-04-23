@@ -1,97 +1,65 @@
 - Media:
   - Jellyfin:
-      icon: jellyfin.png
+      icon: jellyfin.svg
       href: https://jellyfin.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: The Free Software Media System
-      widget:
-        type: jellyfin
-        url: https://jellyfin.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        key: "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}"
-        enableBlocks: true
-        enableNowPlaying: false
 
   - Audiobookshelf:
-      icon: audiobookshelf.png
+      icon: audiobookshelf.svg
       href: https://audiobookshelf.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Self-hosted audiobook and podcast server
-      widget:
-        type: audiobookshelf
-        url: https://audiobookshelf.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        key: "{{HOMEPAGE_VAR_AUDIOBOOKSHELF_API_KEY}}"
 
+- Media Management:
   - Radarr:
-      icon: radarr.png
+      icon: radarr.svg
       href: https://radarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Movie collection manager
-      widget:
-        type: radarr
-        url: https://radarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        key: "{{HOMEPAGE_VAR_RADARR_API_KEY}}"
 
   - Sonarr:
-      icon: sonarr.png
+      icon: sonarr.svg
       href: https://sonarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: TV shows collection manager
-      widget:
-        type: sonarr
-        url: https://sonarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        key: "{{HOMEPAGE_VAR_SONARR_API_KEY}}"
 
   - Lidarr:
-      icon: lidarr.png
+      icon: lidarr.svg
       href: https://lidarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Music collection manager
-      widget:
-        type: lidarr
-        url: https://lidarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        key: "{{HOMEPAGE_VAR_LIDARR_API_KEY}}"
 
   - Prowlarr:
-      icon: prowlarr.png
+      icon: prowlarr.svg
       href: https://prowlarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Indexer manager/proxy
-      widget:
-        type: prowlarr
-        url: https://prowlarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        key: "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}"
 
   - qBittorrent:
-      icon: qbittorrent.png
+      icon: qbittorrent.svg
       href: https://qbittorrent.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: BitTorrent client
 
-- Cloud:
+- Files:
   - Nextcloud:
-      icon: nextcloud.png
+      icon: nextcloud-white.svg
       href: https://nextcloud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Open source content collaboration platform
-      widget:
-        type: nextcloud
-        url: https://nextcloud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        key: "{{HOMEPAGE_VAR_NEXTCLOUD_API_KEY}}"
 
   - Filebrowser:
-      icon: filebrowser.png
+      icon: filebrowser.svg
       href: https://filebrowser.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Web File Browser
 
 - Admin:
   - Traefik:
-      icon: traefik.png
+      icon: traefik.svg
       description: The Cloud Native Application Proxy
       href: https://traefik.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-      widget:
-        type: traefik
-        url: https://traefik.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
 
   - Dozzle:
-      icon: dozzle.png
+      icon: dozzle.svg
       href: https://dozzle.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Simple Container Monitoring and Logging
 
 - Monitoring:
   - Beszel:
-      icon: beszel.png
+      icon: beszel.svg
       href: https://beszel.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/system/{{HOMEPAGE_VAR_BESZEL_SYSTEM_NAME}}
       description: Simple, lightweight server monitoring
       widget:
@@ -101,3 +69,14 @@
         password: "{{HOMEPAGE_VAR_BESZEL_PASSWORD}}"
         systemId: "{{HOMEPAGE_VAR_BESZEL_SYSTEM_NAME}}"
         version: 2
+
+  - Speedtest Tracker:
+      icon: sh-speedtest-tracker.svg
+      href: https://speedtest.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+      description: Self-hosted application that monitors the internet connection
+      widget:
+        type: speedtest
+        url: https://speedtest.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        version: 2
+        key: "{{HOMEPAGE_VAR_SPEEDTEST_TRACKER_API_TOKEN}}"
+        bitratePrecision: 0

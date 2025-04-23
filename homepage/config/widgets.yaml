@@ -1,0 +1,14 @@
+- logo:
+    icon: sh-homepage
+
+- greeting:
+    text_size: xl
+    text: Homepage
+
+- datetime:
+    text_size: xl
+    locale: ru
+    format:
+      dateStyle: short
+      timeStyle: short
+      hourCycle: h23
