@@ -11,10 +11,10 @@ services:
       - ${PATH_TO_ROOT:?}/beszel/socket:/beszel_socket
       - /etc/localtime:/etc/localtime:ro
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.beszel.entrypoints=local-secure
-      - traefik.http.routers.beszel.rule=Host(`beszel.${ROOT_DOMAIN:?}`)
-      - traefik.http.services.beszel.loadbalancer.server.port=8090
+      traefik.enable: true
+      traefik.http.routers.beszel.entrypoints: local-secure
+      traefik.http.routers.beszel.rule: Host(`beszel.${ROOT_DOMAIN:?}`)
+      traefik.http.services.beszel.loadbalancer.server.port: 8090
     depends_on:
       beszel-agent:
         condition: service_healthy

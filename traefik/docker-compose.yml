@@ -14,6 +14,7 @@ services:
 
       - --entrypoints.local.address=:80
       - --entrypoints.local.http.redirections.entrypoint.to=local-secure
+      - --entrypoints.local.http.middlewares=security-headers@file
 
       - --entrypoints.local-secure.address=:443
       - --entrypoints.local-secure.http.middlewares=security-headers@file
@@ -21,7 +22,8 @@ services:
       - --entrypoints.local-secure.http.tls.domains[0].main=*.${ROOT_DOMAIN:?}
 
       - --entrypoints.external.address=:81
-      - --entrypoints.external.http.redirections.entrypoint.to=local-secure # 81 -> 443 -> 444 (from router)
+      - --entrypoints.external.http.redirections.entrypoint.to=local-secure # 81 -> 443 -> 444 (by router)
+      - --entrypoints.external.http.middlewares=security-headers@file
 
       - --entrypoints.external-secure.address=:444
       - --entrypoints.external-secure.http.middlewares=security-headers@file
@@ -53,10 +55,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.traefik-dashboard.entrypoints=local-secure
-      - traefik.http.routers.traefik-dashboard.rule=Host(`traefik.${ROOT_DOMAIN:?}`)
-      - traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080
+      traefik.enable: true
+      traefik.http.routers.traefik-dashboard.entrypoints: local-secure
+      traefik.http.routers.traefik-dashboard.rule: Host(`traefik.${ROOT_DOMAIN:?}`)
+      traefik.http.services.traefik-dashboard.loadbalancer.server.port: 8080
 
 networks:
   proxy:

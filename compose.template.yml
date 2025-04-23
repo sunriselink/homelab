@@ -28,11 +28,11 @@ services:
       - /etc/localtime:/etc/localtime:ro
     labels:
       # Reverse Proxy settings
-      - traefik.enable=true
+      traefik.enable: true
       # Use "local-secure,external-secure" to enable access from the internet
-      - traefik.http.routers.<service-name>.entrypoints=local-secure
-      - traefik.http.routers.<service-name>.rule=Host(`<service-name>.${ROOT_DOMAIN:?}`)
-      - traefik.http.services.<service-name>.loadbalancer.server.port=<service-port>
+      traefik.http.routers.<service-name>.entrypoints: local-secure
+      traefik.http.routers.<service-name>.rule: Host(`<service-name>.${ROOT_DOMAIN:?}`)
+      traefik.http.services.<service-name>.loadbalancer.server.port: <service-port>
     depends_on:
       init:
         condition: service_completed_successfully

@@ -10,10 +10,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.dozzle.entrypoints=local-secure
-      - traefik.http.routers.dozzle.rule=Host(`dozzle.${ROOT_DOMAIN:?}`)
-      - traefik.http.services.dozzle.loadbalancer.server.port=8080
+      traefik.enable: true
+      traefik.http.routers.dozzle.entrypoints: local-secure
+      traefik.http.routers.dozzle.rule: Host(`dozzle.${ROOT_DOMAIN:?}`)
+      traefik.http.services.dozzle.loadbalancer.server.port: 8080
 
 networks:
   proxy:

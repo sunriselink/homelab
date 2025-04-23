@@ -35,10 +35,10 @@ services:
       - ${PATH_TO_ROOT:?}/nextcloud/themes:/var/www/html/themes
       - ${PATH_TO_FILES:?}/nextcloud:/var/www/html/data
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.nextcloud.entrypoints=local-secure,external-secure
-      - traefik.http.routers.nextcloud.rule=Host(`nextcloud.${ROOT_DOMAIN:?}`)
-      - traefik.http.services.nextcloud.loadbalancer.server.port=80
+      traefik.enable: true
+      traefik.http.routers.nextcloud.entrypoints: local-secure,external-secure
+      traefik.http.routers.nextcloud.rule: Host(`nextcloud.${ROOT_DOMAIN:?}`)
+      traefik.http.services.nextcloud.loadbalancer.server.port: 80
     depends_on:
       init:
         condition: service_completed_successfully

@@ -24,10 +24,10 @@ services:
       - ${PATH_TO_MEDIA:?}:/srv/media
       - /etc/localtime:/etc/localtime:ro
     labels:
-      - traefik.enable=true
-      - traefik.http.routers.filebrowser.entrypoints=local-secure
-      - traefik.http.routers.filebrowser.rule=Host(`filebrowser.${ROOT_DOMAIN:?}`)
-      - traefik.http.services.filebrowser.loadbalancer.server.port=80
+      traefik.enable: true
+      traefik.http.routers.filebrowser.entrypoints: local-secure
+      traefik.http.routers.filebrowser.rule: Host(`filebrowser.${ROOT_DOMAIN:?}`)
+      traefik.http.services.filebrowser.loadbalancer.server.port: 80
     depends_on:
       init:
         condition: service_completed_successfully

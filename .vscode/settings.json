@@ -1,0 +1,33 @@
+{
+  "cSpell.words": [
+    "audiobookshelf",
+    "beszel",
+    "certificatesresolvers",
+    "certresolver",
+    "dnschallenge",
+    "dockge",
+    "dozzle",
+    "duckdns",
+    "exposedbydefault",
+    "gethomepage",
+    "healthcheck",
+    "jellyfin",
+    "letsencrypt",
+    "lidarr",
+    "localtime",
+    "lscr",
+    "lsio",
+    "nextcloud",
+    "pgid",
+    "prowlarr",
+    "puid",
+    "qbittorrent",
+    "radarr",
+    "redirections",
+    "servarr",
+    "sonarr",
+    "traefik",
+    "vuetorrent",
+    "webui"
+  ]
+}
