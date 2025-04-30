@@ -4,9 +4,15 @@ services:
     image: portainer/portainer-ce:2.29.0
     container_name: portainer
     restart: unless-stopped
+    command: -H tcp://admin-docker-socket:2375
+    networks:
+      - admin-docker-socket
     ports:
       - 9000:9000
     volumes:
       - ./data:/data
       - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  admin-docker-socket:
+    external: true

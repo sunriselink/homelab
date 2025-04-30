@@ -6,10 +6,11 @@ services:
     restart: unless-stopped
     networks:
       - proxy
+      - readonly-docker-socket
     environment:
       DOZZLE_NO_ANALYTICS: true
+      DOZZLE_REMOTE_HOST: tcp://readonly-docker-socket:2375
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
       traefik.enable: true
@@ -19,4 +20,6 @@ services:
 
 networks:
   proxy:
+    external: true
+  readonly-docker-socket:
     external: true

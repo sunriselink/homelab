@@ -46,13 +46,15 @@ services:
     container_name: monitoring_telegraf
     restart: unless-stopped
     user: telegraf:${DOCKER_GID:?}
+    networks:
+      - default
+      - readonly-docker-socket
     environment:
       INFLUXDB_ORG: ${INFLUXDB_ORG:?}
       INFLUXDB_BUCKET: ${INFLUXDB_BUCKET:?}
       INFLUXDB_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN:?}
     volumes:
       - ${PATH_TO_ROOT:?}/monitoring/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /:/hostfs:ro
     depends_on:
       influxdb:
@@ -86,4 +88,6 @@ services:
 
 networks:
   proxy:
+    external: true
+  readonly-docker-socket:
     external: true

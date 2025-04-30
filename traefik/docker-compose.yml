@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     networks:
       - proxy
+      - readonly-docker-socket
     command:
       - --api.dashboard
       - --api.insecure
@@ -30,7 +31,7 @@ services:
       - --entrypoints.external-secure.http.tls.certresolver=duckdns-resolver
       - --entrypoints.external-secure.http.tls.domains[0].main=*.${ROOT_DOMAIN:?}
 
-      - --providers.docker.endpoint=unix:///var/run/docker.sock
+      - --providers.docker.endpoint=tcp://readonly-docker-socket:2375
       - --providers.docker.exposedbydefault=false
       - --providers.docker.network=proxy
 
@@ -53,7 +54,6 @@ services:
     volumes:
       - ${PATH_TO_ROOT:?}/traefik/letsencrypt:/letsencrypt
       - ${PATH_TO_ROOT:?}/traefik/config.yml:/config.yml:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
       traefik.enable: true
@@ -63,4 +63,6 @@ services:
 
 networks:
   proxy:
+    external: true
+  readonly-docker-socket:
     external: true

@@ -4,14 +4,20 @@ services:
     image: louislam/dockge:1.5.0
     container_name: dockge
     restart: unless-stopped
+    networks:
+      - admin-docker-socket
     ports:
       - 5001:5001
     env_file:
       - ${PATH_TO_ROOT:?}/global.env
     environment:
       DOCKGE_STACKS_DIR: ${PATH_TO_ROOT:?}
+      DOCKER_HOST: tcp://admin-docker-socket:2375
     volumes:
       - ./data:/app/data
       - ${PATH_TO_ROOT:?}:${PATH_TO_ROOT:?}:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/localtime:/etc/localtime:ro
+
+networks:
+  admin-docker-socket:
+    external: true

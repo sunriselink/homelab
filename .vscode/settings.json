@@ -25,6 +25,7 @@
     "redirections",
     "servarr",
     "sonarr",
+    "tmpfs",
     "traefik",
     "vuetorrent",
     "webui"
