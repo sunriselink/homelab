@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     networks:
       - proxy
+      - readonly-docker-socket
     environment:
       PUID: ${NAS_UID:?}
       PGID: ${NAS_GID:?}
@@ -23,4 +24,6 @@ services:
 
 networks:
   proxy:
+    external: true
+  readonly-docker-socket:
     external: true

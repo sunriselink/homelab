@@ -3,64 +3,88 @@
       icon: jellyfin.svg
       href: https://jellyfin.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: The Free Software Media System
+      server: docker
+      container: jellyfin
 
   - Audiobookshelf:
       icon: audiobookshelf.svg
       href: https://audiobookshelf.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Self-hosted audiobook and podcast server
+      server: docker
+      container: audiobookshelf
 
 - Media Management:
   - Radarr:
       icon: radarr.svg
       href: https://radarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Movie collection manager
+      server: docker
+      container: servarr_radarr
 
   - Sonarr:
       icon: sonarr.svg
       href: https://sonarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: TV shows collection manager
+      server: docker
+      container: servarr_sonarr
 
   - Lidarr:
       icon: lidarr.svg
       href: https://lidarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Music collection manager
+      server: docker
+      container: servarr_lidarr
 
   - Prowlarr:
       icon: prowlarr.svg
       href: https://prowlarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Indexer manager/proxy
+      server: docker
+      container: servarr_prowlarr
 
   - qBittorrent:
       icon: qbittorrent.svg
       href: https://qbittorrent.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: BitTorrent client
+      server: docker
+      container: servarr_qbittorrent
 
 - Files:
   - Nextcloud:
       icon: nextcloud-white.svg
       href: https://nextcloud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Open source content collaboration platform
+      server: docker
+      container: nextcloud
 
   - Filebrowser:
       icon: filebrowser.svg
       href: https://filebrowser.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Web File Browser
+      server: docker
+      container: filebrowser
 
 - Admin:
   - Traefik:
       icon: traefik.svg
       description: The Cloud Native Application Proxy
       href: https://traefik.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+      server: docker
+      container: traefik
 
   - Dozzle:
       icon: dozzle.svg
       href: https://dozzle.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Simple Container Monitoring and Logging
+      server: docker
+      container: dozzle
 
   - Grafana:
       icon: grafana.svg
       href: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: The open and composable observability platform
+      server: docker
+      container: monitoring_grafana
 
 - Monitoring:
   - Uptime:
