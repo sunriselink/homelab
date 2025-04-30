@@ -9,3 +9,5 @@ http:
         stsSeconds: 31536000
         stsIncludeSubdomains: true
         stsPreload: true
+        customResponseHeaders:
+          Content-Security-Policy: frame-ancestors https://*.{{env `ROOT_DOMAIN`}}

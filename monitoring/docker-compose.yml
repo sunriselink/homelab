@@ -1,0 +1,89 @@
+services:
+  init:
+    image: alpine
+    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
+    volumes:
+      - ${PATH_TO_ROOT:?}/monitoring:/tmp/monitoring
+    command:
+      - /tmp/monitoring/grafana/data
+      - /tmp/monitoring/influxdb
+      - /tmp/monitoring/influxdb/data
+      - /tmp/monitoring/influxdb/config
+
+  # https://hub.docker.com/r/grafana/grafana/tags
+  grafana:
+    image: grafana/grafana:11.6.0
+    container_name: monitoring_grafana
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    networks:
+      - default
+      - proxy
+    environment:
+      TZ: ${TZ:?}
+      GF_SERVER_DOMAIN: grafana.${ROOT_DOMAIN:?}
+      GF_SERVER_ROOT_URL: https://grafana.${ROOT_DOMAIN:?}/
+      GF_SERVER_SERVE_FROM_SUB_PATH: false
+      INFLUXDB_BUCKET: ${INFLUXDB_BUCKET:?}
+      INFLUXDB_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN:?}
+    volumes:
+      - ${PATH_TO_ROOT:?}/monitoring/grafana/data:/var/lib/grafana
+      - ${PATH_TO_ROOT:?}/monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+    labels:
+      traefik.enable: true
+      traefik.http.routers.grafana.entrypoints: local-secure
+      traefik.http.routers.grafana.rule: Host(`grafana.${ROOT_DOMAIN:?}`)
+      traefik.http.services.grafana.loadbalancer.server.port: 3000
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      influxdb:
+        condition: service_healthy
+
+  # https://hub.docker.com/_/telegraf/tags
+  telegraf:
+    image: telegraf:1.34.1
+    container_name: monitoring_telegraf
+    restart: unless-stopped
+    user: telegraf:${DOCKER_GID:?}
+    environment:
+      INFLUXDB_ORG: ${INFLUXDB_ORG:?}
+      INFLUXDB_BUCKET: ${INFLUXDB_BUCKET:?}
+      INFLUXDB_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN:?}
+    volumes:
+      - ${PATH_TO_ROOT:?}/monitoring/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /:/hostfs:ro
+    depends_on:
+      influxdb:
+        condition: service_healthy
+
+  # https://hub.docker.com/_/influxdb/tags
+  influxdb:
+    image: influxdb:2.7.11
+    container_name: monitoring_influxdb
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_ORG: ${INFLUXDB_ORG:?}
+      DOCKER_INFLUXDB_INIT_BUCKET: ${INFLUXDB_BUCKET:?}
+      DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USERNAME:?}
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_PASSWORD:?}
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN:?}
+      DOCKER_INFLUXDB_INIT_RETENTION: 7d
+    volumes:
+      - ${PATH_TO_ROOT:?}/monitoring/influxdb/data:/var/lib/influxdb2
+      - ${PATH_TO_ROOT:?}/monitoring/influxdb/config:/etc/influxdb2
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: curl -f http://localhost:8086/ping
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+networks:
+  proxy:
+    external: true

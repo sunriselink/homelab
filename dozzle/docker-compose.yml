@@ -6,6 +6,8 @@ services:
     restart: unless-stopped
     networks:
       - proxy
+    environment:
+      DOZZLE_NO_ANALYTICS: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /etc/localtime:/etc/localtime:ro

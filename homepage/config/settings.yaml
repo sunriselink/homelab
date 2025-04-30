@@ -25,4 +25,4 @@ layout:
   Monitoring:
     style: row
     icon: mdi-chart-line-stacked
-    columns: 3
+    columns: 4

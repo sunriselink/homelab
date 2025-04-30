@@ -1,3 +1,14 @@
 .services-group {
   margin-bottom: 24px;
 }
+
+iframe {
+  height: 200px;
+}
+
+#monitoring_uptime .service-name,
+#monitoring_cpu .service-name,
+#monitoring_ram .service-name,
+#monitoring_disks .service-name {
+  display: none;
+}

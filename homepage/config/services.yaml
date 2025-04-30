@@ -57,26 +57,32 @@
       href: https://dozzle.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
       description: Simple Container Monitoring and Logging
 
-- Monitoring:
-  - Beszel:
-      icon: beszel.svg
-      href: https://beszel.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/system/{{HOMEPAGE_VAR_BESZEL_SYSTEM_NAME}}
-      description: Simple, lightweight server monitoring
-      widget:
-        type: beszel
-        url: https://beszel.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        username: "{{HOMEPAGE_VAR_BESZEL_USERNAME}}"
-        password: "{{HOMEPAGE_VAR_BESZEL_PASSWORD}}"
-        systemId: "{{HOMEPAGE_VAR_BESZEL_SYSTEM_NAME}}"
-        version: 2
+  - Grafana:
+      icon: grafana.svg
+      href: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+      description: The open and composable observability platform
 
-  - Speedtest Tracker:
-      icon: sh-speedtest-tracker.svg
-      href: https://speedtest.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-      description: Self-hosted application that monitors the internet connection
+- Monitoring:
+  - Uptime:
+      id: monitoring_uptime
       widget:
-        type: speedtest
-        url: https://speedtest.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        version: 2
-        key: "{{HOMEPAGE_VAR_SPEEDTEST_TRACKER_API_TOKEN}}"
-        bitratePrecision: 0
+        type: iframe
+        src: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/d-solo/aek2tmxcsptz4f/system?refresh=10s&panelId=1&__feature.dashboardSceneSolo
+
+  - CPU usage:
+      id: monitoring_cpu
+      widget:
+        type: iframe
+        src: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/d-solo/aek2tmxcsptz4f/system?refresh=10s&panelId=2&__feature.dashboardSceneSolo
+
+  - RAM usage:
+      id: monitoring_ram
+      widget:
+        type: iframe
+        src: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/d-solo/aek2tmxcsptz4f/system?refresh=10s&panelId=3&__feature.dashboardSceneSolo
+
+  - Disks usage:
+      id: monitoring_disks
+      widget:
+        type: iframe
+        src: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/d-solo/aek2tmxcsptz4f/system?refresh=10s&panelId=9&__feature.dashboardSceneSolo

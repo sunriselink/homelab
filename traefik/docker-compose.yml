@@ -40,6 +40,7 @@ services:
       - --certificatesresolvers.duckdns-resolver.acme.storage=/letsencrypt/acme.json
       - --certificatesresolvers.duckdns-resolver.acme.dnschallenge.provider=duckdns
     environment:
+      ROOT_DOMAIN: ${ROOT_DOMAIN:?}
       DUCKDNS_TOKEN: ${DUCKDNS_TOKEN:?}
     ports:
       - 80:80
