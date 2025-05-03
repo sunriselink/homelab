@@ -12,7 +12,7 @@ services:
 
   # https://hub.docker.com/r/grafana/grafana/tags
   grafana:
-    image: grafana/grafana:11.6.0
+    image: grafana/grafana:11.6.1
     container_name: monitoring_grafana
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -45,7 +45,7 @@ services:
 
   # https://hub.docker.com/_/telegraf/tags
   telegraf:
-    image: telegraf:1.34.1
+    image: telegraf:1.34.2
     container_name: monitoring_telegraf
     restart: unless-stopped
     user: telegraf:${DOCKER_GID:?}
