@@ -12,7 +12,7 @@ services:
 
   # https://github.com/linuxserver/docker-radarr/pkgs/container/radarr
   radarr:
-    image: lscr.io/linuxserver/radarr:5.21.1
+    image: ghcr.io/linuxserver/radarr:5.22.4
     container_name: servarr_radarr
     restart: unless-stopped
     networks:
@@ -29,6 +29,9 @@ services:
       traefik.http.routers.radarr.entrypoints: local-secure
       traefik.http.routers.radarr.rule: Host(`radarr.${ROOT_DOMAIN:?}`)
       traefik.http.services.radarr.loadbalancer.server.port: 7878
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
     depends_on:
       init:
         condition: service_completed_successfully
@@ -39,7 +42,7 @@ services:
 
   # https://github.com/linuxserver/docker-sonarr/pkgs/container/sonarr
   sonarr:
-    image: lscr.io/linuxserver/sonarr:4.0.14
+    image: ghcr.io/linuxserver/sonarr:4.0.14
     container_name: servarr_sonarr
     restart: unless-stopped
     networks:
@@ -56,6 +59,9 @@ services:
       traefik.http.routers.sonarr.entrypoints: local-secure
       traefik.http.routers.sonarr.rule: Host(`sonarr.${ROOT_DOMAIN:?}`)
       traefik.http.services.sonarr.loadbalancer.server.port: 8989
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
     depends_on:
       init:
         condition: service_completed_successfully
@@ -66,7 +72,7 @@ services:
 
   # https://github.com/linuxserver/docker-lidarr/pkgs/container/lidarr
   lidarr:
-    image: lscr.io/linuxserver/lidarr:2.10.3
+    image: ghcr.io/linuxserver/lidarr:2.11.2
     container_name: servarr_lidarr
     restart: unless-stopped
     networks:
@@ -83,6 +89,10 @@ services:
       traefik.http.routers.lidarr.entrypoints: local-secure
       traefik.http.routers.lidarr.rule: Host(`lidarr.${ROOT_DOMAIN:?}`)
       traefik.http.services.lidarr.loadbalancer.server.port: 8686
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+      wud.tag.exclude: ^8.1.2135$$
     depends_on:
       init:
         condition: service_completed_successfully
@@ -93,7 +103,7 @@ services:
 
   # https://github.com/linuxserver/docker-prowlarr/pkgs/container/prowlarr
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:1.33.3
+    image: ghcr.io/linuxserver/prowlarr:1.35.1
     container_name: servarr_prowlarr
     restart: unless-stopped
     networks:
@@ -109,11 +119,14 @@ services:
       traefik.http.routers.prowlarr.entrypoints: local-secure
       traefik.http.routers.prowlarr.rule: Host(`prowlarr.${ROOT_DOMAIN:?}`)
       traefik.http.services.prowlarr.loadbalancer.server.port: 9696
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
 
   # https://github.com/linuxserver/docker-qbittorrent/pkgs/container/qbittorrent
   # https://github.com/vuetorrent/VueTorrent/pkgs/container/vuetorrent-lsio-mod
   qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:5.0.4
+    image: ghcr.io/linuxserver/qbittorrent:5.1.0
     container_name: servarr_qbittorrent
     restart: unless-stopped
     networks:
@@ -123,7 +136,7 @@ services:
       PGID: ${NAS_GID:?}
       TZ: ${TZ:?}
       WEBUI_PORT: 8080
-      DOCKER_MODS: ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.24.1
+      DOCKER_MODS: ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.24.2
     volumes:
       - ${PATH_TO_ROOT:?}/servarr/qbittorrent:/config
       - ${PATH_TO_MEDIA:?}/downloads:/data/downloads
@@ -132,6 +145,10 @@ services:
       traefik.http.routers.qbittorrent.entrypoints: local-secure
       traefik.http.routers.qbittorrent.rule: Host(`qbittorrent.${ROOT_DOMAIN:?}`)
       traefik.http.services.qbittorrent.loadbalancer.server.port: 8080
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+      wud.tag.exclude: ^20.04.1|14.3.9$$
     depends_on:
       init:
         condition: service_completed_successfully

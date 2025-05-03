@@ -34,6 +34,9 @@ services:
       traefik.http.routers.grafana.entrypoints: local-secure
       traefik.http.routers.grafana.rule: Host(`grafana.${ROOT_DOMAIN:?}`)
       traefik.http.services.grafana.loadbalancer.server.port: 3000
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
     depends_on:
       init:
         condition: service_completed_successfully
@@ -56,6 +59,10 @@ services:
     volumes:
       - ${PATH_TO_ROOT:?}/monitoring/telegraf.conf:/etc/telegraf/telegraf.conf:ro
       - /:/hostfs:ro
+    labels:
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
     depends_on:
       influxdb:
         condition: service_healthy
@@ -77,6 +84,10 @@ services:
     volumes:
       - ${PATH_TO_ROOT:?}/monitoring/influxdb/data:/var/lib/influxdb2
       - ${PATH_TO_ROOT:?}/monitoring/influxdb/config:/etc/influxdb2
+    labels:
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
     depends_on:
       init:
         condition: service_completed_successfully

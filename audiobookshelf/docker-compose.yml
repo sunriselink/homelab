@@ -12,7 +12,7 @@ services:
 
   # https://github.com/advplyr/audiobookshelf/pkgs/container/audiobookshelf
   audiobookshelf:
-    image: ghcr.io/advplyr/audiobookshelf:2.20.0
+    image: ghcr.io/advplyr/audiobookshelf:2.21.0
     container_name: audiobookshelf
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -29,6 +29,9 @@ services:
       traefik.http.routers.audiobookshelf.entrypoints: local-secure,external-secure
       traefik.http.routers.audiobookshelf.rule: Host(`audiobookshelf.${ROOT_DOMAIN:?}`)
       traefik.http.services.audiobookshelf.loadbalancer.server.port: 80
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
     depends_on:
       init:
         condition: service_completed_successfully

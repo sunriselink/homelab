@@ -12,6 +12,10 @@ services:
     volumes:
       - ./data:/data
       - /etc/localtime:/etc/localtime:ro
+    labels:
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
 
 networks:
   admin-docker-socket:

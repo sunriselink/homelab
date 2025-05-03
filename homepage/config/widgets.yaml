@@ -3,7 +3,7 @@
 
 - greeting:
     text_size: xl
-    text: Homepage
+    text: My NAS
 
 - datetime:
     text_size: xl

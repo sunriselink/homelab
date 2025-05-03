@@ -1,0 +1,34 @@
+services:
+  # https://github.com/getwud/wud/pkgs/container/wud
+  whats-up-docker:
+    image: ghcr.io/getwud/wud:8.0.1
+    container_name: whats-up-docker
+    restart: unless-stopped
+    networks:
+      - proxy
+      - readonly-docker-socket
+    environment:
+      WUD_LOG_LEVEL: ${LOG_LEVEL:?}
+      WUD_SERVER_FEATURE_DELETE: false
+      WUD_WATCHER_DOCKER_CRON: 0 */12 * * *
+      WUD_WATCHER_DOCKER_HOST: readonly-docker-socket
+      WUD_WATCHER_DOCKER_PORT: 2375
+      WUD_WATCHER_DOCKER_SOCKET: tcp://readonly-docker-socket
+      WUD_WATCHER_DOCKER_WATCHBYDEFAULT: false
+      TZ: ${TZ:?}
+    volumes:
+      - ${PATH_TO_ROOT:?}/whats-up-docker/data:/store
+    labels:
+      traefik.enable: true
+      traefik.http.routers.whats-up-docker.entrypoints: local-secure
+      traefik.http.routers.whats-up-docker.rule: Host(`wud.${ROOT_DOMAIN:?}`)
+      traefik.http.services.whats-up-docker.loadbalancer.server.port: 3000
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+
+networks:
+  proxy:
+    external: true
+  readonly-docker-socket:
+    external: true

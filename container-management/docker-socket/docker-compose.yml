@@ -1,12 +1,16 @@
 # https://github.com/linuxserver/docker-socket-proxy/pkgs/container/socket-proxy
 x-docker-socket: &common-opts
-  image: lscr.io/linuxserver/socket-proxy:3.0.10
+  image: ghcr.io/linuxserver/socket-proxy:3.0.10
   restart: unless-stopped
   read_only: true
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock:ro
   tmpfs:
     - /run
+  labels:
+    wud.watch: true
+    wud.watch.digest: true
+    wud.tag.include: ^v?\d+\.\d+\.\d+$$
 
 services:
   readonly-docker-socket:
@@ -17,6 +21,7 @@ services:
     environment:
       CONTAINERS: 1
       INFO: 1
+      IMAGES: 1
 
   admin-docker-socket:
     <<: *common-opts

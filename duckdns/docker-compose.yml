@@ -1,7 +1,7 @@
 services:
   # https://github.com/linuxserver/docker-duckdns/pkgs/container/duckdns
   duckdns:
-    image: lscr.io/linuxserver/duckdns:version-a6c167e0
+    image: ghcr.io/linuxserver/duckdns:version-a6c167e0
     container_name: duckdns
     restart: unless-stopped
     environment:

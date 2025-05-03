@@ -16,8 +16,9 @@ layout:
     style: column
     icon: mdi-cloud-check-variant
   Admin:
-    style: column
+    style: row
     icon: mdi-security
+    columns: 5
   Media Management:
     style: row
     columns: 5

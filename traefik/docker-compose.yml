@@ -60,6 +60,9 @@ services:
       traefik.http.routers.traefik-dashboard.entrypoints: local-secure
       traefik.http.routers.traefik-dashboard.rule: Host(`traefik.${ROOT_DOMAIN:?}`)
       traefik.http.services.traefik-dashboard.loadbalancer.server.port: 8080
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
 
 networks:
   proxy:

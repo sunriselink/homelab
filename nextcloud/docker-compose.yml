@@ -39,6 +39,9 @@ services:
       traefik.http.routers.nextcloud.entrypoints: local-secure,external-secure
       traefik.http.routers.nextcloud.rule: Host(`nextcloud.${ROOT_DOMAIN:?}`)
       traefik.http.services.nextcloud.loadbalancer.server.port: 80
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
     depends_on:
       init:
         condition: service_completed_successfully

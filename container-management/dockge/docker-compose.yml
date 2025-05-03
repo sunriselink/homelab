@@ -17,6 +17,10 @@ services:
       - ./data:/app/data
       - ${PATH_TO_ROOT:?}:${PATH_TO_ROOT:?}:ro
       - /etc/localtime:/etc/localtime:ro
+    labels:
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
 
 networks:
   admin-docker-socket:

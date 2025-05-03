@@ -86,6 +86,16 @@
       server: docker
       container: monitoring_grafana
 
+  - What's Up Docker:
+      icon: sh-wud.svg
+      href: https://wud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/containers?update-available=true&group-by-label=com.docker.compose.project
+      description: Keep your containers up-to-date!
+      server: docker
+      container: whats-up-docker
+      widget:
+        type: whatsupdocker
+        url: https://wud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+
 - Monitoring:
   - Uptime:
       id: monitoring_uptime

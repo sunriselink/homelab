@@ -33,6 +33,11 @@ services:
       traefik.http.routers.<service-name>.entrypoints: local-secure
       traefik.http.routers.<service-name>.rule: Host(`<service-name>.${ROOT_DOMAIN:?}`)
       traefik.http.services.<service-name>.loadbalancer.server.port: <service-port>
+      # Updates watcher via What's up Docker
+      wud.watch: true
+      wud.watch.digest: true
+      # supported 5.0.1 and v5.0.1 formats
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
     depends_on:
       init:
         condition: service_completed_successfully
