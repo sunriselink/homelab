@@ -23,6 +23,8 @@ services:
       - ${PATH_TO_ROOT:?}/filebrowser/settings.json:/.filebrowser.json:ro
       - ${PATH_TO_MEDIA:?}:/srv/media
       - /etc/localtime:/etc/localtime:ro
+      - type: tmpfs
+        target: /srv
     labels:
       traefik.enable: true
       traefik.http.routers.filebrowser.entrypoints: local-secure
