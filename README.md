@@ -45,7 +45,7 @@ Run Docker Socket Proxy
 
 > **💡 Tip**
 >
-> By setting the `NAS_URL` variable, your admin panel will be available at `https://admin.my-nas.duckdns.org`
+> By setting the `NAS_URL` variable, your admin panel will be available at `https://admin.my-nas.duckdns.org` (only internal network)
 
 ## Container management
 
