@@ -19,7 +19,7 @@ services:
 
       - --entrypoints.local-secure.address=:443
       - --entrypoints.local-secure.http.middlewares=security-headers@file
-      - --entrypoints.local-secure.http.tls.certresolver=duckdns-resolver
+      - --entrypoints.local-secure.http.tls.certResolver=duckdns-resolver
       - --entrypoints.local-secure.http.tls.domains[0].main=*.${ROOT_DOMAIN:?}
 
       - --entrypoints.external.address=:81
@@ -28,21 +28,24 @@ services:
 
       - --entrypoints.external-secure.address=:444
       - --entrypoints.external-secure.http.middlewares=security-headers@file
-      - --entrypoints.external-secure.http.tls.certresolver=duckdns-resolver
+      - --entrypoints.external-secure.http.tls.certResolver=duckdns-resolver
       - --entrypoints.external-secure.http.tls.domains[0].main=*.${ROOT_DOMAIN:?}
 
+      - --serversTransport.insecureSkipVerify
+
       - --providers.docker.endpoint=tcp://readonly-docker-socket:2375
-      - --providers.docker.exposedbydefault=false
+      - --providers.docker.exposedByDefault=false
       - --providers.docker.network=proxy
 
       - --providers.file.filename=/config.yml
 
-      - --certificatesresolvers.duckdns-resolver.acme.email=${ACME_EMAIL:?}
-      - --certificatesresolvers.duckdns-resolver.acme.storage=/letsencrypt/acme.json
-      - --certificatesresolvers.duckdns-resolver.acme.dnschallenge.provider=duckdns
+      - --certificatesResolvers.duckdns-resolver.acme.email=${ACME_EMAIL:?}
+      - --certificatesResolvers.duckdns-resolver.acme.storage=/letsencrypt/acme.json
+      - --certificatesResolvers.duckdns-resolver.acme.dnsChallenge.provider=duckdns
     environment:
       ROOT_DOMAIN: ${ROOT_DOMAIN:?}
       DUCKDNS_TOKEN: ${DUCKDNS_TOKEN:?}
+      NAS_URL: ${NAS_URL:?}
     ports:
       - 80:80
       - 81:81

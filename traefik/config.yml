@@ -1,4 +1,15 @@
 http:
+  routers:
+    admin:
+      entryPoints:
+        - local-secure
+      rule: Host(`admin.{{env `ROOT_DOMAIN`}}`)
+      service: admin
+  services:
+    admin:
+      loadBalancer:
+        servers:
+          - url: "{{env `NAS_URL`}}"
   middlewares:
     security-headers:
       headers:
