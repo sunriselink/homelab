@@ -80,7 +80,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.1",
       "targets": [
         {
           "datasource": {
@@ -186,7 +186,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.1",
       "targets": [
         {
           "datasource": {
@@ -303,7 +303,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.1",
       "targets": [
         {
           "datasource": {
@@ -387,7 +387,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.1",
       "targets": [
         {
           "datasource": {
@@ -479,7 +479,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.1",
       "targets": [
         {
           "datasource": {
@@ -530,6 +530,7 @@
             "mode": "thresholds"
           },
           "decimals": 0,
+          "displayName": "${__field.labels}",
           "fieldMinMax": false,
           "mappings": [
             {
@@ -579,7 +580,7 @@
           "placement": "bottom",
           "showLegend": false
         },
-        "maxVizHeight": 300,
+        "maxVizHeight": 35,
         "minVizHeight": 16,
         "minVizWidth": 8,
         "namePlacement": "auto",
@@ -590,10 +591,10 @@
           "values": true
         },
         "showUnfilled": true,
-        "sizing": "auto",
+        "sizing": "manual",
         "valueMode": "color"
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.1",
       "targets": [
         {
           "groupBy": [
@@ -745,7 +746,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.1",
       "targets": [
         {
           "alias": "$tag_container_name",
@@ -946,7 +947,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "11.6.0",
+      "pluginVersion": "11.6.1",
       "targets": [
         {
           "alias": "$tag_container_name",
@@ -1007,6 +1008,6 @@
   "timezone": "browser",
   "title": "System",
   "uid": "aek2tmxcsptz4f",
-  "version": 15,
+  "version": 1,
   "weekStart": "monday"
 }
