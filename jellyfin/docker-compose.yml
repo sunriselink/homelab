@@ -20,11 +20,14 @@ services:
       PUID: ${NAS_UID:?}
       PGID: ${NAS_GID:?}
       TZ: ${TZ:?}
+      DOCKER_MODS: linuxserver/mods:jellyfin-opencl-intel
     volumes:
       - ${PATH_TO_ROOT:?}/jellyfin/config:/config
       - ${PATH_TO_MEDIA:?}:/data:ro
     devices:
       - /dev/dri:/dev/dri
+    dns:
+      - 9.9.9.9 # fuck GeoDNS
     labels:
       traefik.enable: true
       traefik.http.routers.jellyfin.entrypoints: local-secure,external-secure
