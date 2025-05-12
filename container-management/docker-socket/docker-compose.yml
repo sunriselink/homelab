@@ -29,6 +29,7 @@ services:
     networks:
       - admin-docker-socket
     environment:
+      BUILD: 1
       CONTAINERS: 1
       IMAGES: 1
       INFO: 1

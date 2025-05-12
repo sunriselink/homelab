@@ -13,6 +13,7 @@ services:
     environment:
       DOCKGE_STACKS_DIR: ${PATH_TO_ROOT:?}
       DOCKER_HOST: tcp://admin-docker-socket:2375
+      DOCKER_BUILDKIT: 0
     volumes:
       - ./data:/app/data
       - ${PATH_TO_ROOT:?}:${PATH_TO_ROOT:?}:ro
