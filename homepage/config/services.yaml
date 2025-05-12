@@ -1,17 +1,32 @@
-- Media:
-    - Jellyfin:
-        icon: jellyfin.svg
-        href: https://jellyfin.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        description: The Free Software Media System
-        server: docker
-        container: jellyfin
+- Group A:
+    - Media:
+        - Jellyfin:
+            icon: jellyfin.svg
+            href: https://jellyfin.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+            description: The Free Software Media System
+            server: docker
+            container: jellyfin
 
-    - Audiobookshelf:
-        icon: audiobookshelf.svg
-        href: https://audiobookshelf.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        description: Self-hosted audiobook and podcast server
-        server: docker
-        container: audiobookshelf
+        - Audiobookshelf:
+            icon: audiobookshelf.svg
+            href: https://audiobookshelf.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+            description: Self-hosted audiobook and podcast server
+            server: docker
+            container: audiobookshelf
+    - Files:
+        - Nextcloud:
+            icon: nextcloud-white.svg
+            href: https://nextcloud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+            description: Open source content collaboration platform
+            server: docker
+            container: nextcloud
+
+        - Filebrowser:
+            icon: filebrowser.svg
+            href: https://filebrowser.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+            description: Web File Browser
+            server: docker
+            container: filebrowser
 
 - Media Management:
     - Radarr:
@@ -48,21 +63,6 @@
         description: BitTorrent client
         server: docker
         container: servarr_qbittorrent
-
-- Files:
-    - Nextcloud:
-        icon: nextcloud-white.svg
-        href: https://nextcloud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        description: Open source content collaboration platform
-        server: docker
-        container: nextcloud
-
-    - Filebrowser:
-        icon: filebrowser.svg
-        href: https://filebrowser.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        description: Web File Browser
-        server: docker
-        container: filebrowser
 
 - Admin:
     - Traefik:

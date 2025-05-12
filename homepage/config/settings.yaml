@@ -1,29 +1,36 @@
 title: My NAS
 theme: dark
 color: slate
-background: /images/background.jpg
+background:
+  image: /images/background.jpg
+  blur: sm
 headerStyle: underlined
-cardBlur: sm
 disableCollapse: true
 iconStyle: theme
 useEqualHeights: true
 
 layout:
-  Media:
-    style: column
-    icon: mdi-multimedia
-  Files:
-    style: column
-    icon: mdi-cloud-check-variant
-  Admin:
+  Group A:
     style: row
-    icon: mdi-security
-    columns: 5
+    columns: 2
+    header: false
+    Media:
+      style: row
+      columns: 2
+      icon: mdi-multimedia
+    Files:
+      style: row
+      columns: 2
+      icon: mdi-cloud-check-variant
   Media Management:
     style: row
     columns: 5
     icon: mdi-play-network
+  Admin:
+    style: row
+    columns: 4
+    icon: mdi-security
   Monitoring:
     style: row
-    icon: mdi-chart-line-stacked
     columns: 4
+    icon: mdi-chart-line-stacked

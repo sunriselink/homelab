@@ -1,4 +1,13 @@
 services:
+  init:
+    image: alpine
+    entrypoint: chmod -R g+w
+    volumes:
+      - ${PATH_TO_ROOT:?}/homepage:/tmp/homepage
+    command:
+      - /tmp/homepage/config
+      - /tmp/homepage/images
+
   # https://github.com/gethomepage/homepage/pkgs/container/homepage
   homepage:
     image: ghcr.io/gethomepage/homepage:v1.2.0
@@ -24,6 +33,9 @@ services:
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
 
 networks:
   proxy:
