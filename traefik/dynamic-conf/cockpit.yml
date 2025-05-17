@@ -1,0 +1,12 @@
+http:
+  routers:
+    cockpit:
+      service: cockpit
+      rule: Host(`cockpit.{{env `ROOT_DOMAIN`}}`)
+      entryPoints:
+        - local-secure
+  services:
+    cockpit:
+      loadBalancer:
+        servers:
+          - url: https://host.docker.internal:9090

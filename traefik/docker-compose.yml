@@ -4,6 +4,8 @@ services:
     image: traefik:v3.4.0
     container_name: traefik
     restart: unless-stopped
+    extra_hosts:
+      host.docker.internal: host-gateway
     networks:
       - proxy
       - readonly-docker-socket
@@ -37,7 +39,7 @@ services:
       - --providers.docker.exposedByDefault=false
       - --providers.docker.network=proxy
 
-      - --providers.file.filename=/config.yml
+      - --providers.file.directory=/dynamic-conf
 
       - --certificatesResolvers.duckdns-resolver.acme.email=${ACME_EMAIL:?}
       - --certificatesResolvers.duckdns-resolver.acme.storage=/letsencrypt/acme.json
@@ -45,7 +47,6 @@ services:
     environment:
       ROOT_DOMAIN: ${ROOT_DOMAIN:?}
       DUCKDNS_TOKEN: ${DUCKDNS_TOKEN:?}
-      NAS_URL: ${NAS_URL:?}
     ports:
       - 80:80
       - 81:81
@@ -56,7 +57,7 @@ services:
       - 8.8.8.8
     volumes:
       - ${PATH_TO_ROOT:?}/traefik/letsencrypt:/letsencrypt
-      - ${PATH_TO_ROOT:?}/traefik/config.yml:/config.yml:ro
+      - ${PATH_TO_ROOT:?}/traefik/dynamic-conf:/dynamic-conf:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
       traefik.enable: true

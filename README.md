@@ -29,23 +29,18 @@ Run Docker Socket Proxy
 
 ## Global environment variables (`global.env`)
 
-| Variable name        | Description                         | Example or command                   |
-| -------------------- | ----------------------------------- | ------------------------------------ |
-| `NAS_UID`            | NAS user PUID                       | `id -u nas`                          |
-| `NAS_GID`            | NAS user PGID                       | `id -g nas`                          |
-| `DOCKER_GID`         | Docker group id                     | `getent group docker \| cut -d: -f3` |
-| `TZ`                 | Current timezone                    | `cat /etc/timezone`                  |
-| `PATH_TO_ROOT`       | Full path to stacks folder          | /home/nas/nas_stack                  |
-| `PATH_TO_FILES`      | Full path to user files             | /mnt/data/files                      |
-| `PATH_TO_MEDIA`      | Full path to media files            | /mnt/data/media                      |
-| `ROOT_DOMAIN`        | Root domain name                    | my-nas.duckdns.org                   |
-| `DUCKDNS_SUBDOMAINS` | Subdomain for DuckDNS               | my-nas                               |
-| `DUCKDNS_TOKEN`      | Token from DuckDNS admin panel      |                                      |
-| `NAS_URL`            | Full address for OMV, Cockpit, etc. | https://192.168.1.100:9090           |
-
-> **💡 Tip**
->
-> By setting the `NAS_URL` variable, your admin panel will be available at `https://admin.my-nas.duckdns.org` (only internal network)
+| Variable name        | Description                    | Example or command                   |
+| -------------------- | ------------------------------ | ------------------------------------ |
+| `NAS_UID`            | NAS user PUID                  | `id -u nas`                          |
+| `NAS_GID`            | NAS user PGID                  | `id -g nas`                          |
+| `DOCKER_GID`         | Docker group id                | `getent group docker \| cut -d: -f3` |
+| `TZ`                 | Current timezone               | `cat /etc/timezone`                  |
+| `PATH_TO_ROOT`       | Full path to stacks folder     | /home/nas/nas_stack                  |
+| `PATH_TO_FILES`      | Full path to user files        | /mnt/data/files                      |
+| `PATH_TO_MEDIA`      | Full path to media files       | /mnt/data/media                      |
+| `ROOT_DOMAIN`        | Root domain name               | my-nas.duckdns.org                   |
+| `DUCKDNS_SUBDOMAINS` | Subdomain for DuckDNS          | my-nas                               |
+| `DUCKDNS_TOKEN`      | Token from DuckDNS admin panel |                                      |
 
 ## Container management
 
