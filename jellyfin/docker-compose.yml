@@ -23,7 +23,7 @@ services:
       DOCKER_MODS: linuxserver/mods:jellyfin-opencl-intel
     volumes:
       - ${PATH_TO_ROOT:?}/jellyfin/config:/config
-      - ${PATH_TO_MEDIA:?}:/data:ro
+      - ${PATH_TO_MEDIA:?}:/data
     devices:
       - /dev/dri:/dev/dri
     labels:

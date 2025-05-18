@@ -12,7 +12,7 @@ services:
 
   # https://github.com/linuxserver/docker-radarr/pkgs/container/radarr
   radarr:
-    image: ghcr.io/linuxserver/radarr:5.22.4
+    image: ghcr.io/linuxserver/radarr:5.23.3
     container_name: servarr_radarr
     restart: unless-stopped
     networks:
