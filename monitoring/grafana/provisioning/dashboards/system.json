@@ -1126,6 +1126,15 @@
         }
       ],
       "title": "CPU temp °C",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "coretemp_(.*)",
+            "renamePattern": "$1"
+          }
+        }
+      ],
       "type": "timeseries"
     },
     {
@@ -1531,6 +1540,6 @@
   "timezone": "browser",
   "title": "System",
   "uid": "aek2tmxcsptz4f",
-  "version": 8,
+  "version": 9,
   "weekStart": "monday"
 }
