@@ -81,5 +81,8 @@ services:
       start_period: 60s
 
 networks:
+  default:
+    driver_opts:
+      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
   proxy:
     external: true

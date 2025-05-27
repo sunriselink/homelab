@@ -43,5 +43,9 @@ services:
         condition: service_completed_successfully
 
 networks:
+  default:
+    driver_opts:
+      # length is limited to 15 characters
+      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
   proxy:
     external: true

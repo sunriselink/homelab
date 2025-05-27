@@ -14,3 +14,8 @@ services:
       LOG_FILE: false
     volumes:
       - ${PATH_TO_ROOT:?}/duckdns/config:/config
+
+networks:
+  default:
+    driver_opts:
+      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}

@@ -154,5 +154,8 @@ services:
         condition: service_completed_successfully
 
 networks:
+  default:
+    driver_opts:
+      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
   proxy:
     external: true
