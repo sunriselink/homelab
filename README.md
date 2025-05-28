@@ -75,7 +75,7 @@ Run Dockge via command
 For fix "exited" status just run script
 
 ```sh
-./container-management/dockge/fix-exited-status.sh
+./prune.sh
 ```
 
 See https://github.com/louislam/dockge/issues/177
