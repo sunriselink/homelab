@@ -5,14 +5,11 @@ services:
     volumes:
       - ${PATH_TO_MEDIA:?}:/tmp/media
     command:
-      - /tmp/media/movies
-      - /tmp/media/tv
-      - /tmp/media/music
       - /tmp/media/downloads
 
   # https://github.com/linuxserver/docker-prowlarr/pkgs/container/prowlarr
   prowlarr:
-    image: ghcr.io/linuxserver/prowlarr:1.35.1
+    image: ghcr.io/linuxserver/prowlarr:1.36.3
     container_name: torrent_prowlarr
     restart: unless-stopped
     networks:
@@ -45,7 +42,7 @@ services:
       PGID: ${NAS_GID:?}
       TZ: ${TZ:?}
       WEBUI_PORT: 8080
-      DOCKER_MODS: ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.24.2
+      DOCKER_MODS: ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.25.0
     volumes:
       - ${PATH_TO_ROOT:?}/torrent/qbittorrent:/config
       - ${PATH_TO_MEDIA:?}/downloads:/data/downloads

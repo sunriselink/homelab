@@ -1,5 +1,5 @@
 # https://hub.docker.com/_/telegraf/tags
-FROM telegraf:1.34.3
+FROM telegraf:1.34.4
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends sudo smartmontools && \
