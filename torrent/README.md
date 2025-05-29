@@ -1,4 +1,4 @@
-# Servarr stack
+# Torrent stack
 
 ## qBittorrent
 

@@ -1,0 +1,42 @@
+services:
+  init:
+    image: alpine
+    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
+    volumes:
+      - ${PATH_TO_MEDIA:?}:/tmp/media
+    command:
+      - /tmp/media/music
+      - /tmp/media/downloads
+
+  # https://hub.docker.com/r/mikenye/picard/tags
+  picard:
+    image: mikenye/picard:2.13.3
+    container_name: picard
+    restart: unless-stopped
+    networks:
+      - proxy
+    environment:
+      USER_ID: ${NAS_UID:?}
+      GROUP_ID: ${NAS_GID:?}
+      TZ: ${TZ:?}
+    volumes:
+      - ${PATH_TO_ROOT:?}/picard/config:/config
+      - ${PATH_TO_MEDIA:?}:/data
+    labels:
+      traefik.enable: true
+      traefik.http.routers.picard.entrypoints: local-secure
+      traefik.http.routers.picard.rule: Host(`picard.${ROOT_DOMAIN:?}`)
+      traefik.http.services.picard.loadbalancer.server.port: 5800
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+networks:
+  default:
+    driver_opts:
+      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
+  proxy:
+    external: true

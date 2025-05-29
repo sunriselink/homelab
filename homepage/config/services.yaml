@@ -29,40 +29,26 @@
             container: filebrowser
 
 - Media Management:
-    - Radarr:
-        icon: radarr.svg
-        href: https://radarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        description: Movie collection manager
-        server: docker
-        container: servarr_radarr
-
-    - Sonarr:
-        icon: sonarr.svg
-        href: https://sonarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        description: TV shows collection manager
-        server: docker
-        container: servarr_sonarr
-
-    - Lidarr:
-        icon: lidarr.svg
-        href: https://lidarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        description: Music collection manager
-        server: docker
-        container: servarr_lidarr
-
     - Prowlarr:
         icon: prowlarr.svg
         href: https://prowlarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         description: Indexer manager/proxy
         server: docker
-        container: servarr_prowlarr
+        container: torrent_prowlarr
 
     - qBittorrent:
         icon: qbittorrent.svg
         href: https://qbittorrent.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         description: BitTorrent client
         server: docker
-        container: servarr_qbittorrent
+        container: torrent_qbittorrent
+
+    - MusicBrainz Picard:
+        icon: musicbrainz.svg
+        href: https://picard.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        description: Music tagger powered by the MusicBrainz database
+        server: docker
+        container: picard
 
 - Admin:
     - Traefik:
