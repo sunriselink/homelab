@@ -45,6 +45,7 @@ services:
 
   # https://hub.docker.com/_/telegraf/tags
   telegraf:
+    image: nas/telegraf
     build:
       context: .docker
       dockerfile: telegraf.dockerfile
