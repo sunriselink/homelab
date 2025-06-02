@@ -3,7 +3,7 @@ services:
     image: alpine
     entrypoint: chmod -R g+w
     volumes:
-      - ${PATH_TO_ROOT:?}/homepage:/tmp/homepage
+      - ./:/tmp/homepage
     command:
       - /tmp/homepage/config
       - /tmp/homepage/images
@@ -23,8 +23,8 @@ services:
       HOMEPAGE_ALLOWED_HOSTS: homepage.${ROOT_DOMAIN:?}
       HOMEPAGE_VAR_ROOT_DOMAIN: ${ROOT_DOMAIN:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/homepage/config:/app/config
-      - ${PATH_TO_ROOT:?}/homepage/images:/app/public/images
+      - ./config:/app/config
+      - ./images:/app/public/images
     labels:
       traefik.enable: true
       traefik.http.routers.homepage.entrypoints: local-secure

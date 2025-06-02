@@ -1,9 +1,18 @@
 services:
+  init:
+    image: alpine
+    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
+    volumes:
+      - ./:/tmp/dockge
+    command:
+      - /tmp/dockge/data
+
   # https://hub.docker.com/r/louislam/dockge/tags
   dockge:
     image: louislam/dockge:1.5.0
     container_name: dockge
     restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
       - admin-docker-socket
     ports:
@@ -22,7 +31,13 @@ services:
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
 
 networks:
+  default:
+    driver_opts:
+      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
   admin-docker-socket:
     external: true

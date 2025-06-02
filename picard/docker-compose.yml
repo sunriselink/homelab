@@ -20,7 +20,7 @@ services:
       GROUP_ID: ${NAS_GID:?}
       TZ: ${TZ:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/picard/config:/config
+      - ./config:/config
       - ${PATH_TO_MEDIA:?}:/data
     labels:
       traefik.enable: true

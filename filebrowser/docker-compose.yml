@@ -7,7 +7,7 @@ services:
       PUID: ${NAS_UID:?}
       PGID: ${NAS_GID:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/filebrowser:/tmp/filebrowser
+      - ./:/tmp/filebrowser
       - ${PATH_TO_MEDIA:?}:/tmp/media
 
   # https://hub.docker.com/r/filebrowser/filebrowser/tags
@@ -19,8 +19,8 @@ services:
     networks:
       - proxy
     volumes:
-      - ${PATH_TO_ROOT:?}/filebrowser/database:/database
-      - ${PATH_TO_ROOT:?}/filebrowser/settings.json:/.filebrowser.json:ro
+      - ./database:/database
+      - ./settings.json:/.filebrowser.json:ro
       - ${PATH_TO_MEDIA:?}:/srv/media
       - /etc/localtime:/etc/localtime:ro
       - type: tmpfs

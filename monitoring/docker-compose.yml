@@ -3,7 +3,7 @@ services:
     image: alpine
     entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
     volumes:
-      - ${PATH_TO_ROOT:?}/monitoring:/tmp/monitoring
+      - ./:/tmp/monitoring
     command:
       - /tmp/monitoring/grafana/data
       - /tmp/monitoring/influxdb
@@ -27,8 +27,8 @@ services:
       INFLUXDB_BUCKET: ${INFLUXDB_BUCKET:?}
       INFLUXDB_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/monitoring/grafana/data:/var/lib/grafana
-      - ${PATH_TO_ROOT:?}/monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
     labels:
       traefik.enable: true
       traefik.http.routers.grafana.entrypoints: local-secure
@@ -51,7 +51,7 @@ services:
       dockerfile: telegraf.dockerfile
     container_name: monitoring_telegraf
     restart: unless-stopped
-    user: telegraf:${DOCKER_GID:?}
+    user: telegraf
     privileged: true #for smartctl
     networks:
       - default
@@ -61,7 +61,7 @@ services:
       INFLUXDB_BUCKET: ${INFLUXDB_BUCKET:?}
       INFLUXDB_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/monitoring/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
       - /:/hostfs:ro
     depends_on:
       influxdb:
@@ -82,8 +82,8 @@ services:
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN:?}
       DOCKER_INFLUXDB_INIT_RETENTION: 7d
     volumes:
-      - ${PATH_TO_ROOT:?}/monitoring/influxdb/data:/var/lib/influxdb2
-      - ${PATH_TO_ROOT:?}/monitoring/influxdb/config:/etc/influxdb2
+      - ./influxdb/data:/var/lib/influxdb2
+      - ./influxdb/config:/etc/influxdb2
     labels:
       wud.watch: true
       wud.watch.digest: true

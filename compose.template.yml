@@ -4,7 +4,7 @@ services:
     image: alpine
     entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
     volumes:
-      - ${PATH_TO_ROOT:?}/<service-name>:/tmp/<service-name>
+      - ./:/tmp/<service-name>
     command:
       - /tmp/<service-name>/data
       - /tmp/<service-name>/config
@@ -22,8 +22,8 @@ services:
       # Use local time via ENV
       TZ: ${TZ:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/<service-name>/data:/data
-      - ${PATH_TO_ROOT:?}/<service-name>/config:/config
+      - ./data:/data
+      - ./config:/config
       # Use local time via mount /etc/localtime
       - /etc/localtime:/etc/localtime:ro
     labels:

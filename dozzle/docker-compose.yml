@@ -4,6 +4,7 @@ services:
     image: amir20/dozzle:v8.12.19
     container_name: dozzle
     restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
       - proxy
       - readonly-docker-socket

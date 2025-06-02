@@ -24,23 +24,21 @@ docker network create admin-docker-socket --opt com.docker.network.bridge.name=b
 Run Docker Socket Proxy
 
 ```sh
-./compose.sh container-management/docker-socket up -d
+./compose.sh .admin/docker-socket up -d
 ```
 
 ## Global environment variables (`global.env`)
 
-| Variable name        | Description                    | Example or command                   |
-| -------------------- | ------------------------------ | ------------------------------------ |
-| `NAS_UID`            | NAS user PUID                  | `id -u nas`                          |
-| `NAS_GID`            | NAS user PGID                  | `id -g nas`                          |
-| `DOCKER_GID`         | Docker group id                | `getent group docker \| cut -d: -f3` |
-| `TZ`                 | Current timezone               | `cat /etc/timezone`                  |
-| `PATH_TO_ROOT`       | Full path to stacks folder     | /home/nas/nas_stack                  |
-| `PATH_TO_FILES`      | Full path to user files        | /mnt/data/files                      |
-| `PATH_TO_MEDIA`      | Full path to media files       | /mnt/data/media                      |
-| `ROOT_DOMAIN`        | Root domain name               | my-nas.duckdns.org                   |
-| `DUCKDNS_SUBDOMAINS` | Subdomain for DuckDNS          | my-nas                               |
-| `DUCKDNS_TOKEN`      | Token from DuckDNS admin panel |                                      |
+| Variable name        | Description                    | Example or command  |
+| -------------------- | ------------------------------ | ------------------- |
+| `NAS_UID`            | NAS user PUID                  | `id -u nas`         |
+| `NAS_GID`            | NAS user PGID                  | `id -g nas`         |
+| `TZ`                 | Current timezone               | `cat /etc/timezone` |
+| `PATH_TO_FILES`      | Full path to user files        | /mnt/data/files     |
+| `PATH_TO_MEDIA`      | Full path to media files       | /mnt/data/media     |
+| `ROOT_DOMAIN`        | Root domain name               | my-nas.duckdns.org  |
+| `DUCKDNS_SUBDOMAINS` | Subdomain for DuckDNS          | my-nas              |
+| `DUCKDNS_TOKEN`      | Token from DuckDNS admin panel |                     |
 
 ## Container management
 
@@ -54,22 +52,12 @@ Run Docker Socket Proxy
 
 Go to `Services -> Compose -> Files` (`Edit global environment file` button) and place all from `global.env` into text field.
 
-### Portainer
-
-Run Portainer via command
-
-```sh
-./compose.sh container-management/portainer up -d
-```
-
-`global.env` file will need to be loaded into Portainer for each stack (unfortunately). See https://github.com/orgs/portainer/discussions/9867
-
 ### Dockge
 
 Run Dockge via command
 
 ```sh
-./compose.sh container-management/dockge up -d
+./compose.sh .admin/dockge up -d
 ```
 
 For fix "exited" status just run script

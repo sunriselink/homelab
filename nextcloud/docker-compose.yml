@@ -3,7 +3,7 @@ services:
     image: alpine
     entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
     volumes:
-      - ${PATH_TO_ROOT:?}/nextcloud:/tmp/nextcloud
+      - ./:/tmp/nextcloud
       - ${PATH_TO_FILES:?}:/tmp/files
     command:
       - /tmp/nextcloud/data
@@ -32,10 +32,10 @@ services:
       POSTGRES_USER: ${NEXTCLOUD_DB_USER:?}
       POSTGRES_PASSWORD: ${NEXTCLOUD_DB_PASSWORD:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/nextcloud/data:/var/www/html
-      - ${PATH_TO_ROOT:?}/nextcloud/config:/var/www/html/config
-      - ${PATH_TO_ROOT:?}/nextcloud/custom_apps:/var/www/html/custom_apps
-      - ${PATH_TO_ROOT:?}/nextcloud/themes:/var/www/html/themes
+      - ./data:/var/www/html
+      - ./config:/var/www/html/config
+      - ./custom_apps:/var/www/html/custom_apps
+      - ./themes:/var/www/html/themes
       - ${PATH_TO_FILES:?}/nextcloud:/var/www/html/data
     labels:
       traefik.enable: true
@@ -62,8 +62,8 @@ services:
     user: ${NAS_UID:?}:${NAS_GID:?}
     restart: unless-stopped
     volumes:
+      - ./postgres_data:/var/lib/postgresql/data
       - /etc/localtime:/etc/localtime:ro
-      - ${PATH_TO_ROOT:?}/nextcloud/postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${NEXTCLOUD_DB_NAME:?}
       POSTGRES_USER: ${NEXTCLOUD_DB_USER:?}

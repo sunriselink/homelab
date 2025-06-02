@@ -1,9 +1,18 @@
 services:
+  init:
+    image: alpine
+    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
+    volumes:
+      - ./:/tmp/whats-up-docker
+    command:
+      - /tmp/whats-up-docker/data
+
   # https://github.com/getwud/wud/pkgs/container/wud
   whats-up-docker:
     image: ghcr.io/getwud/wud:8.0.1
     container_name: whats-up-docker
     restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
       - proxy
       - readonly-docker-socket
@@ -17,7 +26,7 @@ services:
       WUD_WATCHER_DOCKER_WATCHBYDEFAULT: false
       TZ: ${TZ:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/whats-up-docker/data:/store
+      - ./data:/store
     labels:
       traefik.enable: true
       traefik.http.routers.whats-up-docker.entrypoints: local-secure
@@ -26,8 +35,14 @@ services:
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
 
 networks:
+  default:
+    driver_opts:
+      com.docker.network.bridge.name: br-wud
   proxy:
     external: true
   readonly-docker-socket:

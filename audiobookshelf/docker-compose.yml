@@ -3,7 +3,7 @@ services:
     image: alpine
     entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
     volumes:
-      - ${PATH_TO_ROOT:?}/audiobookshelf:/tmp/audiobookshelf
+      - ./:/tmp/audiobookshelf
       - ${PATH_TO_MEDIA:?}:/tmp/media
     command:
       - /tmp/audiobookshelf/config
@@ -21,8 +21,8 @@ services:
     environment:
       TZ: ${TZ:?}
     volumes:
-      - ${PATH_TO_ROOT:?}/audiobookshelf/config:/config
-      - ${PATH_TO_ROOT:?}/audiobookshelf/metadata:/metadata
+      - ./config:/config
+      - ./metadata:/metadata
       - ${PATH_TO_MEDIA:?}/audiobooks:/audiobooks
     labels:
       traefik.enable: true
