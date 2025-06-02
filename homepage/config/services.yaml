@@ -1,4 +1,4 @@
-- Group A:
+- Media group:
     - Media:
         - Jellyfin:
             icon: jellyfin.svg
@@ -57,6 +57,9 @@
         href: https://traefik.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         server: docker
         container: traefik
+        widget:
+          type: traefik
+          url: https://traefik.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
 
     - Dozzle:
         icon: dozzle.svg
@@ -64,13 +67,6 @@
         description: Simple Container Monitoring and Logging
         server: docker
         container: dozzle
-
-    - Grafana:
-        icon: grafana.svg
-        href: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        description: The open and composable observability platform
-        server: docker
-        container: monitoring_grafana
 
     - What's Up Docker:
         icon: sh-wud.svg
@@ -83,26 +79,42 @@
           url: https://wud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
 
 - Monitoring:
-    - Uptime:
-        id: monitoring_uptime
-        widget:
-          type: iframe
-          src: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/d-solo/aek2tmxcsptz4f/system?refresh=10s&panelId=1&__feature.dashboardSceneSolo
+    - Monitoring_Services:
+        - Grafana:
+            icon: grafana.svg
+            href: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+            description: The open and composable observability platform
+            server: docker
+            container: monitoring_grafana
 
-    - CPU usage:
-        id: monitoring_cpu
-        widget:
-          type: iframe
-          src: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/d-solo/aek2tmxcsptz4f/system?refresh=10s&panelId=2&__feature.dashboardSceneSolo
+        - Uptime Kuma:
+            icon: uptime-kuma.svg
+            href: https://uptime-kuma.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+            description: Easy-to-use self-hosted monitoring tool
+            server: docker
+            container: uptime-kuma
 
-    - RAM usage:
-        id: monitoring_ram
-        widget:
-          type: iframe
-          src: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/d-solo/aek2tmxcsptz4f/system?refresh=10s&panelId=3&__feature.dashboardSceneSolo
+    - Monitoring_Grafana:
+        - Uptime:
+            id: monitoring_uptime
+            widget:
+              type: iframe
+              src: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/d-solo/aek2tmxcsptz4f/system?refresh=10s&panelId=1&__feature.dashboardSceneSolo
 
-    - Disks usage:
-        id: monitoring_disks
-        widget:
-          type: iframe
-          src: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/d-solo/aek2tmxcsptz4f/system?refresh=10s&panelId=9&__feature.dashboardSceneSolo
+        - CPU usage:
+            id: monitoring_cpu
+            widget:
+              type: iframe
+              src: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/d-solo/aek2tmxcsptz4f/system?refresh=10s&panelId=2&__feature.dashboardSceneSolo
+
+        - RAM usage:
+            id: monitoring_ram
+            widget:
+              type: iframe
+              src: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/d-solo/aek2tmxcsptz4f/system?refresh=10s&panelId=3&__feature.dashboardSceneSolo
+
+        - Disks usage:
+            id: monitoring_disks
+            widget:
+              type: iframe
+              src: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}/d-solo/aek2tmxcsptz4f/system?refresh=10s&panelId=9&__feature.dashboardSceneSolo

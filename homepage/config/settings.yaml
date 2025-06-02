@@ -4,13 +4,13 @@ color: slate
 background:
   image: /images/background.jpg
   blur: sm
-headerStyle: underlined
+headerStyle: clean
 disableCollapse: true
 iconStyle: theme
 useEqualHeights: true
 
 layout:
-  Group A:
+  Media group:
     style: row
     columns: 2
     header: false
@@ -31,6 +31,13 @@ layout:
     columns: 4
     icon: mdi-security
   Monitoring:
-    style: row
-    columns: 4
+    style: column
     icon: mdi-chart-line-stacked
+    Monitoring_Services:
+      header: false
+      style: row
+      columns: 4
+    Monitoring_Grafana:
+      header: false
+      style: row
+      columns: 4

@@ -1,0 +1,25 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1.23.16
+    container_name: uptime-kuma
+    restart: unless-stopped
+    networks:
+      - proxy
+    environment:
+      PUID: ${NAS_UID:?}
+      PGID: ${NAS_GID:?}
+      TZ: ${TZ:?}
+    volumes:
+      - ./data:/app/data
+    labels:
+      traefik.enable: true
+      traefik.http.routers.uptime-kuma.entrypoints: local-secure
+      traefik.http.routers.uptime-kuma.rule: Host(`uptime-kuma.${ROOT_DOMAIN:?}`)
+      traefik.http.services.uptime-kuma.loadbalancer.server.port: 3001
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+
+networks:
+  proxy:
+    external: true
