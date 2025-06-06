@@ -11,6 +11,7 @@ services:
       - /tmp/nextcloud/custom_apps
       - /tmp/nextcloud/themes
       - /tmp/nextcloud/postgres_data
+      - /tmp/files
       - /tmp/files/nextcloud
 
   # https://hub.docker.com/_/nextcloud/tags
@@ -22,6 +23,9 @@ services:
     container_name: nextcloud
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
+    extends:
+      file: files-mapping.yml
+      service: files-mapping
     networks:
       - default
       - proxy
@@ -36,7 +40,6 @@ services:
       - ./config:/var/www/html/config
       - ./custom_apps:/var/www/html/custom_apps
       - ./themes:/var/www/html/themes
-      - ${PATH_TO_FILES:?}/nextcloud:/var/www/html/data
     labels:
       traefik.enable: true
       traefik.http.routers.nextcloud.entrypoints: local-secure,external-secure

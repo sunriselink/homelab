@@ -3,3 +3,5 @@
 /data
 /postgres_data
 /themes
+
+files-mapping.yml
