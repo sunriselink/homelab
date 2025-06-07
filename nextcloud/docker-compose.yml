@@ -16,7 +16,6 @@ services:
 
   # https://hub.docker.com/_/nextcloud/tags
   nextcloud:
-    image: nas/nextcloud
     build:
       context: .docker
       dockerfile: nextcloud.dockerfile

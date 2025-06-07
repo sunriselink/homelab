@@ -9,7 +9,7 @@ services:
 
   # https://github.com/linuxserver/docker-prowlarr/pkgs/container/prowlarr
   prowlarr:
-    image: ghcr.io/linuxserver/prowlarr:1.36.3
+    image: ghcr.io/linuxserver/prowlarr:1.37.0
     container_name: torrent_prowlarr
     restart: unless-stopped
     networks:
