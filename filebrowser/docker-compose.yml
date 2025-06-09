@@ -9,6 +9,7 @@ services:
     volumes:
       - ./:/tmp/filebrowser
       - ${PATH_TO_MEDIA:?}:/tmp/media
+      - ${PATH_TO_FILES:?}:/tmp/files
 
   # https://hub.docker.com/r/filebrowser/filebrowser/tags
   filebrowser:
@@ -22,6 +23,7 @@ services:
       - ./database:/database
       - ./settings.json:/.filebrowser.json:ro
       - ${PATH_TO_MEDIA:?}:/srv/media
+      - ${PATH_TO_FILES:?}:/srv/files
       - /etc/localtime:/etc/localtime:ro
       - type: tmpfs
         target: /srv
