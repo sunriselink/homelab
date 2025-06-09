@@ -22,9 +22,6 @@ services:
       - ./prowlarr:/config
     labels:
       traefik.enable: true
-      traefik.http.routers.prowlarr.entrypoints: local-secure
-      traefik.http.routers.prowlarr.rule: Host(`prowlarr.${ROOT_DOMAIN:?}`)
-      traefik.http.services.prowlarr.loadbalancer.server.port: 9696
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
@@ -51,8 +48,6 @@ services:
       - ${PATH_TO_MEDIA:?}/downloads:/downloads
     labels:
       traefik.enable: true
-      traefik.http.routers.qbittorrent.entrypoints: local-secure
-      traefik.http.routers.qbittorrent.rule: Host(`qbittorrent.${ROOT_DOMAIN:?}`)
       traefik.http.services.qbittorrent.loadbalancer.server.port: 8080
       wud.watch: true
       wud.watch.digest: true

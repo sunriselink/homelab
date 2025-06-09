@@ -29,8 +29,6 @@ services:
     labels:
       traefik.enable: true
       traefik.http.routers.jellyfin.entrypoints: local-secure,external-secure
-      traefik.http.routers.jellyfin.rule: Host(`jellyfin.${ROOT_DOMAIN:?}`)
-      traefik.http.services.jellyfin.loadbalancer.server.port: 8096
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

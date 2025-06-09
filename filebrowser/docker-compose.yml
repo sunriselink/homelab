@@ -27,9 +27,6 @@ services:
         target: /srv
     labels:
       traefik.enable: true
-      traefik.http.routers.filebrowser.entrypoints: local-secure
-      traefik.http.routers.filebrowser.rule: Host(`filebrowser.${ROOT_DOMAIN:?}`)
-      traefik.http.services.filebrowser.loadbalancer.server.port: 80
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

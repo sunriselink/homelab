@@ -29,9 +29,7 @@ services:
       - ./data:/store
     labels:
       traefik.enable: true
-      traefik.http.routers.whats-up-docker.entrypoints: local-secure
-      traefik.http.routers.whats-up-docker.rule: Host(`wud.${ROOT_DOMAIN:?}`)
-      traefik.http.services.whats-up-docker.loadbalancer.server.port: 3000
+      traefik.custom.host: wud
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

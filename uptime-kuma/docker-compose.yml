@@ -13,9 +13,6 @@ services:
       - ./data:/app/data
     labels:
       traefik.enable: true
-      traefik.http.routers.uptime-kuma.entrypoints: local-secure
-      traefik.http.routers.uptime-kuma.rule: Host(`uptime-kuma.${ROOT_DOMAIN:?}`)
-      traefik.http.services.uptime-kuma.loadbalancer.server.port: 3001
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

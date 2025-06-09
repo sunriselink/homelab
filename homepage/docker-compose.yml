@@ -27,9 +27,6 @@ services:
       - ./images:/app/public/images
     labels:
       traefik.enable: true
-      traefik.http.routers.homepage.entrypoints: local-secure
-      traefik.http.routers.homepage.rule: Host(`homepage.${ROOT_DOMAIN:?}`)
-      traefik.http.services.homepage.loadbalancer.server.port: 3000
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

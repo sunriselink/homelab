@@ -27,12 +27,8 @@ services:
       # Use local time via mount /etc/localtime
       - /etc/localtime:/etc/localtime:ro
     labels:
-      # Reverse Proxy settings
+      # Reverse Proxy support (see traefik/README.md for more examples)
       traefik.enable: true
-      # Use "local-secure,external-secure" to enable access from the internet
-      traefik.http.routers.<service-name>.entrypoints: local-secure
-      traefik.http.routers.<service-name>.rule: Host(`<service-name>.${ROOT_DOMAIN:?}`)
-      traefik.http.services.<service-name>.loadbalancer.server.port: <service-port>
       # Updates watcher via What's up Docker
       wud.watch: true
       wud.watch.digest: true

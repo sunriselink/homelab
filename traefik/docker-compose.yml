@@ -29,6 +29,7 @@ services:
       - --entrypoints.local.http.middlewares=security-headers@file
 
       - --entrypoints.local-secure.address=:443
+      - --entrypoints.local-secure.asDefault=true
       - --entrypoints.local-secure.http.middlewares=security-headers@file
       - --entrypoints.local-secure.http.tls.certResolver=duckdns-resolver
       - --entrypoints.local-secure.http.tls.domains[0].main=*.${ROOT_DOMAIN:?}
@@ -47,6 +48,7 @@ services:
       - --providers.docker.endpoint=tcp://readonly-docker-socket:2375
       - --providers.docker.exposedByDefault=false
       - --providers.docker.network=proxy
+      - --providers.docker.defaultRule=Host(`{{ coalesce (index .Labels "traefik.custom.host") (index .Labels "com.docker.compose.service") }}.${ROOT_DOMAIN:?}`)
 
       - --providers.file.directory=/dynamic-conf
 
@@ -70,8 +72,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
     labels:
       traefik.enable: true
-      traefik.http.routers.traefik-dashboard.entrypoints: local-secure
-      traefik.http.routers.traefik-dashboard.rule: Host(`traefik.${ROOT_DOMAIN:?}`)
       traefik.http.services.traefik-dashboard.loadbalancer.server.port: 8080
       wud.watch: true
       wud.watch.digest: true

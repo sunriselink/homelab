@@ -24,9 +24,6 @@ services:
       - ${PATH_TO_MEDIA:?}:/data
     labels:
       traefik.enable: true
-      traefik.http.routers.picard.entrypoints: local-secure
-      traefik.http.routers.picard.rule: Host(`picard.${ROOT_DOMAIN:?}`)
-      traefik.http.services.picard.loadbalancer.server.port: 5800
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

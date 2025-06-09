@@ -31,9 +31,6 @@ services:
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
     labels:
       traefik.enable: true
-      traefik.http.routers.grafana.entrypoints: local-secure
-      traefik.http.routers.grafana.rule: Host(`grafana.${ROOT_DOMAIN:?}`)
-      traefik.http.services.grafana.loadbalancer.server.port: 3000
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

@@ -15,9 +15,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
     labels:
       traefik.enable: true
-      traefik.http.routers.dozzle.entrypoints: local-secure
-      traefik.http.routers.dozzle.rule: Host(`dozzle.${ROOT_DOMAIN:?}`)
-      traefik.http.services.dozzle.loadbalancer.server.port: 8080
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

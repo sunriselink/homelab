@@ -27,8 +27,6 @@ services:
     labels:
       traefik.enable: true
       traefik.http.routers.audiobookshelf.entrypoints: local-secure,external-secure
-      traefik.http.routers.audiobookshelf.rule: Host(`audiobookshelf.${ROOT_DOMAIN:?}`)
-      traefik.http.services.audiobookshelf.loadbalancer.server.port: 80
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
