@@ -3,7 +3,7 @@
 ## Execute `occ` tasks
 
 ```sh
-./exec.sh occ [params]
+./occ.sh [params]
 ```
 
 ## Cron job
