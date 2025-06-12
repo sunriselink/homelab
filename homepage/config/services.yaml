@@ -78,6 +78,13 @@
           type: whatsupdocker
           url: https://wud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
 
+    - DbGate:
+        icon: sh-dbgate.webp
+        href: https://dbgate.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        description: Database manager for MySQL, PostgreSQL, SQL Server, MongoDB, SQLite and others
+        server: docker
+        container: dbgate
+
 - Monitoring:
     - Monitoring_Services:
         - Grafana:

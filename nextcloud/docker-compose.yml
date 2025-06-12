@@ -56,8 +56,11 @@ services:
   nextcloud_db:
     image: postgres:17
     container_name: nextcloud_db
-    user: ${NAS_UID:?}:${NAS_GID:?}
     restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    networks:
+      - default
+      - database
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
       - /etc/localtime:/etc/localtime:ro
@@ -89,4 +92,6 @@ networks:
     driver_opts:
       com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
   proxy:
+    external: true
+  database:
     external: true

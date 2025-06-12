@@ -17,6 +17,7 @@ Create required networks
 
 ```sh
 docker network create proxy --opt com.docker.network.bridge.name=br-proxy
+docker network create database --opt com.docker.network.bridge.name=br-database
 docker network create readonly-docker-socket --opt com.docker.network.bridge.name=br-sock_ro
 docker network create admin-docker-socket --opt com.docker.network.bridge.name=br-sock_admin
 ```

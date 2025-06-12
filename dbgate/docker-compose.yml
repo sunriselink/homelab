@@ -1,0 +1,23 @@
+services:
+  # https://hub.docker.com/r/dbgate/dbgate/tags
+  dbgate:
+    image: dbgate/dbgate:6.4.2
+    container_name: dbgate
+    restart: unless-stopped
+    networks:
+      - proxy
+      - database
+    volumes:
+      - ./data:/root/.dbgate
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      traefik.enable: true
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+
+networks:
+  proxy:
+    external: true
+  database:
+    external: true
