@@ -30,16 +30,17 @@ Run Docker Socket Proxy
 
 ## Global environment variables (`global.env`)
 
-| Variable name        | Description                    | Example or command  |
-| -------------------- | ------------------------------ | ------------------- |
-| `NAS_UID`            | NAS user PUID                  | `id -u nas`         |
-| `NAS_GID`            | NAS user PGID                  | `id -g nas`         |
-| `TZ`                 | Current timezone               | `cat /etc/timezone` |
-| `PATH_TO_FILES`      | Full path to user files        | /mnt/data/files     |
-| `PATH_TO_MEDIA`      | Full path to media files       | /mnt/data/media     |
-| `ROOT_DOMAIN`        | Root domain name               | my-nas.duckdns.org  |
-| `DUCKDNS_SUBDOMAINS` | Subdomain for DuckDNS          | my-nas              |
-| `DUCKDNS_TOKEN`      | Token from DuckDNS admin panel |                     |
+| Variable name        | Description                    | Example or command                   |
+| -------------------- | ------------------------------ | ------------------------------------ |
+| `NAS_UID`            | NAS user PUID                  | `id -u nas`                          |
+| `NAS_GID`            | NAS user PGID                  | `id -g nas`                          |
+| `RENDER_GID`         | `render` group id              | `getent group render \| cut -d: -f3` |
+| `TZ`                 | Current timezone               | `cat /etc/timezone`                  |
+| `PATH_TO_FILES`      | Full path to user files        | /mnt/data/files                      |
+| `PATH_TO_MEDIA`      | Full path to media files       | /mnt/data/media                      |
+| `ROOT_DOMAIN`        | Root domain name               | my-nas.duckdns.org                   |
+| `DUCKDNS_SUBDOMAINS` | Subdomain for DuckDNS          | my-nas                               |
+| `DUCKDNS_TOKEN`      | Token from DuckDNS admin panel |                                      |
 
 ## Container management
 
@@ -69,4 +70,4 @@ For fix "exited" status just run script
 
 See https://github.com/louislam/dockge/issues/177
 
-When file `global.env` changes, restart Dockge container
+When file `global.env` changes, recreate Dockge container

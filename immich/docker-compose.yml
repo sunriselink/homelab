@@ -1,0 +1,121 @@
+services:
+  init:
+    image: alpine
+    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
+    volumes:
+      - ./:/tmp/immich
+    command:
+      - /tmp/immich/data
+      - /tmp/immich/ml
+      - /tmp/immich/ml/cache
+      - /tmp/immich/ml/config
+      - /tmp/immich/ml/models
+      - /tmp/immich/postgres
+      - /tmp/immich/redis
+
+  # https://github.com/immich-app/immich/pkgs/container/immich-server
+  # https://immich.app/docs/install/upgrading
+  immich:
+    image: ghcr.io/immich-app/immich-server:v1.134.0
+    container_name: immich
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    extends:
+      file: external-storage.yml
+      service: external-storage
+    networks:
+      - default
+      - proxy
+    environment:
+      DB_HOSTNAME: immich-db
+      DB_DATABASE_NAME: ${DB_DATABASE_NAME:?}
+      DB_USERNAME: ${DB_USERNAME:?}
+      DB_PASSWORD: ${DB_PASSWORD:?}
+      REDIS_HOSTNAME: immich-redis
+      TZ: ${TZ:?}
+    volumes:
+      - ./data:/usr/src/app/upload
+    labels:
+      traefik.enable: true
+      traefik.http.routers.immich.entrypoints: local-secure,external-secure
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      immich-machine-learning:
+        condition: service_healthy
+      immich-redis:
+        condition: service_healthy
+      immich-db:
+        condition: service_healthy
+
+  # https://github.com/immich-app/immich/pkgs/container/immich-machine-learning
+  immich-machine-learning:
+    image: ghcr.io/immich-app/immich-machine-learning:v1.134.0-openvino
+    container_name: immich_ml
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    group_add:
+      - ${RENDER_GID:?}
+    environment:
+      MACHINE_LEARNING_CACHE_FOLDER: /models
+      TZ: ${TZ:?}
+    volumes:
+      - ./ml/cache:/.cache
+      - ./ml/config:/.config
+      - ./ml/models:/models
+    devices:
+      - /dev/dri:/dev/dri
+    labels:
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+\-openvino$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+  immich-redis:
+    image: docker.io/valkey/valkey:8-bookworm@sha256:ff21bc0f8194dc9c105b769aeabf9585fea6a8ed649c0781caeac5cb3c247884
+    container_name: immich_redis
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    environment:
+      TZ: ${TZ:?}
+    volumes:
+      - ./redis:/data
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: redis-cli ping || exit 1
+
+  immich-db:
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0@sha256:fa4f6e0971f454cd95fec5a9aaed2ed93d8f46725cc6bc61e0698e97dba96da1
+    container_name: immich_db
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    networks:
+      - default
+      - database
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:?}
+      POSTGRES_DB: ${DB_DATABASE_NAME:?}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?}
+      POSTGRES_INITDB_ARGS: --data-checksums
+      TZ: ${TZ:?}
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+networks:
+  default:
+    driver_opts:
+      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
+  proxy:
+    external: true
+  database:
+    external: true

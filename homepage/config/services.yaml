@@ -1,32 +1,38 @@
-- Media group:
-    - Media:
-        - Jellyfin:
-            icon: jellyfin.svg
-            href: https://jellyfin.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-            description: The Free Software Media System
-            server: docker
-            container: jellyfin
+- Files & Media:
+    - Jellyfin:
+        icon: jellyfin.svg
+        href: https://jellyfin.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        description: The Free Software Media System
+        server: docker
+        container: jellyfin
 
-        - Audiobookshelf:
-            icon: audiobookshelf.svg
-            href: https://audiobookshelf.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-            description: Self-hosted audiobook and podcast server
-            server: docker
-            container: audiobookshelf
-    - Files:
-        - Nextcloud:
-            icon: nextcloud-white.svg
-            href: https://nextcloud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-            description: Open source content collaboration platform
-            server: docker
-            container: nextcloud
+    - Audiobookshelf:
+        icon: audiobookshelf.svg
+        href: https://audiobookshelf.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        description: Self-hosted audiobook and podcast server
+        server: docker
+        container: audiobookshelf
 
-        - Filebrowser:
-            icon: filebrowser.svg
-            href: https://filebrowser.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-            description: Web File Browser
-            server: docker
-            container: filebrowser
+    - Nextcloud:
+        icon: nextcloud-white.svg
+        href: https://nextcloud.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        description: Open source content collaboration platform
+        server: docker
+        container: nextcloud
+
+    - Immich:
+        icon: immich.svg
+        href: https://immich.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        description: Self-hosted photo and video management solution
+        server: docker
+        container: immich
+
+    - Filebrowser:
+        icon: filebrowser.svg
+        href: https://filebrowser.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        description: Web File Browser
+        server: docker
+        container: filebrowser
 
 - Media Management:
     - Prowlarr:

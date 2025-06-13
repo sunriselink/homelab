@@ -10,18 +10,10 @@ iconStyle: theme
 useEqualHeights: true
 
 layout:
-  Media group:
+  Files & Media:
+    icon: mdi-multimedia
     style: row
-    columns: 2
-    header: false
-    Media:
-      style: row
-      columns: 2
-      icon: mdi-multimedia
-    Files:
-      style: row
-      columns: 2
-      icon: mdi-cloud-check-variant
+    columns: 5
   Media Management:
     style: row
     columns: 4

@@ -13,27 +13,23 @@ services:
     image: <service-name>:<service-version>
     container_name: <service-name>
     restart: unless-stopped
-    # Rootless mode (if needed)
-    user: ${NAS_UID:?}:${NAS_GID:?}
-    # Use Reverse Proxy network (if needed)
+    user: ${NAS_UID:?}:${NAS_GID:?} # Rootless mode (if needed)
     networks:
-      - proxy
+      - proxy                   # Reverse Proxy support (if needed)
+      - database                # Access to database via dbgate (if needed)
+      - readonly-docker-socket  # Readonly docker socket access (if needed)
+      - admin-docker-socket     # Admin docker socket access (if needed)
     environment:
-      # Use local time via ENV
-      TZ: ${TZ:?}
+      TZ: ${TZ:?} # Use local time via ENV
     volumes:
       - ./data:/data
       - ./config:/config
-      # Use local time via mount /etc/localtime
-      - /etc/localtime:/etc/localtime:ro
+      - /etc/localtime:/etc/localtime:ro # Use local time via mount /etc/localtime
     labels:
-      # Reverse Proxy support (see traefik/README.md for more examples)
-      traefik.enable: true
-      # Updates watcher via What's up Docker
-      wud.watch: true
+      traefik.enable: true                # Reverse Proxy support (see traefik/README.md for more examples)
+      wud.watch: true                     # Updates watcher via What's up Docker
       wud.watch.digest: true
-      # supported 5.0.1 and v5.0.1 formats
-      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$ # supported 5.0.1 and v5.0.1 formats
     depends_on:
       init:
         condition: service_completed_successfully
@@ -44,4 +40,10 @@ networks:
       # length is limited to 15 characters
       com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
   proxy:
+    external: true
+  database:
+    external: true
+  readonly-docker-socket:
+    external: true
+  admin-docker-socket:
     external: true
