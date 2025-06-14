@@ -5,6 +5,7 @@ services:
     volumes:
       - ${PATH_TO_MEDIA:?}:/tmp/media
     command:
+      - /tmp/media
       - /tmp/media/downloads
 
   # https://github.com/linuxserver/docker-prowlarr/pkgs/container/prowlarr

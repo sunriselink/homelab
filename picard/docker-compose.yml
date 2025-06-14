@@ -5,6 +5,7 @@ services:
     volumes:
       - ${PATH_TO_MEDIA:?}:/tmp/media
     command:
+      - /tmp/media
       - /tmp/media/music
       - /tmp/media/downloads
 
