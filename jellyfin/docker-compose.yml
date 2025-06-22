@@ -24,6 +24,7 @@ services:
       DOCKER_MODS: linuxserver/mods:jellyfin-opencl-intel
     volumes:
       - ./config:/config
+      - ./modcache:/modcache
       - ${PATH_TO_MEDIA:?}:/data
     devices:
       - /dev/dri:/dev/dri

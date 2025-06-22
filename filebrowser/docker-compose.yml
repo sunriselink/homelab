@@ -1,19 +1,19 @@
 services:
   init:
     image: alpine
-    entrypoint: /tmp/filebrowser/init.sh
-    working_dir: /tmp/filebrowser
-    environment:
-      PUID: ${NAS_UID:?}
-      PGID: ${NAS_GID:?}
+    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
     volumes:
       - ./:/tmp/filebrowser
       - ${PATH_TO_MEDIA:?}:/tmp/media
       - ${PATH_TO_FILES:?}:/tmp/files
+    command:
+      - /tmp/filebrowser/database
+      - /tmp/media
+      - /tmp/files
 
   # https://hub.docker.com/r/filebrowser/filebrowser/tags
   filebrowser:
-    image: filebrowser/filebrowser:v2.32.0
+    image: filebrowser/filebrowser:v2.33.2
     container_name: filebrowser
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -21,7 +21,7 @@ services:
       - proxy
     volumes:
       - ./database:/database
-      - ./settings.json:/.filebrowser.json:ro
+      - ./config:/config
       - ${PATH_TO_MEDIA:?}:/srv/media
       - ${PATH_TO_FILES:?}:/srv/files
       - /etc/localtime:/etc/localtime:ro

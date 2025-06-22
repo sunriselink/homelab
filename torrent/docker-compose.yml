@@ -46,6 +46,7 @@ services:
       DOCKER_MODS: ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.26.0
     volumes:
       - ./qbittorrent:/config
+      - ./modcache:/modcache
       - ${PATH_TO_MEDIA:?}/downloads:/downloads
     labels:
       traefik.enable: true

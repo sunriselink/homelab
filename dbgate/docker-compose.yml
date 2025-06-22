@@ -1,7 +1,7 @@
 services:
   # https://hub.docker.com/r/dbgate/dbgate/tags
   dbgate:
-    image: dbgate/dbgate:6.4.2
+    image: dbgate/dbgate:6.5.4
     container_name: dbgate
     restart: unless-stopped
     networks:
