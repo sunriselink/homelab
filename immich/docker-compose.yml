@@ -1,7 +1,3 @@
-# Immich is currently under heavy development, which means you can expect breaking changes and bugs
-# https://immich.app/docs/install/upgrading
-# https://github.com/immich-app/immich/releases
-
 services:
   init:
     image: alpine
