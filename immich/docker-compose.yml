@@ -13,7 +13,6 @@ services:
       - /tmp/immich/postgres
       - /tmp/immich/redis
 
-  # https://github.com/immich-app/immich/pkgs/container/immich-server
   immich:
     image: ghcr.io/immich-app/immich-server:v1.135.3
     container_name: immich
@@ -50,7 +49,6 @@ services:
       immich-db:
         condition: service_healthy
 
-  # https://github.com/immich-app/immich/pkgs/container/immich-machine-learning
   immich-machine-learning:
     image: ghcr.io/immich-app/immich-machine-learning:v1.135.3-openvino
     container_name: immich_ml

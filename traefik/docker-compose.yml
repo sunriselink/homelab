@@ -8,6 +8,7 @@ services:
       - /tmp/traefik/letsencrypt
 
   # https://hub.docker.com/_/traefik/tags
+  # https://github.com/traefik/traefik/releases
   traefik:
     image: traefik:v3.4.1
     container_name: traefik

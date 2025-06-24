@@ -8,6 +8,7 @@ services:
       - /tmp/whats-up-docker/data
 
   # https://github.com/getwud/wud/pkgs/container/wud
+  # https://github.com/getwud/wud/releases
   whats-up-docker:
     image: ghcr.io/getwud/wud:8.0.1
     container_name: whats-up-docker

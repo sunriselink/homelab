@@ -1,4 +1,5 @@
 # https://github.com/linuxserver/docker-socket-proxy/pkgs/container/socket-proxy
+# https://github.com/linuxserver/docker-socket-proxy/releases
 x-docker-socket: &common-opts
   image: ghcr.io/linuxserver/socket-proxy:3.2.1
   restart: unless-stopped

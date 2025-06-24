@@ -11,6 +11,7 @@ services:
       - /tmp/monitoring/influxdb/config
 
   # https://hub.docker.com/r/grafana/grafana/tags
+  # https://github.com/grafana/grafana/releases
   grafana:
     image: grafana/grafana:12.0.2
     container_name: monitoring_grafana
@@ -40,7 +41,6 @@ services:
       influxdb:
         condition: service_healthy
 
-  # https://hub.docker.com/_/telegraf/tags
   telegraf:
     build:
       context: .docker
@@ -64,6 +64,7 @@ services:
         condition: service_healthy
 
   # https://hub.docker.com/_/influxdb/tags
+  # https://github.com/influxdata/influxdb/releases
   influxdb:
     image: influxdb:2.7.12
     container_name: monitoring_influxdb

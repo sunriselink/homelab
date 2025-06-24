@@ -1,4 +1,5 @@
 # https://hub.docker.com/_/nextcloud/tags
+# https://nextcloud.com/changelog/
 FROM nextcloud:31.0.6
 
 RUN apt-get update && \
