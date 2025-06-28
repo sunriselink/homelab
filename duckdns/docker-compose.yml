@@ -11,7 +11,6 @@ services:
       TZ: ${TZ:?}
       SUBDOMAINS: ${DUCKDNS_SUBDOMAINS:?}
       TOKEN: ${DUCKDNS_TOKEN:?}
-      UPDATE_IP: ipv4
       LOG_FILE: false
     volumes:
       - ./config:/config
