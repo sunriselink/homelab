@@ -10,7 +10,7 @@ services:
   # https://github.com/getwud/wud/pkgs/container/wud
   # https://github.com/getwud/wud/releases
   whats-up-docker:
-    image: ghcr.io/getwud/wud:8.0.1
+    image: ghcr.io/getwud/wud:8.1.1
     container_name: whats-up-docker
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}

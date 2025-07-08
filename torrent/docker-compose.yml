@@ -34,7 +34,7 @@ services:
   # https://github.com/linuxserver/docker-qbittorrent/pkgs/container/qbittorrent
   # https://github.com/linuxserver/docker-qbittorrent/releases
   qbittorrent:
-    image: ghcr.io/linuxserver/qbittorrent:5.1.0
+    image: ghcr.io/linuxserver/qbittorrent:5.1.2
     container_name: torrent_qbittorrent
     restart: unless-stopped
     networks:
@@ -46,7 +46,7 @@ services:
       WEBUI_PORT: 8080
       # https://github.com/vuetorrent/VueTorrent/pkgs/container/vuetorrent-lsio-mod
       # https://github.com/VueTorrent/VueTorrent/releases
-      DOCKER_MODS: ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.26.0
+      DOCKER_MODS: ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.27.0
     volumes:
       - ./qbittorrent:/config
       - ./modcache:/modcache
