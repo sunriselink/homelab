@@ -1,4 +1,4 @@
-# My NAS stack
+# My Home Lab stack
 
 ## First steps
 
