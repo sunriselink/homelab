@@ -1,6 +1,6 @@
 # https://hub.docker.com/_/nextcloud/tags
 # https://nextcloud.com/changelog/
-FROM nextcloud:31.0.6
+FROM nextcloud:31.0.7
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends ffmpeg && \
