@@ -15,6 +15,7 @@ services:
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
+      - proxy
       - admin-docker-socket
     ports:
       - 5001:5001
@@ -29,6 +30,7 @@ services:
       - ${PATH_TO_ROOT:?}:${PATH_TO_ROOT:?}:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
+      traefik.enable: true
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
@@ -41,4 +43,6 @@ networks:
     driver_opts:
       com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
   admin-docker-socket:
+    external: true
+  proxy:
     external: true

@@ -20,7 +20,7 @@ layout:
     icon: mdi-play-network
   Admin:
     style: row
-    columns: 4
+    columns: 3
     icon: mdi-security
   Monitoring:
     style: column

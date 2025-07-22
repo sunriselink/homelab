@@ -57,6 +57,25 @@
         container: picard
 
 - Admin:
+    - Cockpit:
+        icon: cockpit-light.svg
+        href: https://cockpit.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        description: A web-based graphical interface for servers
+
+    - Dockge:
+        icon: dockge.svg
+        href: https://dockge.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        description: A fancy, easy-to-use and reactive self-hosted docker compose.yaml stack-oriented manager
+        server: docker
+        container: dockge
+
+    - Dozzle:
+        icon: dozzle.svg
+        href: https://dozzle.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        description: Simple Container Monitoring and Logging
+        server: docker
+        container: dozzle
+
     - Traefik:
         icon: traefik.svg
         description: The Cloud Native Application Proxy
@@ -66,13 +85,6 @@
         widget:
           type: traefik
           url: https://traefik.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-
-    - Dozzle:
-        icon: dozzle.svg
-        href: https://dozzle.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
-        description: Simple Container Monitoring and Logging
-        server: docker
-        container: dozzle
 
     - What's Up Docker:
         icon: sh-wud.svg
