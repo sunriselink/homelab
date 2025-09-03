@@ -14,7 +14,7 @@ services:
       - /tmp/immich/redis
 
   immich:
-    image: ghcr.io/immich-app/immich-server:v1.137.3
+    image: ghcr.io/immich-app/immich-server:v1.140.1
     container_name: immich
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -50,7 +50,7 @@ services:
         condition: service_healthy
 
   immich-machine-learning:
-    image: ghcr.io/immich-app/immich-machine-learning:v1.137.3-openvino
+    image: ghcr.io/immich-app/immich-machine-learning:v1.140.1-openvino
     container_name: immich_ml
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -74,7 +74,7 @@ services:
         condition: service_completed_successfully
 
   immich-redis:
-    image: docker.io/valkey/valkey:8-bookworm@sha256:facc1d2c3462975c34e10fccb167bfa92b0e0dbd992fc282c29a61c3243afb11
+    image: docker.io/valkey/valkey:8-bookworm@sha256:a137a2b60aca1a75130022d6bb96af423fefae4eb55faf395732db3544803280
     container_name: immich_redis
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}

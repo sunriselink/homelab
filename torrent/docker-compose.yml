@@ -11,7 +11,7 @@ services:
   # https://github.com/linuxserver/docker-prowlarr/pkgs/container/prowlarr
   # https://github.com/linuxserver/docker-prowlarr/releases
   prowlarr:
-    image: ghcr.io/linuxserver/prowlarr:1.37.0
+    image: ghcr.io/linuxserver/prowlarr:2.0.5
     container_name: torrent_prowlarr
     restart: unless-stopped
     networks:
@@ -46,7 +46,7 @@ services:
       WEBUI_PORT: 8080
       # https://github.com/vuetorrent/VueTorrent/pkgs/container/vuetorrent-lsio-mod
       # https://github.com/VueTorrent/VueTorrent/releases
-      DOCKER_MODS: ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.28.2
+      DOCKER_MODS: ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.29.0
     volumes:
       - ./qbittorrent:/config
       - ./modcache:/modcache
