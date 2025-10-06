@@ -71,3 +71,11 @@ For fix "exited" status just run script
 See https://github.com/louislam/dockge/issues/177
 
 When file `global.env` changes, recreate Dockge container
+
+## Manual updating stack
+
+When the versions of Docker images have been changed in the stack (in docker-compose.yml or .dockerfile files), you need to run a command to download new images and rebuild custom versions of images
+
+```sh
+./update.sh STACK_NAME
+```
