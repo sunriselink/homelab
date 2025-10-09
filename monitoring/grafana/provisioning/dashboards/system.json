@@ -19,7 +19,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -45,7 +45,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -80,7 +81,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.1",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "datasource": {
@@ -149,7 +150,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(50, 172, 45, 0.97)"
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": 0
               },
               {
                 "color": "rgba(237, 129, 40, 0.89)",
@@ -186,7 +188,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "12.0.1",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "datasource": {
@@ -266,7 +268,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(50, 172, 45, 0.97)"
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": 0
               },
               {
                 "color": "rgba(237, 129, 40, 0.89)",
@@ -303,7 +306,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "12.0.1",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "datasource": {
@@ -358,7 +361,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
           }
@@ -387,7 +391,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.1",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "datasource": {
@@ -442,7 +446,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": 0
               },
               {
                 "color": "green",
@@ -479,7 +484,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.1",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "datasource": {
@@ -549,7 +554,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "orange",
@@ -594,7 +600,7 @@
         "sizing": "manual",
         "valueMode": "color"
       },
-      "pluginVersion": "12.0.1",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "groupBy": [
@@ -692,6 +698,7 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -708,7 +715,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -746,7 +754,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "12.0.1",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "alias": "$tag_container_name",
@@ -901,6 +909,7 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -917,7 +926,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": 0
               }
             ]
           },
@@ -947,7 +957,7 @@
           "sort": "desc"
         }
       },
-      "pluginVersion": "12.0.1",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "alias": "$tag_container_name",
@@ -1031,6 +1041,7 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1046,7 +1057,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -1082,7 +1094,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.0.1",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "alias": "$tag_sensor",
@@ -1174,6 +1186,7 @@
               "type": "linear"
             },
             "showPoints": "never",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1188,7 +1201,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -1224,7 +1238,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.0.1",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "alias": "$tag_name",
@@ -1280,6 +1294,9 @@
             "cellOptions": {
               "type": "auto"
             },
+            "footer": {
+              "reducers": []
+            },
             "inspect": false
           },
           "mappings": [],
@@ -1287,7 +1304,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": 0
               }
             ]
           }
@@ -1376,7 +1394,8 @@
                   "mode": "absolute",
                   "steps": [
                     {
-                      "color": "green"
+                      "color": "green",
+                      "value": 0
                     },
                     {
                       "color": "#EAB839",
@@ -1410,16 +1429,10 @@
       "id": 13,
       "options": {
         "cellHeight": "lg",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": ["sum"],
-          "show": false
-        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "12.0.1",
+      "pluginVersion": "12.2.0",
       "targets": [
         {
           "groupBy": [
@@ -1498,7 +1511,7 @@
           "tags": []
         }
       ],
-      "title": "SMART Devices",
+      "title": "SMART Stats",
       "transformations": [
         {
           "id": "organize",
@@ -1530,7 +1543,7 @@
   ],
   "preload": false,
   "refresh": "10s",
-  "schemaVersion": 41,
+  "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": []
@@ -1543,6 +1556,6 @@
   "timezone": "browser",
   "title": "System",
   "uid": "aek2tmxcsptz4f",
-  "version": 12,
+  "version": 1,
   "weekStart": "monday"
 }
