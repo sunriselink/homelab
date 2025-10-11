@@ -116,7 +116,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$server$/"
+            }
+          ]
         }
       ],
       "title": "Uptime",
@@ -233,6 +239,12 @@
               "key": "cpu",
               "operator": "=",
               "value": "cpu-total"
+            },
+            {
+              "condition": "AND",
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$server$/"
             }
           ]
         }
@@ -340,6 +352,13 @@
                 "type": "last"
               }
             ]
+          ],
+          "tags": [
+            {
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$server$/"
+            }
           ]
         }
       ],
@@ -425,7 +444,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$server$/"
+            }
+          ]
         }
       ],
       "title": "Running containers",
@@ -518,7 +543,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$server$/"
+            }
+          ]
         }
       ],
       "title": "Stopped containers",
@@ -638,21 +669,9 @@
             },
             {
               "condition": "AND",
-              "key": "path::tag",
-              "operator": "!~",
-              "value": "/wsl/"
-            },
-            {
-              "condition": "AND",
-              "key": "path::tag",
-              "operator": "!~",
-              "value": "/snap/"
-            },
-            {
-              "condition": "AND",
-              "key": "path::tag",
-              "operator": "!~",
-              "value": "/Docker/"
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$server$/"
             }
           ]
         }
@@ -793,42 +812,13 @@
               }
             ]
           ],
-          "tags": []
-        },
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "influxdb_v2_influxql"
-          },
-          "groupBy": [
+          "tags": [
             {
-              "params": ["10s"],
-              "type": "time"
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$server$/"
             }
-          ],
-          "hide": false,
-          "measurement": "system",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "cpus_count",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": ["n_cpus"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["n_cpus"],
-                "type": "alias"
-              }
-            ]
-          ],
-          "tags": []
+          ]
         }
       ],
       "title": "CPU usage (containers)",
@@ -847,7 +837,7 @@
               "right": {
                 "matcher": {
                   "id": "byName",
-                  "options": "system.n_cpus"
+                  "options": "$n_cpus"
                 }
               }
             },
@@ -856,17 +846,6 @@
               "reducer": "sum"
             },
             "replaceFields": true
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "system.n_cpus": true
-            },
-            "includeByName": {},
-            "indexByName": {},
-            "renameByName": {}
           }
         }
       ],
@@ -996,7 +975,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$server$/"
+            }
+          ]
         }
       ],
       "title": "RAM usage (containers)",
@@ -1076,7 +1061,7 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 24,
+        "w": 12,
         "x": 0,
         "y": 12
       },
@@ -1134,6 +1119,12 @@
               "key": "sensor::tag",
               "operator": "=~",
               "value": "/coretemp_core/"
+            },
+            {
+              "condition": "AND",
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$server$/"
             }
           ]
         }
@@ -1221,8 +1212,8 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 0,
-        "y": 20
+        "x": 12,
+        "y": 12
       },
       "id": 11,
       "options": {
@@ -1273,7 +1264,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$server$/"
+            }
+          ]
         }
       ],
       "title": "Disks temp °C",
@@ -1297,7 +1294,10 @@
             "footer": {
               "reducers": []
             },
-            "inspect": false
+            "inspect": false,
+            "minWidth": 100,
+            "wrapHeaderText": true,
+            "wrapText": false
           },
           "mappings": [],
           "thresholds": {
@@ -1417,18 +1417,214 @@
                 }
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "available_spare"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "transparent",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 0
+                    },
+                    {
+                      "color": "orange",
+                      "value": 50
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 70
+                    },
+                    {
+                      "color": "green",
+                      "value": 90
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "critical_warning"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "transparent",
+                      "value": 0
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "media_errors"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "transparent",
+                      "value": 0
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "num_err_log_entries"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "transparent",
+                      "value": 0
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "percentage_used"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "transparent",
+                      "value": 0
+                    },
+                    {
+                      "color": "green",
+                      "value": 0
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Media Errors"
+            },
+            "properties": []
           }
         ]
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
+        "w": 24,
+        "x": 0,
         "y": 20
       },
       "id": 13,
       "options": {
-        "cellHeight": "lg",
+        "cellHeight": "md",
+        "frozenColumns": {
+          "left": 1
+        },
         "showHeader": true,
         "sortBy": []
       },
@@ -1441,8 +1637,8 @@
               "type": "tag"
             },
             {
-              "params": ["null"],
-              "type": "fill"
+              "params": ["serial::tag"],
+              "type": "tag"
             }
           ],
           "measurement": "smartctl",
@@ -1506,12 +1702,88 @@
                 "params": ["temperature"],
                 "type": "alias"
               }
+            ],
+            [
+              {
+                "params": ["available_spare"],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": ["available_spare"],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": ["critical_warning"],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": ["critical_warning"],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": ["media_errors"],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": ["media_errors"],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": ["num_err_log_entries"],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": ["num_err_log_entries"],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": ["percentage_used"],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": ["percentage_used"],
+                "type": "alias"
+              }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$server$/"
+            }
+          ]
         }
       ],
-      "title": "SMART Stats",
+      "title": "SMART",
       "transformations": [
         {
           "id": "organize",
@@ -1522,18 +1794,278 @@
             "includeByName": {},
             "indexByName": {
               "Time": 0,
-              "capacity": 2,
-              "health_ok": 5,
+              "available_spare": 7,
+              "capacity": 3,
+              "critical_warning": 9,
+              "health_ok": 6,
+              "media_errors": 10,
               "name": 1,
-              "power_on_hours": 3,
-              "temperature": 4
+              "num_err_log_entries": 11,
+              "percentage_used": 8,
+              "power_on_hours": 4,
+              "serial": 2,
+              "temperature": 5
             },
             "renameByName": {
+              "available_spare": "Available Spare",
               "capacity": "Capacity",
+              "critical_warning": "Critical Warning",
               "health_ok": "Health",
+              "media_errors": "Media Errors",
               "name": "Device",
+              "num_err_log_entries": "Num Err Log Entries",
+              "percentage_used": "Percentage Used",
               "power_on_hours": "Power on",
-              "temperature": "Temperature"
+              "serial": "Serial",
+              "temperature": "Temperature",
+              "wwn": "WWN"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "influxdb_v2_influxql"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "color-background"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false,
+            "minWidth": 100,
+            "wrapHeaderText": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Spin Up Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "ms"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Serial"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "id": 14,
+      "options": {
+        "cellHeight": "md",
+        "frozenColumns": {
+          "left": 1
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "12.2.0",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": ["serial::tag"],
+              "type": "tag"
+            },
+            {
+              "params": ["name::tag"],
+              "type": "tag"
+            }
+          ],
+          "measurement": "smartctl_attributes",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT last(\"raw_value\") AS \"raw_value\"\nFROM \"smartctl_attributes\"\nWHERE \n(\n\"name\"::tag = 'Raw_Read_Error_Rate' OR \n\"name\"::tag = 'Reallocated_Sector_Ct' OR \n\"name\"::tag = 'Seek_Error_Rate' OR \n\"name\"::tag = 'Spin_Retry_Count' OR \n\"name\"::tag = 'Reallocated_Event_Count' OR \n\"name\"::tag = 'Current_Pending_Sector' OR \n\"name\"::tag = 'Offline_Uncorrectable' OR \n\"name\"::tag = 'Spin_Up_Time'\n)\nAND \"host\"::tag =~ /^$server$/ \nAND $timeFilter \nGROUP BY \"serial\"::tag, \"name\"::tag",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": ["raw_value"],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              },
+              {
+                "params": ["raw_value"],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "name::tag",
+              "operator": "=",
+              "value": "Raw_Read_Error_Rate"
+            },
+            {
+              "condition": "OR",
+              "key": "name::tag",
+              "operator": "=",
+              "value": "Reallocated_Sector_Ct"
+            },
+            {
+              "condition": "OR",
+              "key": "name::tag",
+              "operator": "=",
+              "value": "Seek_Error_Rate"
+            },
+            {
+              "condition": "OR",
+              "key": "name::tag",
+              "operator": "=",
+              "value": "Spin_Retry_Count"
+            },
+            {
+              "condition": "OR",
+              "key": "name::tag",
+              "operator": "=",
+              "value": "Reallocated_Event_Count"
+            },
+            {
+              "condition": "OR",
+              "key": "name::tag",
+              "operator": "=",
+              "value": "Current_Pending_Sector"
+            },
+            {
+              "condition": "OR",
+              "key": "name::tag",
+              "operator": "=",
+              "value": "Offline_Uncorrectable"
+            },
+            {
+              "condition": "OR",
+              "key": "name::tag",
+              "operator": "=",
+              "value": "Spin_Up_Time"
+            },
+            {
+              "condition": "AND",
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$server$/"
+            }
+          ]
+        }
+      ],
+      "title": "SMART Attributes",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "raw_value": {
+                "aggregations": ["last"],
+                "operation": "aggregate"
+              },
+              "serial": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
+          "id": "groupingToMatrix",
+          "options": {
+            "columnField": "name",
+            "emptyValue": "zero",
+            "rowField": "serial",
+            "valueField": "raw_value (last)"
+          }
+        },
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "/_/g",
+            "renamePattern": " "
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "Current Pending Sector": 2,
+              "Offline Uncorrectable": 3,
+              "Raw Read Error Rate": 5,
+              "Reallocated Event Count": 6,
+              "Reallocated Sector Ct": 4,
+              "Seek Error Rate": 7,
+              "Spin Retry Count": 8,
+              "Spin Up Time": 1,
+              "serial": 0
+            },
+            "renameByName": {
+              "Offline Uncorrectable": "Offline Uncorrectable Sector",
+              "Reallocated Sector Ct": "Reallocated Sector",
+              "Spin Retry Count": "",
+              "serial": "Serial"
             }
           }
         }
@@ -1546,7 +2078,41 @@
   "schemaVersion": 42,
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "definition": "SHOW TAG VALUES FROM system WITH KEY=host",
+        "includeAll": false,
+        "label": "Server",
+        "name": "server",
+        "options": [],
+        "query": {
+          "query": "SHOW TAG VALUES FROM system WITH KEY=host",
+          "refId": "InfluxVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "definition": "SELECT last(\"n_cpus\") AS \"n_cpus\" FROM \"system\" WHERE (\"host\"::tag =~ /^$server$/)",
+        "hide": 2,
+        "label": "CPUs count",
+        "name": "n_cpus",
+        "options": [],
+        "query": {
+          "query": "SELECT last(\"n_cpus\") AS \"n_cpus\" FROM \"system\" WHERE (\"host\"::tag =~ /^$server$/)",
+          "refId": "InfluxVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      }
+    ]
   },
   "time": {
     "from": "now-5m",
@@ -1556,6 +2122,6 @@
   "timezone": "browser",
   "title": "System",
   "uid": "aek2tmxcsptz4f",
-  "version": 1,
+  "version": 9,
   "weekStart": "monday"
 }
