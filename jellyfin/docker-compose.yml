@@ -36,6 +36,9 @@ services:
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
       wud.tag.exclude: ^2021.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
 
 networks:
   default:
