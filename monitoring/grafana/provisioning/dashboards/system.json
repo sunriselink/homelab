@@ -1870,7 +1870,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Spin Up Time"
+              "options": "Spin_Up_Time"
             },
             "properties": [
               {
@@ -1888,7 +1888,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Serial"
+              "options": "serial\\name"
             },
             "properties": [
               {
@@ -2122,6 +2122,6 @@
   "timezone": "browser",
   "title": "System",
   "uid": "aek2tmxcsptz4f",
-  "version": 9,
+  "version": 11,
   "weekStart": "monday"
 }
