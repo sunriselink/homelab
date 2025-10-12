@@ -249,7 +249,7 @@
           ]
         }
       ],
-      "title": "CPU usage",
+      "title": "CPU usage ($n_cpus cores)",
       "type": "gauge"
     },
     {
@@ -362,7 +362,7 @@
           ]
         }
       ],
-      "title": "RAM usage",
+      "title": "RAM usage ($mem_total GB)",
       "type": "gauge"
     },
     {
@@ -2111,6 +2111,21 @@
         "refresh": 1,
         "regex": "",
         "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "definition": "SELECT ceil(last(\"total\") / 1024 / 1024 / 1024) FROM \"mem\" WHERE (\"host\"::tag =~ /^$server$/)",
+        "hide": 2,
+        "name": "mem_total",
+        "options": [],
+        "query": {
+          "query": "SELECT ceil(last(\"total\") / 1024 / 1024 / 1024) FROM \"mem\" WHERE (\"host\"::tag =~ /^$server$/)",
+          "refId": "InfluxVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
       }
     ]
   },
@@ -2122,6 +2137,6 @@
   "timezone": "browser",
   "title": "System",
   "uid": "aek2tmxcsptz4f",
-  "version": 11,
+  "version": 12,
   "weekStart": "monday"
 }
