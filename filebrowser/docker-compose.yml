@@ -14,7 +14,7 @@ services:
   # https://hub.docker.com/r/filebrowser/filebrowser/tags
   # https://github.com/filebrowser/filebrowser/releases
   filebrowser:
-    image: filebrowser/filebrowser:v2.44.0
+    image: filebrowser/filebrowser:v2.44.1
     container_name: filebrowser
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
