@@ -69,6 +69,13 @@
         server: docker
         container: dockge
 
+    - AdGuard Home:
+        icon: adguard-home.svg
+        href: https://adguard.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        description: Network-wide ads & trackers blocking DNS server
+        server: docker
+        container: adguard
+
     - Dozzle:
         icon: dozzle.svg
         href: https://dozzle.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
@@ -82,9 +89,6 @@
         href: https://traefik.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         server: docker
         container: traefik
-        widget:
-          type: traefik
-          url: https://traefik.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
 
     - What's Up Docker:
         icon: sh-wud.svg

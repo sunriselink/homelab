@@ -1,0 +1,31 @@
+services:
+  # https://github.com/AdguardTeam/AdGuardHome/releases
+  # https://hub.docker.com/r/adguard/adguardhome/tags
+  adguard:
+    image: adguard/adguardhome:v0.107.67
+    container_name: adguard
+    restart: unless-stopped
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+    networks:
+      - proxy
+    volumes:
+      - ./config:/opt/adguardhome/conf
+      - ./data:/opt/adguardhome/work
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      traefik.enable: true
+      traefik.http.routers.adguard.rule: Host(`adguard.${ROOT_DOMAIN:?}`)
+      traefik.http.routers.adguard.service: adguard
+      traefik.http.services.adguard.loadbalancer.server.port: 80
+      traefik.http.routers.adguard-setup.rule: Host(`adguard-setup.${ROOT_DOMAIN:?}`)
+      traefik.http.routers.adguard-setup.service: adguard-setup
+      traefik.http.services.adguard-setup.loadbalancer.server.port: 3000
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+
+networks:
+  proxy:
+    external: true
