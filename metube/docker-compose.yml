@@ -1,0 +1,39 @@
+services:
+  init:
+    image: alpine
+    working_dir: /tmp/metube
+    entrypoint: ./init.sh
+    environment:
+      NAS_UID: ${NAS_UID:?}
+      NAS_GID: ${NAS_GID:?}
+    volumes:
+      - ./:/tmp/metube
+      - ${PATH_TO_MEDIA:?}:/tmp/media
+
+  metube:
+    # https://github.com/alexta69/metube/pkgs/container/metube
+    # https://github.com/alexta69/metube/releases
+    image: ghcr.io/alexta69/metube:2025.10.23
+    container_name: metube
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    networks:
+      - proxy
+    environment:
+      YTDL_OPTIONS_FILE: /ytdl-options/options.json
+    volumes:
+      - ./ytdl-options:/ytdl-options:ro
+      - ${PATH_TO_MEDIA:?}/downloads:/downloads
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      traefik.enable: true
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+networks:
+  proxy:
+    external: true

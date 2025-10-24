@@ -56,6 +56,13 @@
         server: docker
         container: picard
 
+    - MeTube:
+        icon: metube.svg
+        href: https://metube.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
+        description: Self-hosted YouTube downloader
+        server: docker
+        container: metube
+
 - Admin:
     - Cockpit:
         icon: cockpit-light.svg
