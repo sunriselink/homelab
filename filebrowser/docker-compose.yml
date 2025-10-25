@@ -29,7 +29,12 @@ services:
       - type: tmpfs
         target: /srv
     labels:
+      glance.icon: di:filebrowser
+      glance.url: https://filebrowser.${ROOT_DOMAIN:?}
+      glance.category: media
+
       traefik.enable: true
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

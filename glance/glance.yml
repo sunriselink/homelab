@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/not-first/glance-schema/master/schema.json
+
+branding:
+  hide-footer: true
+
+pages:
+  - name: Home Lab
+    columns:
+      - size: small
+        widgets:
+          - type: dns-stats
+            service: adguard
+            hour-format: 24h
+            cache: 5m
+            url: http://adguard
+            username: ${ADGUARD_USERNAME}
+            password: ${ADGUARD_PASSWORD}
+
+          - type: custom-api
+            title: Docker Images
+            url: http://whats-up-docker:3000/api/containers
+            cache: 5s
+            template: |
+              <div class="flex justify-evenly text-center">
+                <div>
+                  <div class="color-highlight size-h2">{{ len (.JSON.Array "") }}</div>
+                  <div class="size-h4">MONITORING</div>
+                </div>
+                <div>
+                  <div class="color-highlight size-h2">{{ len (.JSON.Array "#(updateAvailable==true)#") }}</div>
+                  <div class="size-h4">UPDATES</div>
+                </div>
+              </div>
+
+      - size: full
+        widgets:
+          - type: docker-containers
+            title: Files & Media
+            category: media
+            format-container-names: true
+            sock-path: tcp://readonly-docker-socket:2375
+
+          - type: docker-containers
+            title: Media Management
+            category: media_management
+            format-container-names: true
+            sock-path: tcp://readonly-docker-socket:2375
+
+          - type: docker-containers
+            title: Admin
+            category: admin
+            format-container-names: true
+            sock-path: tcp://readonly-docker-socket:2375
+
+      - size: small
+        widgets:
+          - type: weather
+            location: ${WEATHER_LOCATION}

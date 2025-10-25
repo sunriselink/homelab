@@ -14,7 +14,7 @@ services:
   # https://github.com/grafana/grafana/releases
   grafana:
     image: grafana/grafana:12.2.0
-    container_name: monitoring_grafana
+    container_name: grafana
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
@@ -31,7 +31,12 @@ services:
       - ./grafana/data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
     labels:
+      glance.icon: di:grafana
+      glance.url: https://grafana.${ROOT_DOMAIN:?}
+      glance.category: admin
+
       traefik.enable: true
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
@@ -45,7 +50,7 @@ services:
     build:
       context: .docker
       dockerfile: telegraf.dockerfile
-    container_name: monitoring_telegraf
+    container_name: telegraf
     restart: unless-stopped
     user: telegraf
     privileged: true #for smartctl
@@ -68,7 +73,7 @@ services:
   # https://github.com/influxdata/influxdb/releases
   influxdb:
     image: influxdb:2.7.12
-    container_name: monitoring_influxdb
+    container_name: influxdb
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     # ports: # debugging

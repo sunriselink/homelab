@@ -72,8 +72,13 @@ services:
       - ./dynamic-conf:/dynamic-conf:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
+      glance.icon: di:traefik
+      glance.url: https://traefik.${ROOT_DOMAIN:?}
+      glance.category: admin
+
       traefik.enable: true
       traefik.http.services.traefik-dashboard.loadbalancer.server.port: 8080
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

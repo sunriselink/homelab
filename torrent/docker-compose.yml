@@ -12,7 +12,7 @@ services:
   # https://github.com/linuxserver/docker-prowlarr/releases
   prowlarr:
     image: ghcr.io/linuxserver/prowlarr:2.0.5
-    container_name: torrent_prowlarr
+    container_name: prowlarr
     restart: unless-stopped
     networks:
       - proxy
@@ -23,7 +23,12 @@ services:
     volumes:
       - ./prowlarr:/config
     labels:
+      glance.icon: di:prowlarr
+      glance.url: https://prowlarr.${ROOT_DOMAIN:?}
+      glance.category: media_management
+
       traefik.enable: true
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
@@ -35,7 +40,7 @@ services:
   # https://github.com/linuxserver/docker-qbittorrent/releases
   qbittorrent:
     image: ghcr.io/linuxserver/qbittorrent:5.1.2
-    container_name: torrent_qbittorrent
+    container_name: qbittorrent
     restart: unless-stopped
     networks:
       - proxy
@@ -52,8 +57,14 @@ services:
       - ./modcache:/modcache
       - ${PATH_TO_MEDIA:?}/downloads:/downloads
     labels:
+      glance.name: qBittorrent
+      glance.icon: di:qbittorrent
+      glance.url: https://qbittorrent.${ROOT_DOMAIN:?}
+      glance.category: media_management
+
       traefik.enable: true
       traefik.http.services.qbittorrent.loadbalancer.server.port: 8080
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

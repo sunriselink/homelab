@@ -40,14 +40,14 @@
         href: https://prowlarr.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         description: Indexer manager/proxy
         server: docker
-        container: torrent_prowlarr
+        container: prowlarr
 
     - qBittorrent:
         icon: qbittorrent.svg
         href: https://qbittorrent.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
         description: BitTorrent client
         server: docker
-        container: torrent_qbittorrent
+        container: qbittorrent
 
     - MusicBrainz Picard:
         icon: musicbrainz.svg
@@ -121,7 +121,7 @@
             href: https://grafana.{{HOMEPAGE_VAR_ROOT_DOMAIN}}
             description: The open and composable observability platform
             server: docker
-            container: monitoring_grafana
+            container: grafana
 
         - Uptime Kuma:
             icon: uptime-kuma.svg

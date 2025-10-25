@@ -15,7 +15,13 @@ services:
       - ./data:/root/.dbgate
       - /etc/localtime:/etc/localtime:ro
     labels:
+      glance.name: DbGate
+      glance.icon: sh:dbgate.png
+      glance.url: https://dbgate.${ROOT_DOMAIN:?}
+      glance.category: admin
+
       traefik.enable: true
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
