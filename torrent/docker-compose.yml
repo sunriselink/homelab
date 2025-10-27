@@ -11,7 +11,7 @@ services:
   # https://github.com/linuxserver/docker-prowlarr/pkgs/container/prowlarr
   # https://github.com/linuxserver/docker-prowlarr/releases
   prowlarr:
-    image: ghcr.io/linuxserver/prowlarr:2.0.5
+    image: ghcr.io/linuxserver/prowlarr:2.1.5
     container_name: prowlarr
     restart: unless-stopped
     networks:
