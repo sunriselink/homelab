@@ -26,7 +26,13 @@ services:
       - ${PATH_TO_MEDIA:?}/downloads:/downloads
       - /etc/localtime:/etc/localtime:ro
     labels:
+      glance.name: MeTube
+      glance.icon: di:metube
+      glance.url: https://metube.${ROOT_DOMAIN:?}
+      glance.category: media_management
+
       traefik.enable: true
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

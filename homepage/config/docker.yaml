@@ -1,3 +1,0 @@
-docker:
-  host: readonly-docker-socket
-  port: 2375

@@ -15,6 +15,11 @@ services:
       - ./data:/opt/adguardhome/work
       - /etc/localtime:/etc/localtime:ro
     labels:
+      glance.name: AdGuard Home
+      glance.icon: di:adguard-home
+      glance.url: https://adguard.${ROOT_DOMAIN:?}
+      glance.category: admin
+
       traefik.enable: true
       traefik.http.routers.adguard.rule: Host(`adguard.${ROOT_DOMAIN:?}`)
       traefik.http.routers.adguard.service: adguard
@@ -22,6 +27,7 @@ services:
       traefik.http.routers.adguard-setup.rule: Host(`adguard-setup.${ROOT_DOMAIN:?}`)
       traefik.http.routers.adguard-setup.service: adguard-setup
       traefik.http.services.adguard-setup.loadbalancer.server.port: 3000
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

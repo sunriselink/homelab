@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/not-first/glance-schema/master/schema.json
+
+branding:
+  app-name: Home Lab
+  hide-footer: true
+
+theme:
+  light: false
+  disable-picker: true
+
+pages:
+  - name: Home Lab
+    columns:
+      - size: small
+        widgets:
+          - type: dns-stats
+            service: adguard
+            hour-format: 24h
+            cache: 5m
+            url: ${ADGUARD_URL}
+            username: ${ADGUARD_USERNAME}
+            password: ${ADGUARD_PASSWORD}
+
+          - $include: extensions/wud.yml
+
+      - size: full
+        widgets:
+          - type: docker-containers
+            title: Files & Media
+            category: media
+            format-container-names: true
+            cache: 10s
+            sock-path: tcp://readonly-docker-socket:2375
+
+          - type: docker-containers
+            title: Media Management
+            category: media_management
+            format-container-names: true
+            cache: 10s
+            sock-path: tcp://readonly-docker-socket:2375
+
+          - type: docker-containers
+            title: Admin
+            category: admin
+            format-container-names: true
+            cache: 10s
+            sock-path: tcp://readonly-docker-socket:2375
+
+      - size: small
+        widgets:
+          - type: weather
+            hour-format: 24h
+            location: ${WEATHER_LOCATION}

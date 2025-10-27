@@ -26,8 +26,17 @@ services:
       - ./config:/config
       - /etc/localtime:/etc/localtime:ro # Use local time via mount /etc/localtime
     labels:
-      traefik.enable: true                # Reverse Proxy support (see traefik/README.md for more examples)
-      wud.watch: true                     # Updates watcher via What's up Docker
+      # Glance integration
+      glance.name: Service Name # Customize service name (by default used normalized container name)
+      glance.icon: di:<service-name> # https://github.com/glanceapp/glance/blob/main/docs/configuration.md#icons
+      glance.url: https://<service-name>.${ROOT_DOMAIN:?}
+      glance.category: <service-category> # See glance/glance.yml
+
+      # Reverse Proxy support (see traefik/README.md for more examples)
+      traefik.enable: true
+
+      # Updates watcher via What's up Docker
+      wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$ # supported 5.0.1 and v5.0.1 formats
     depends_on:

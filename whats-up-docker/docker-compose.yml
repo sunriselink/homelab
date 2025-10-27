@@ -29,8 +29,14 @@ services:
     volumes:
       - ./data:/store
     labels:
+      glance.name: What's Up Docker
+      glance.icon: sh:wud
+      glance.url: https://wud.${ROOT_DOMAIN:?}/containers?update-available=true&group-by-label=com.docker.compose.project
+      glance.category: admin
+
       traefik.enable: true
       traefik.custom.host: wud
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

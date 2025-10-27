@@ -27,8 +27,13 @@ services:
       - ./metadata:/metadata
       - ${PATH_TO_MEDIA:?}/audiobooks:/audiobooks
     labels:
+      glance.icon: di:audiobookshelf
+      glance.url: https://audiobookshelf.${ROOT_DOMAIN:?}
+      glance.category: media
+
       traefik.enable: true
       traefik.http.routers.audiobookshelf.entrypoints: local-secure,external-secure
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

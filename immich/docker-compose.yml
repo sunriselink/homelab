@@ -34,8 +34,13 @@ services:
     volumes:
       - ./data:/usr/src/app/upload
     labels:
+      glance.icon: di:immich
+      glance.url: https://immich.${ROOT_DOMAIN:?}
+      glance.category: media
+
       traefik.enable: true
       traefik.http.routers.immich.entrypoints: local-secure,external-secure
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

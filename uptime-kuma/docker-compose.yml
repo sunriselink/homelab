@@ -14,7 +14,12 @@ services:
     volumes:
       - ./data:/app/data
     labels:
+      glance.icon: di:uptime-kuma
+      glance.url: https://uptime-kuma.${ROOT_DOMAIN:?}
+      glance.category: admin
+
       traefik.enable: true
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

@@ -30,7 +30,12 @@ services:
       - ${PATH_TO_ROOT:?}:${PATH_TO_ROOT:?}:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
+      glance.icon: di:dockge
+      glance.url: https://dockge.${ROOT_DOMAIN:?}
+      glance.category: admin
+
       traefik.enable: true
+
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
