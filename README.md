@@ -2,25 +2,26 @@
 
 ## First steps
 
-- Create a `nas` user (recommended)
-- Add current user to `nas` group (recommended)
 - Create `global.env` file from `global.env.example` and fill missing variables
 - Create `.env` files from `.env.example` for each stack and fill missing variables
 - Set up port forwarding on your router
   - `:80 -> <nas ip>:81`
   - `:443 -> <nas ip>:444`
 - Set up static DNS on your router
-  - `${ROOT_DOMAIN} -> <nas ip>`
   - `*.${ROOT_DOMAIN} -> <nas ip>`
 
 Create required networks
 
 ```sh
-docker network create proxy --opt com.docker.network.bridge.name=br-proxy
-docker network create database --opt com.docker.network.bridge.name=br-database
-docker network create readonly-docker-socket --opt com.docker.network.bridge.name=br-sock_ro
-docker network create admin-docker-socket --opt com.docker.network.bridge.name=br-sock_admin
+docker network create proxy
+docker network create database
+docker network create readonly-docker-socket
+docker network create admin-docker-socket
 ```
+
+> You can override network name
+>
+> `docker network create proxy --opt com.docker.network.bridge.name=br-proxy`
 
 Run Docker Socket Proxy
 
@@ -28,31 +29,13 @@ Run Docker Socket Proxy
 ./compose.sh .admin/docker-socket up -d
 ```
 
-## Global environment variables (`global.env`)
-
-| Variable name        | Description                    | Example or command                   |
-| -------------------- | ------------------------------ | ------------------------------------ |
-| `NAS_UID`            | NAS user PUID                  | `id -u nas`                          |
-| `NAS_GID`            | NAS user PGID                  | `id -g nas`                          |
-| `RENDER_GID`         | `render` group id              | `getent group render \| cut -d: -f3` |
-| `TZ`                 | Current timezone               | `cat /etc/timezone`                  |
-| `PATH_TO_FILES`      | Full path to user files        | /mnt/data/files                      |
-| `PATH_TO_MEDIA`      | Full path to media files       | /mnt/data/media                      |
-| `ROOT_DOMAIN`        | Root domain name               | my-nas.duckdns.org                   |
-| `DUCKDNS_SUBDOMAINS` | Subdomain for DuckDNS          | my-nas                               |
-| `DUCKDNS_TOKEN`      | Token from DuckDNS admin panel |                                      |
-
 ## Container management
 
 ### Local
 
 ```sh
-./compose.sh STACK_NAME COMPOSE_COMMANDS
+./compose.sh <stack_path> <compose_commands>
 ```
-
-### OpenMediaVault
-
-Go to `Services -> Compose -> Files` (`Edit global environment file` button) and place all from `global.env` into text field.
 
 ### Dockge
 
@@ -77,5 +60,5 @@ When file `global.env` changes, recreate Dockge container
 When the versions of Docker images have been changed in the stack (in docker-compose.yml or .dockerfile files), you need to run a command to download new images and rebuild custom versions of images
 
 ```sh
-./update.sh STACK_NAME
+./update.sh <stack_path>
 ```
