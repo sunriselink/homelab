@@ -6,6 +6,7 @@ services:
       - ./:/tmp/immich
     command:
       - /tmp/immich/data
+      - /tmp/immich/data2
       - /tmp/immich/ml
       - /tmp/immich/ml/cache
       - /tmp/immich/ml/config
@@ -14,7 +15,7 @@ services:
       - /tmp/immich/redis
 
   immich:
-    image: ghcr.io/immich-app/immich-server:v2.1.0
+    image: ghcr.io/immich-app/immich-server:v2.2.1
     container_name: immich
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -33,6 +34,7 @@ services:
       TZ: ${TZ:?}
     volumes:
       - ./data:/usr/src/app/upload
+      - ./data2:/data # Fix anonymous volume creating
     labels:
       glance.icon: di:immich
       glance.url: https://immich.${ROOT_DOMAIN:?}
@@ -55,7 +57,7 @@ services:
         condition: service_healthy
 
   immich-machine-learning:
-    image: ghcr.io/immich-app/immich-machine-learning:v2.1.0-openvino
+    image: ghcr.io/immich-app/immich-machine-learning:v2.2.1-openvino
     container_name: immich_ml
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -79,7 +81,7 @@ services:
         condition: service_completed_successfully
 
   immich-redis:
-    image: docker.io/valkey/valkey:8-bookworm@sha256:fea8b3e67b15729d4bb70589eb03367bab9ad1ee89c876f54327fc7c6e618571
+    image: docker.io/valkey/valkey:8@sha256:81db6d39e1bba3b3ff32bd3a1b19a6d69690f94a3954ec131277b9a26b95b3aa
     container_name: immich_redis
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
