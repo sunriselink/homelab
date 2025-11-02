@@ -2,18 +2,18 @@
 
 set -e
 
-if [ "$#" -lt 2 ]; then
-  echo "Illegal number of parameters"
+stack_path=${1%/}
+compose_args=${*:2}
+compose_opts="--env-file global.env"
+
+if [[ -z "$stack_path" || -z "$compose_args" ]]; then
+  echo "Usage: ./$(basename $0) <stack_path> <docker_compose_args>"
   exit 1
 fi
 
-COMPOSE_APP=$1
-COMPOSE_COMMANDS=${*:2}
-COMPOSE_OPTS="--env-file global.env"
-
-if [ -f "$COMPOSE_APP/.env" ]; then
-  COMPOSE_OPTS="$COMPOSE_OPTS --env-file $COMPOSE_APP/.env"
+if [[ -f "$stack_path/.env" ]]; then
+  compose_opts="$compose_opts --env-file $stack_path/.env"
 fi
 
 set -x
-docker compose $COMPOSE_OPTS -f $COMPOSE_APP/docker-compose.yml $COMPOSE_COMMANDS
+docker compose $compose_opts -f $stack_path/docker-compose.yml $compose_args

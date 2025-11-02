@@ -2,9 +2,11 @@
 
 set -e
 
-if [ "$#" -lt 1 ]; then
-  echo "Illegal number of parameters"
+stack_path=$1
+
+if [[ -z "$stack_path" ]]; then
+  echo "Usage: ./$(basename $0) <stack_path>"
   exit 1
 fi
 
-./compose.sh $1 up -d --pull always --force-recreate --build
+./compose.sh $stack_path up -d --pull always --force-recreate --build

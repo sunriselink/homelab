@@ -5,7 +5,7 @@ set -e
 # Remove all init containers (and other containers with exit status 0)
 containers=$(docker ps -qa -f "exited=0")
 
-if [ -n "$containers" ]; then
+if [[ -n "$containers" ]]; then
   docker rm $containers
 else
   echo "No stopped containers with exit status 0"

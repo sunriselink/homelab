@@ -1,6 +1,6 @@
 # Traefik
 
-> Don't forget to change all occurrences of "my-service" to the name of your service (including labels)
+> Don't forget to change all occurrences of "my-service" to the name of your service (including label names)
 
 ## Default settings for reverse proxy activation
 
