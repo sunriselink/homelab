@@ -14,7 +14,7 @@ services:
   # https://github.com/linuxserver/docker-jellyfin/releases
   # https://github.com/jellyfin/jellyfin/releases
   jellyfin:
-    image: ghcr.io/linuxserver/jellyfin:10.11.1
+    image: ghcr.io/linuxserver/jellyfin:10.11.2
     container_name: jellyfin
     restart: unless-stopped
     networks:

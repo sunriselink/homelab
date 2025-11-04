@@ -28,5 +28,3 @@ To compare the contents of the recommended files, run script
 # example
 ./versions-diff.sh v1.134.0 v1.135.3
 ```
-
-> https://github.com/immich-app/immich/releases

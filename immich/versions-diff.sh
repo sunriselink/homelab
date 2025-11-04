@@ -2,26 +2,26 @@
 
 set -e
 
-OLD_VERSION=$1
-NEW_VERSION=$2
+old_version=$1
+new_version=$2
 
-if [ ! -n "${OLD_VERSION}" ] || [ ! -n "${NEW_VERSION}" ]; then
-    echo "Usage: ./$(basename $0) OLD_VERSION NEW_VERSION"
+if [[ -z "${old_version}" || -z "${new_version}" ]]; then
+    echo "Usage: ./$(basename $0) <old_version> <new_version>"
     exit 1
 fi
 
-declare -a FILES=(
+declare -a files=(
     "docker-compose.yml"
     "example.env"
     "hwaccel.ml.yml"
     "hwaccel.transcoding.yml"
 )
 
-for file in "${FILES[@]}"; do
-    OLD_FILE="https://github.com/immich-app/immich/releases/download/${OLD_VERSION}/${file}"
-    NEW_FILE="https://github.com/immich-app/immich/releases/download/${NEW_VERSION}/${file}"
+for file in "${files[@]}"; do
+    old_file="https://github.com/immich-app/immich/releases/download/${old_version}/${file}"
+    new_file="https://github.com/immich-app/immich/releases/download/${new_version}/${file}"
 
     echo "$file:"
-    diff --color=auto <(wget -qO- ${OLD_FILE}) <(wget -qO- ${NEW_FILE}) || true
+    diff --color=auto <(wget -qO- ${old_file}) <(wget -qO- ${new_file}) || true
     echo ""
 done
