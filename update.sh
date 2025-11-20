@@ -9,4 +9,4 @@ if [[ -z "$stack_path" ]]; then
   exit 1
 fi
 
-./compose.sh $stack_path up -d --pull always --force-recreate --build
+./compose.sh $stack_path up -d --pull always --build --force-recreate --remove-orphans
