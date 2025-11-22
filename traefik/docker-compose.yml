@@ -20,6 +20,9 @@ services:
       - proxy
       - readonly-docker-socket
     command:
+      - --global.checkNewVersion=false
+      - --global.sendAnonymousUsage=false
+
       - --api.dashboard
       - --api.insecure
 
