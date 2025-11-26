@@ -3,7 +3,8 @@
 ## First steps
 
 - Create `global.env` file from `global.env.example` and fill missing variables
-- Create `.env` files from `.env.example` for each stack and fill missing variables
+  - To fill variable `ROOT_DOMAIN`, register your domain on https://dynu.com/
+- Create `.env` files from `.env.example` for each stack that you need and fill missing variables
 - Set up port forwarding on your router
   - `:80 -> <nas ip>:81`
   - `:443 -> <nas ip>:444`
@@ -23,11 +24,11 @@ docker network create admin-docker-socket
 >
 > `docker network create proxy --opt com.docker.network.bridge.name=br-proxy`
 
-Run Docker Socket Proxy
+## Minimum set of services
 
-```sh
-./compose.sh .admin/docker-socket up -d
-```
+1. Docker Socket Proxy: `./compose.sh .admin/docker-socket up -d`
+2. DDNS Updater: `./compose.sh ddns-updater up -d`
+3. Traefik: `./compose.sh traefik up -d`
 
 ## Container management
 
@@ -54,6 +55,10 @@ For fix "exited" status just run script
 See https://github.com/louislam/dockge/issues/177
 
 When file `global.env` changes, recreate Dockge container
+
+```sh
+./compose.sh .admin/dockge up -d --force-recreate
+```
 
 ## Manual updating stack
 
