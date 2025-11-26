@@ -1,0 +1,55 @@
+services:
+  init:
+    image: alpine
+    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
+    volumes:
+      - ./:/tmp/ddns-updater
+    command:
+      - /tmp/ddns-updater/data
+
+  ddns-updater:
+    # https://github.com/qdm12/ddns-updater/releases
+    # https://github.com/qdm12/ddns-updater/pkgs/container/ddns-updater
+    image: ghcr.io/qdm12/ddns-updater:2.9.0
+    container_name: ddns-updater
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    networks:
+      - proxy
+    environment:
+      CONFIG: |
+        {
+          "settings": [
+            {
+              "provider": "dynu",
+              "domain": "${ROOT_DOMAIN:?}",
+              "username": "${DYNU_USERNAME:?}",
+              "password": "${DYNU_PASSWORD:?}",
+              "ip_version" :"ipv4"
+            }
+          ]
+        }
+      TZ: ${TZ:?}
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    volumes:
+      - ./data:/updater/data
+    labels:
+      glance.name: DDNS Updater
+      glance.icon: di:ddns-updater
+      glance.url: https://ddns-updater.${ROOT_DOMAIN:?}
+      glance.category: admin
+
+      traefik.enable: true
+
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+networks:
+  proxy:
+    external: true

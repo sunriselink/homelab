@@ -35,7 +35,7 @@ services:
       - --entrypoints.local-secure.address=:443
       - --entrypoints.local-secure.asDefault=true
       - --entrypoints.local-secure.http.middlewares=security-headers@file
-      - --entrypoints.local-secure.http.tls.certResolver=duckdns-resolver
+      - --entrypoints.local-secure.http.tls.certResolver=dynu
       - --entrypoints.local-secure.http.tls.domains[0].main=*.${ROOT_DOMAIN:?}
 
       - --entrypoints.external.address=:81
@@ -44,7 +44,7 @@ services:
 
       - --entrypoints.external-secure.address=:444
       - --entrypoints.external-secure.http.middlewares=security-headers@file
-      - --entrypoints.external-secure.http.tls.certResolver=duckdns-resolver
+      - --entrypoints.external-secure.http.tls.certResolver=dynu
       - --entrypoints.external-secure.http.tls.domains[0].main=*.${ROOT_DOMAIN:?}
 
       - --serversTransport.insecureSkipVerify
@@ -56,12 +56,12 @@ services:
 
       - --providers.file.directory=/dynamic-conf
 
-      - --certificatesResolvers.duckdns-resolver.acme.email=${ACME_EMAIL:?}
-      - --certificatesResolvers.duckdns-resolver.acme.storage=/letsencrypt/acme.json
-      - --certificatesResolvers.duckdns-resolver.acme.dnsChallenge.provider=duckdns
+      - --certificatesResolvers.dynu.acme.email=${ACME_EMAIL:?}
+      - --certificatesResolvers.dynu.acme.storage=/letsencrypt/acme.json
+      - --certificatesResolvers.dynu.acme.dnsChallenge.provider=dynu
     environment:
       ROOT_DOMAIN: ${ROOT_DOMAIN:?}
-      DUCKDNS_TOKEN: ${DUCKDNS_TOKEN:?}
+      DYNU_API_KEY: ${DYNU_API_KEY:?}
     ports:
       - 80:80
       - 81:81
