@@ -10,7 +10,7 @@ services:
   # https://hub.docker.com/_/traefik/tags
   # https://github.com/traefik/traefik/releases
   traefik:
-    image: traefik:v3.6.2
+    image: traefik:v3.6.4
     container_name: traefik
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -30,7 +30,6 @@ services:
 
       - --entrypoints.local.address=:80
       - --entrypoints.local.http.redirections.entrypoint.to=local-secure
-      - --entrypoints.local.http.middlewares=security-headers@file
 
       - --entrypoints.local-secure.address=:443
       - --entrypoints.local-secure.asDefault=true
@@ -40,7 +39,6 @@ services:
 
       - --entrypoints.external.address=:81
       - --entrypoints.external.http.redirections.entrypoint.to=local-secure # 81 -> 443 -> 444 (by router)
-      - --entrypoints.external.http.middlewares=security-headers@file
 
       - --entrypoints.external-secure.address=:444
       - --entrypoints.external-secure.http.middlewares=security-headers@file
