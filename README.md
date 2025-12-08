@@ -27,8 +27,7 @@ docker network create admin-docker-socket
 ## Minimum set of services
 
 1. Docker Socket Proxy: `./compose.sh .admin/docker-socket up -d`
-2. DDNS Updater: `./compose.sh ddns-updater up -d`
-3. Traefik: `./compose.sh traefik up -d`
+2. Traefik: `./compose.sh traefik up -d`
 
 ## Container management
 
