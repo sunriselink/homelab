@@ -1,6 +1,6 @@
 # https://hub.docker.com/_/telegraf/tags
 # https://github.com/influxdata/telegraf/releases
-FROM telegraf:1.36.4
+FROM telegraf:1.37.0
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends sudo smartmontools && \

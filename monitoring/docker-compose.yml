@@ -72,7 +72,7 @@ services:
   # https://hub.docker.com/_/influxdb/tags
   # https://github.com/influxdata/influxdb/releases
   influxdb:
-    image: influxdb:2.7.12
+    image: influxdb:2.8.0
     container_name: influxdb
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
