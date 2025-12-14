@@ -1,0 +1,26 @@
+services:
+  openspeedtest:
+    image: openspeedtest/latest:v2.0.6
+    container_name: openspeedtest
+    restart: unless-stopped
+    networks:
+      - proxy
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - type: tmpfs
+        target: /var/log/letsencrypt
+    labels:
+      glance.name: OpenSpeedTest
+      glance.icon: di:openspeedtest
+      glance.url: https://openspeedtest.${ROOT_DOMAIN:?}/?run
+      glance.category: admin
+
+      traefik.enable: true
+
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+
+networks:
+  proxy:
+    external: true
