@@ -40,6 +40,13 @@ pages:
             sock-path: tcp://readonly-docker-socket:2375
 
           - type: docker-containers
+            title: Monitoring
+            category: monitoring
+            format-container-names: true
+            cache: 10s
+            sock-path: tcp://readonly-docker-socket:2375
+
+          - type: docker-containers
             title: Admin
             category: admin
             format-container-names: true

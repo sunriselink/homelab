@@ -32,7 +32,7 @@ services:
       glance.name: What's Up Docker
       glance.icon: sh:wud
       glance.url: https://wud.${ROOT_DOMAIN:?}/containers?update-available=true&group-by-label=com.docker.compose.project
-      glance.category: admin
+      glance.category: monitoring
 
       traefik.enable: true
       traefik.custom.host: wud

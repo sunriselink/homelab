@@ -17,7 +17,7 @@ services:
     labels:
       glance.icon: di:dozzle
       glance.url: https://dozzle.${ROOT_DOMAIN:?}
-      glance.category: admin
+      glance.category: monitoring
 
       traefik.enable: true
 

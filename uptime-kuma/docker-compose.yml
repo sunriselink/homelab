@@ -16,7 +16,7 @@ services:
     labels:
       glance.icon: di:uptime-kuma
       glance.url: https://uptime-kuma.${ROOT_DOMAIN:?}
-      glance.category: admin
+      glance.category: monitoring
 
       traefik.enable: true
 

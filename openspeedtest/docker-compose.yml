@@ -13,7 +13,7 @@ services:
       glance.name: OpenSpeedTest
       glance.icon: di:openspeedtest
       glance.url: https://openspeedtest.${ROOT_DOMAIN:?}/?run
-      glance.category: admin
+      glance.category: monitoring
 
       traefik.enable: true
 

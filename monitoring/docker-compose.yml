@@ -33,7 +33,7 @@ services:
     labels:
       glance.icon: di:grafana
       glance.url: https://grafana.${ROOT_DOMAIN:?}
-      glance.category: admin
+      glance.category: monitoring
 
       traefik.enable: true
 
