@@ -25,6 +25,7 @@ services:
       WUD_WATCHER_DOCKER_PORT: 2375
       WUD_WATCHER_DOCKER_SOCKET: tcp://readonly-docker-socket
       WUD_WATCHER_DOCKER_WATCHBYDEFAULT: false
+      WUD_WATCHER_DOCKER_WATCHEVENTS: false
       TZ: ${TZ:?}
     volumes:
       - ./data:/store
