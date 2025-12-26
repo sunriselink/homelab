@@ -14,7 +14,7 @@ services:
   # https://github.com/advplyr/audiobookshelf/pkgs/container/audiobookshelf
   # https://github.com/advplyr/audiobookshelf/releases
   audiobookshelf:
-    image: ghcr.io/advplyr/audiobookshelf:2.31.0
+    image: ghcr.io/advplyr/audiobookshelf:2.32.1
     container_name: audiobookshelf
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
