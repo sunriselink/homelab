@@ -7,9 +7,9 @@ services:
     command:
       - /tmp/ddns-updater/data
 
+  # https://github.com/qdm12/ddns-updater/pkgs/container/ddns-updater
+  # https://github.com/qdm12/ddns-updater/releases
   ddns-updater:
-    # https://github.com/qdm12/ddns-updater/releases
-    # https://github.com/qdm12/ddns-updater/pkgs/container/ddns-updater
     image: ghcr.io/qdm12/ddns-updater:2.9.0
     container_name: ddns-updater
     restart: unless-stopped
@@ -31,7 +31,7 @@ services:
         }
       TZ: ${TZ:?}
     dns:
-      - 1.1.1.1
+      - 9.9.9.10
       - 8.8.8.8
     volumes:
       - ./data:/updater/data

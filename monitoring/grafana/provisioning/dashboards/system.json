@@ -29,7 +29,6 @@
       },
       "fieldConfig": {
         "defaults": {
-          "decimals": 1,
           "mappings": [
             {
               "options": {
@@ -54,7 +53,7 @@
               }
             ]
           },
-          "unit": "clocks"
+          "unit": "s"
         },
         "overrides": []
       },
@@ -1628,7 +1627,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "12.3.0",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "groupBy": [
@@ -1915,7 +1914,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "12.3.0",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
           "groupBy": [
@@ -2137,6 +2136,6 @@
   "timezone": "browser",
   "title": "System",
   "uid": "aek2tmxcsptz4f",
-  "version": 16,
+  "version": 18,
   "weekStart": "monday"
 }

@@ -13,3 +13,9 @@ datasources:
       httpHeaderName1: Authorization
     secureJsonData:
       httpHeaderValue1: Token ${INFLUXDB_ADMIN_TOKEN}
+
+  - name: Prometheus
+    type: prometheus
+    uid: prometheus
+    access: proxy
+    url: http://prometheus:9090
