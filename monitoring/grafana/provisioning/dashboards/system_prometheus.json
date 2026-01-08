@@ -19,7 +19,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 0,
+  "id": 10,
   "links": [],
   "panels": [
     {
@@ -838,7 +838,20 @@
           },
           "unit": "Bps"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\(R\\).*/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -870,7 +883,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "-1 * irate(node_disk_read_bytes_total[$__rate_interval])",
+          "expr": "irate(node_disk_read_bytes_total[$__rate_interval])",
           "instant": false,
           "legendFormat": "(R) {{device}}",
           "range": true,
@@ -953,7 +966,20 @@
           },
           "unit": "Bps"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\(R\\).*/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -985,7 +1011,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "-1 * sum(irate(container_fs_reads_bytes_total{image!=\"\"}[$__rate_interval])) by (name, device)",
+          "expr": "sum(irate(container_fs_reads_bytes_total{image!=\"\"}[$__rate_interval])) by (name, device)",
           "instant": false,
           "legendFormat": "(R) {{device}}: {{name}}",
           "range": true,
@@ -1077,7 +1103,20 @@
           },
           "unit": "bps"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/Tx.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -1121,7 +1160,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "-8 * rate(node_network_transmit_bytes_total[$__rate_interval])",
+          "expr": "8 * rate(node_network_transmit_bytes_total[$__rate_interval])",
           "hide": false,
           "instant": false,
           "legendFormat": "Tx {{device}}",
@@ -1192,7 +1231,20 @@
           },
           "unit": "bps"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/Tx.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -1236,7 +1288,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "-8 * sum(rate(container_network_transmit_bytes_total{image!=\"\"}[$__rate_interval])) by (name)",
+          "expr": "8 * sum(rate(container_network_transmit_bytes_total{image!=\"\"}[$__rate_interval])) by (name)",
           "hide": false,
           "instant": false,
           "legendFormat": "Tx {{name}}",
