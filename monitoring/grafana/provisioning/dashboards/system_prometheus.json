@@ -1510,7 +1510,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "smartctl_device_temperature",
+          "expr": "smartctl_device_temperature{temperature_type=\"current\"}",
           "instant": false,
           "legendFormat": "{{device}}",
           "range": true,
@@ -2370,5 +2370,5 @@
   "timezone": "browser",
   "title": "System (Prometheus)",
   "uid": "system_prometheus",
-  "version": 1
+  "version": 2
 }
