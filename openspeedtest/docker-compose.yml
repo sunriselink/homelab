@@ -5,10 +5,10 @@ services:
     restart: unless-stopped
     networks:
       - proxy
+    tmpfs:
+      - /var/log/letsencrypt
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - type: tmpfs
-        target: /var/log/letsencrypt
     labels:
       glance.name: OpenSpeedTest
       glance.icon: di:openspeedtest

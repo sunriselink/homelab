@@ -20,14 +20,14 @@ services:
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
       - proxy
+    tmpfs:
+      - /srv
     volumes:
       - ./database:/database
       - ./config:/config
       - ${PATH_TO_MEDIA:?}:/srv/media
       - ${PATH_TO_FILES:?}:/srv/files
       - /etc/localtime:/etc/localtime:ro
-      - type: tmpfs
-        target: /srv
     labels:
       glance.icon: di:filebrowser
       glance.url: https://filebrowser.${ROOT_DOMAIN:?}

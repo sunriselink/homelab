@@ -6,9 +6,9 @@ services:
       - ./:/tmp/monitoring
     command:
       - /tmp/monitoring/grafana/data
-      - /tmp/monitoring/influxdb
-      - /tmp/monitoring/influxdb/data
-      - /tmp/monitoring/influxdb/config
+      - /tmp/monitoring/prometheus/data
+      - /tmp/monitoring/alertmanager/data
+      - /tmp/monitoring/alertmanager/config
 
   # https://hub.docker.com/r/grafana/grafana/tags
   # https://github.com/grafana/grafana/releases
@@ -25,8 +25,6 @@ services:
       GF_SERVER_DOMAIN: grafana.${ROOT_DOMAIN:?}
       GF_SERVER_ROOT_URL: https://grafana.${ROOT_DOMAIN:?}/
       GF_SERVER_SERVE_FROM_SUB_PATH: false
-      INFLUXDB_BUCKET: ${INFLUXDB_BUCKET:?}
-      INFLUXDB_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN:?}
     volumes:
       - ./grafana/data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
@@ -43,52 +41,171 @@ services:
     depends_on:
       init:
         condition: service_completed_successfully
-      influxdb:
+      prometheus:
         condition: service_healthy
 
-  telegraf:
-    build:
-      context: .docker
-      dockerfile: telegraf.dockerfile
-    container_name: telegraf
-    restart: unless-stopped
-    user: telegraf
-    privileged: true #for smartctl
-    networks:
-      - default
-      - readonly-docker-socket
-    environment:
-      INFLUXDB_ORG: ${INFLUXDB_ORG:?}
-      INFLUXDB_BUCKET: ${INFLUXDB_BUCKET:?}
-      INFLUXDB_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN:?}
-      TELEGRAF_HOSTNAME: ${TELEGRAF_HOSTNAME:?}
-    volumes:
-      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      - /:/hostfs:ro
-    depends_on:
-      influxdb:
-        condition: service_healthy
-
-  # https://hub.docker.com/_/influxdb/tags
-  # https://github.com/influxdata/influxdb/releases
-  influxdb:
-    image: influxdb:2.8.0
-    container_name: influxdb
+  # https://hub.docker.com/r/prom/prometheus/tags
+  # https://github.com/prometheus/prometheus/releases
+  prometheus:
+    image: prom/prometheus:v3.8.1
+    container_name: prometheus
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
-    # ports: # debugging
-    #   - 8086:8086
-    environment:
-      DOCKER_INFLUXDB_INIT_MODE: setup
-      DOCKER_INFLUXDB_INIT_ORG: ${INFLUXDB_ORG:?}
-      DOCKER_INFLUXDB_INIT_BUCKET: ${INFLUXDB_BUCKET:?}
-      DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USERNAME:?}
-      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_PASSWORD:?}
-      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_ADMIN_TOKEN:?}
-      DOCKER_INFLUXDB_INIT_RETENTION: 7d
+    extra_hosts:
+      host.docker.internal: host-gateway
+    networks:
+      - default
+      - proxy
     volumes:
-      - ./influxdb/data:/var/lib/influxdb2
-      - ./influxdb/config:/etc/influxdb2
+      - ./prometheus/data:/prometheus
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml:ro
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: wget -q --spider http://localhost:9090/
+      interval: 10m
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+      start_interval: 5s
+    labels:
+      glance.icon: di:prometheus
+      glance.url: https://prometheus.${ROOT_DOMAIN:?}
+      glance.category: monitoring
+
+      traefik.enable: true
+
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      node-exporter:
+        condition: service_healthy
+      cadvisor:
+        condition: service_healthy
+      smartctl-exporter:
+        condition: service_healthy
+      alertmanager:
+        condition: service_healthy
+
+  # https://hub.docker.com/r/prom/node-exporter/tags
+  # https://github.com/prometheus/node_exporter/releases
+  node-exporter:
+    image: prom/node-exporter:v1.10.2
+    container_name: node-exporter
+    restart: unless-stopped
+    network_mode: host
+    pid: host
+    command:
+      - --path.rootfs=/host
+      - --collector.disable-defaults
+      - --collector.cpu
+      - --collector.diskstats
+      - --collector.filesystem
+      - --collector.filesystem.mount-points-exclude=^/(run|boot|sys|proc|dev)($|/.+)
+      - --collector.hwmon
+      - --collector.meminfo
+      - --collector.netdev
+      - --collector.netdev.device-exclude=^(veth.*|lo|br\-.*|docker.*)$
+      - --collector.stat
+      - --collector.time
+    volumes:
+      - /:/host:ro,rslave
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: wget -q --spider http://localhost:9100/
+      interval: 10m
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+      start_interval: 5s
+    labels:
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+
+  # https://github.com/google/cadvisor/pkgs/container/cadvisor
+  # https://github.com/google/cadvisor/releases
+  cadvisor:
+    image: ghcr.io/google/cadvisor:0.55.1
+    container_name: cadvisor
+    restart: unless-stopped
+    networks:
+      - default
+      - proxy
+    command:
+      - --docker_only
+      - --store_container_labels=false
+      - --housekeeping_interval=10s
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      glance.name: cAdvisor
+      glance.icon: di:cadvisor.png
+      glance.url: https://cadvisor.${ROOT_DOMAIN:?}
+      glance.category: monitoring
+
+      traefik.enable: true
+
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+
+  # https://hub.docker.com/r/prometheuscommunity/smartctl-exporter/tags
+  # https://github.com/prometheus-community/smartctl_exporter/releases
+  smartctl-exporter:
+    image: prometheuscommunity/smartctl-exporter:v0.14.0
+    container_name: smartctl-exporter
+    restart: unless-stopped
+    user: root
+    privileged: true
+    healthcheck:
+      test: wget -q --spider http://localhost:9633/
+      interval: 10m
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+      start_interval: 5s
+    labels:
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+
+  # https://hub.docker.com/r/prom/alertmanager/tags
+  # https://github.com/prometheus/alertmanager/releases
+  alertmanager:
+    image: prom/alertmanager:v0.30.0
+    container_name: alertmanager
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    entrypoint: /app/docker-entrypoint.sh
+    command:
+      - --config.file=/app/config/alertmanager.yml
+      - --storage.path=/app/data
+    networks:
+      - default
+      - proxy
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:?}
+    tmpfs:
+      - /alertmanager
+    volumes:
+      - ./alertmanager:/app
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: wget -q --spider http://localhost:9093/
+      interval: 10m
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+      start_interval: 5s
     labels:
       wud.watch: true
       wud.watch.digest: true
@@ -96,17 +213,10 @@ services:
     depends_on:
       init:
         condition: service_completed_successfully
-    healthcheck:
-      test: curl -f http://localhost:8086/ping
-      interval: 5s
-      timeout: 10s
-      retries: 5
 
 networks:
   default:
     driver_opts:
       com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
   proxy:
-    external: true
-  readonly-docker-socket:
     external: true

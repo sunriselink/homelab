@@ -1,2 +1,4 @@
 /grafana/data
-/influxdb
+/prometheus/data
+/alertmanager/data
+/alertmanager/config

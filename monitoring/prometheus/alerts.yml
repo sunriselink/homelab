@@ -1,0 +1,75 @@
+# yaml-language-server: $schema=https://www.schemastore.org/prometheus.rules.json
+
+groups:
+  - name: prometheus
+    rules:
+      - alert: PrometheusTargetMissing
+        expr: up == 0
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: Prometheus target missing (instance {{ $labels.instance }})
+
+  - name: host
+    rules:
+      - alert: HostHighCpuLoad
+        expr: round(100 * (1 - (avg without (cpu) (rate(node_cpu_seconds_total{mode="idle"}[5m]))))) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: High CPU load ({{ $value }}%)
+
+      - alert: HostHighMemoryUsage
+        expr: round(100 * (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) < 10
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: High memory usage ({{ $value }}% left)
+
+      - alert: HostOutOfDiskSpace
+        expr: round(100 * (node_filesystem_avail_bytes / node_filesystem_size_bytes)) < 10
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: Out of disk space
+          description: Mount point "{{ $labels.mountpoint }}" ({{ $value }}% left)
+
+      - alert: HostPhysicalComponentTooHot
+        expr: node_hwmon_temp_celsius > node_hwmon_temp_max_celsius
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: Host physical component too hot ({{ $labels.chip }})
+
+  - name: docker
+    rules:
+      - alert: ContainerKilled
+        expr: time() - container_last_seen > 60
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: Container "{{ $labels.name }}" was killed
+
+  - name: smartctl
+    rules:
+      - alert: SmartDeviceTemperatureCritical
+        expr: (max_over_time(smartctl_device_temperature{temperature_type="current"}[5m])) > 70
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: SMART device temperature critical ({{ $labels.device }} - {{ $value }} °C)
+
+      - alert: SmartStatusBad
+        expr: smartctl_device_smart_status != 1
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: SMART status BAD ({{ $labels.device }})

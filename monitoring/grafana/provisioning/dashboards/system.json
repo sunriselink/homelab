@@ -24,53 +24,40 @@
   "panels": [
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "influxdb_v2_influxql"
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
-          "decimals": 1,
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "text",
                 "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
-          "unit": "clocks"
+          "unit": "s"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
+        "w": 3,
         "x": 0,
         "y": 0
       },
       "id": 1,
-      "maxDataPoints": 100,
       "options": {
         "colorMode": "none",
         "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
+        "justifyMode": "center",
+        "orientation": "auto",
         "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
@@ -85,44 +72,15 @@
       "targets": [
         {
           "datasource": {
-            "type": "influxdb",
-            "uid": "influxdb_v2_influxql"
+            "type": "prometheus",
+            "uid": "prometheus"
           },
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": ["$interval"],
-              "type": "time"
-            },
-            {
-              "params": ["null"],
-              "type": "fill"
-            }
-          ],
-          "measurement": "system",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": ["uptime"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host::tag",
-              "operator": "=~",
-              "value": "/^$server$/"
-            }
-          ]
+          "editorMode": "code",
+          "expr": "node_time_seconds - node_boot_time_seconds",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
         }
       ],
       "title": "Uptime",
@@ -130,132 +88,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "influxdb_v2_influxql"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 1,
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "rgba(50, 172, 45, 0.97)",
-                "value": 0
-              },
-              {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": 70
-              },
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 0
-      },
-      "id": 2,
-      "maxDataPoints": 100,
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "influxdb_v2_influxql"
-          },
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": ["$interval"],
-              "type": "time"
-            },
-            {
-              "params": ["null"],
-              "type": "fill"
-            }
-          ],
-          "measurement": "cpu",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": ["usage_idle"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["* -1 + 100"],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "condition": "AND",
-              "key": "cpu",
-              "operator": "=",
-              "value": "cpu-total"
-            },
-            {
-              "condition": "AND",
-              "key": "host::tag",
-              "operator": "=~",
-              "value": "/^$server$/"
-            }
-          ]
-        }
-      ],
-      "title": "CPU usage ($n_cpus cores)",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "influxdb_v2_influxql"
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -263,32 +97,18 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
+          "mappings": [],
           "max": 100,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "rgba(50, 172, 45, 0.97)",
+                "color": "green",
                 "value": 0
               },
               {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": 70
-              },
-              {
-                "color": "rgba(245, 54, 54, 0.9)",
+                "color": "red",
                 "value": 80
               }
             ]
@@ -299,76 +119,82 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 8,
+        "w": 9,
+        "x": 3,
         "y": 0
       },
-      "id": 3,
-      "maxDataPoints": 100,
+      "id": 2,
       "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
+        "displayMode": "gradient",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 50,
+        "minVizHeight": 0,
+        "minVizWidth": 8,
+        "namePlacement": "top",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
       },
       "pluginVersion": "12.3.1",
       "targets": [
         {
           "datasource": {
-            "type": "influxdb",
-            "uid": "influxdb_v2_influxql"
+            "type": "prometheus",
+            "uid": "prometheus"
           },
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": ["$interval"],
-              "type": "time"
-            },
-            {
-              "params": ["null"],
-              "type": "fill"
-            }
-          ],
-          "measurement": "mem",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": ["used_percent"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host::tag",
-              "operator": "=~",
-              "value": "/^$server$/"
-            }
-          ]
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "100 * (1 - avg(irate(node_cpu_seconds_total{mode=\"idle\"}[30s])))",
+          "instant": false,
+          "legendFormat": "CPU ($cpu_cores cores)",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "RAM ($mem_total GB)",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "100 * (1 - (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "SWAP ($swap_total GB)",
+          "range": true,
+          "refId": "C"
         }
       ],
-      "title": "RAM usage ($mem_total GB)",
-      "type": "gauge"
+      "title": "",
+      "type": "bargauge"
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "influxdb_v2_influxql"
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -394,7 +220,7 @@
         "x": 12,
         "y": 0
       },
-      "id": 7,
+      "id": 4,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -414,52 +240,24 @@
       "targets": [
         {
           "datasource": {
-            "type": "influxdb",
-            "uid": "influxdb_v2_influxql"
+            "type": "prometheus",
+            "uid": "prometheus"
           },
-          "groupBy": [
-            {
-              "params": ["$__interval"],
-              "type": "time"
-            },
-            {
-              "params": ["null"],
-              "type": "fill"
-            }
-          ],
-          "measurement": "docker",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": ["n_containers_running"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host::tag",
-              "operator": "=~",
-              "value": "/^$server$/"
-            }
-          ]
+          "editorMode": "code",
+          "expr": "engine_daemon_container_states_containers{state=\"running\"}",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
         }
       ],
-      "title": "Running containers",
+      "title": "Containers UP",
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "influxdb_v2_influxql"
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -471,15 +269,11 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent",
-                "value": 0
-              },
-              {
                 "color": "green",
                 "value": 0
               },
               {
-                "color": "dark-red",
+                "color": "red",
                 "value": 1
               }
             ]
@@ -493,7 +287,7 @@
         "x": 15,
         "y": 0
       },
-      "id": 8,
+      "id": 19,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -513,52 +307,24 @@
       "targets": [
         {
           "datasource": {
-            "type": "influxdb",
-            "uid": "influxdb_v2_influxql"
+            "type": "prometheus",
+            "uid": "prometheus"
           },
-          "groupBy": [
-            {
-              "params": ["$__interval"],
-              "type": "time"
-            },
-            {
-              "params": ["null"],
-              "type": "fill"
-            }
-          ],
-          "measurement": "docker",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": ["n_containers_stopped"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host::tag",
-              "operator": "=~",
-              "value": "/^$server$/"
-            }
-          ]
+          "editorMode": "code",
+          "expr": "engine_daemon_container_states_containers{state=\"stopped\"}",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
         }
       ],
-      "title": "Stopped containers",
+      "title": "Containers DOWN",
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "influxdb_v2_influxql"
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -566,21 +332,9 @@
             "mode": "thresholds"
           },
           "decimals": 0,
-          "displayName": "${__field.labels}",
-          "fieldMinMax": false,
-          "mappings": [
-            {
-              "options": {
-                "pattern": "/^\\/hostfs(\\/)?/",
-                "result": {
-                  "index": 0,
-                  "text": "/"
-                }
-              },
-              "type": "regex"
-            }
-          ],
+          "mappings": [],
           "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -589,11 +343,7 @@
                 "value": 0
               },
               {
-                "color": "orange",
-                "value": 60
-              },
-              {
-                "color": "dark-red",
+                "color": "red",
                 "value": 80
               }
             ]
@@ -608,81 +358,52 @@
         "x": 18,
         "y": 0
       },
-      "id": 9,
+      "id": 8,
       "options": {
-        "displayMode": "lcd",
+        "displayMode": "gradient",
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": false
         },
-        "maxVizHeight": 35,
-        "minVizHeight": 16,
+        "maxVizHeight": 50,
+        "minVizHeight": 0,
         "minVizWidth": 8,
-        "namePlacement": "auto",
+        "namePlacement": "top",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
-          "fields": "/^used$/",
-          "values": true
+          "fields": "",
+          "values": false
         },
         "showUnfilled": true,
-        "sizing": "manual",
+        "sizing": "auto",
         "valueMode": "color"
       },
       "pluginVersion": "12.3.1",
       "targets": [
         {
-          "groupBy": [
-            {
-              "params": ["path::tag"],
-              "type": "tag"
-            }
-          ],
-          "measurement": "disk",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": ["used_percent"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["used"],
-                "type": "alias"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "path::tag",
-              "operator": "!~",
-              "value": "/etc/"
-            },
-            {
-              "condition": "AND",
-              "key": "host::tag",
-              "operator": "=~",
-              "value": "/^$server$/"
-            }
-          ]
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "100 * (1 - node_filesystem_avail_bytes / node_filesystem_size_bytes)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{mountpoint}}",
+          "range": true,
+          "refId": "A"
         }
       ],
-      "title": "Disks usage",
+      "title": "Mountpoint usage",
       "type": "bargauge"
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "influxdb_v2_influxql"
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -695,11 +416,10 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "axisSoftMax": 10,
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 14,
+            "fillOpacity": 10,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -711,7 +431,7 @@
             "lineStyle": {
               "fill": "solid"
             },
-            "lineWidth": 2,
+            "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -724,26 +444,19 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "dashed+area"
+              "mode": "off"
             }
           },
-          "decimals": 1,
-          "fieldMinMax": false,
+          "decimals": 0,
           "mappings": [],
+          "max": 100,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "transparent",
                 "value": 0
-              },
-              {
-                "color": "#EAB839",
-                "value": 80
-              },
-              {
-                "color": "red",
-                "value": 90
               }
             ]
           },
@@ -760,101 +473,41 @@
       "id": 5,
       "options": {
         "legend": {
-          "calcs": ["mean", "lastNotNull", "max"],
+          "calcs": ["mean", "lastNotNull"],
           "displayMode": "table",
           "placement": "right",
           "showLegend": true,
-          "sortBy": "Mean",
-          "sortDesc": true
+          "sortBy": "Name",
+          "sortDesc": false
         },
         "tooltip": {
           "hideZeros": false,
-          "mode": "multi",
-          "sort": "desc"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "12.3.1",
       "targets": [
         {
-          "alias": "$tag_container_name",
           "datasource": {
-            "type": "influxdb",
-            "uid": "influxdb_v2_influxql"
+            "type": "prometheus",
+            "uid": "prometheus"
           },
-          "groupBy": [
-            {
-              "params": ["10s"],
-              "type": "time"
-            },
-            {
-              "params": ["container_name::tag"],
-              "type": "tag"
-            },
-            {
-              "params": ["null"],
-              "type": "fill"
-            }
-          ],
-          "measurement": "docker_container_cpu",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "cpu_usage",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": ["usage_percent"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "max"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host::tag",
-              "operator": "=~",
-              "value": "/^$server$/"
-            }
-          ]
+          "editorMode": "code",
+          "expr": "100 * (1 - irate(node_cpu_seconds_total{mode=\"idle\"}[$__rate_interval]))",
+          "instant": false,
+          "legendFormat": "Core {{cpu}}",
+          "range": true,
+          "refId": "A"
         }
       ],
-      "title": "CPU usage (containers)",
-      "transformations": [
-        {
-          "id": "calculateField",
-          "options": {
-            "binary": {
-              "left": {
-                "matcher": {
-                  "id": "byType",
-                  "options": "number"
-                }
-              },
-              "operator": "/",
-              "right": {
-                "matcher": {
-                  "id": "byName",
-                  "options": "$n_cpus"
-                }
-              }
-            },
-            "mode": "binary",
-            "reduce": {
-              "reducer": "sum"
-            },
-            "replaceFields": true
-          }
-        }
-      ],
+      "title": "CPU Usage %",
       "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "influxdb_v2_influxql"
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -867,10 +520,12 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
+            "axisSoftMax": 10,
+            "axisSoftMin": 0,
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 25,
+            "fillOpacity": 10,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -882,145 +537,7 @@
             "lineStyle": {
               "fill": "solid"
             },
-            "lineWidth": 2,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "showValues": false,
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 1,
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "transparent",
-                "value": 0
-              }
-            ]
-          },
-          "unit": "decbytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 4
-      },
-      "id": 6,
-      "options": {
-        "legend": {
-          "calcs": ["mean", "lastNotNull", "max"],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "sortBy": "Mean",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "pluginVersion": "12.3.1",
-      "targets": [
-        {
-          "alias": "$tag_container_name",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "influxdb_v2_influxql"
-          },
-          "groupBy": [
-            {
-              "params": ["10s"],
-              "type": "time"
-            },
-            {
-              "params": ["container_name::tag"],
-              "type": "tag"
-            },
-            {
-              "params": ["none"],
-              "type": "fill"
-            }
-          ],
-          "measurement": "docker_container_mem",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": ["usage"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host::tag",
-              "operator": "=~",
-              "value": "/^$server$/"
-            }
-          ]
-        }
-      ],
-      "title": "RAM usage (containers)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "influxdb_v2_influxql"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "axisSoftMax": 65,
-            "axisSoftMin": 30,
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "smooth",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 2,
+            "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -1036,7 +553,865 @@
               "mode": "dashed+area"
             }
           },
-          "decimals": 0,
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": ["mean", "lastNotNull"],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "100 * sum(irate(container_cpu_usage_seconds_total{image!=\"\"}[$__rate_interval]) / scalar(machine_cpu_cores)) by (name)",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "CPU Usage % (per container)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": 8589934592,
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SWAP"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "id": 7,
+      "options": {
+        "legend": {
+          "calcs": ["mean", "lastNotNull"],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Cached_bytes - node_memory_Buffers_bytes - node_memory_SReclaimable_bytes",
+          "instant": false,
+          "legendFormat": "RAM",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "node_memory_SwapTotal_bytes - node_memory_SwapFree_bytes",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "SWAP",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "RAM Usage",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 9,
+      "options": {
+        "legend": {
+          "calcs": ["mean", "lastNotNull"],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(container_memory_working_set_bytes{image!=\"\"}) by(name)",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "RAM Usage (per container)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": true,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\(R\\).*/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 20
+      },
+      "id": 17,
+      "options": {
+        "legend": {
+          "calcs": ["mean", "lastNotNull"],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "irate(node_disk_read_bytes_total[$__rate_interval])",
+          "instant": false,
+          "legendFormat": "(R) {{device}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "irate(node_disk_written_bytes_total[$__rate_interval])",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "(W) {{device}}",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Disk I/O",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": true,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/\\(R\\).*/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 20
+      },
+      "id": 18,
+      "options": {
+        "legend": {
+          "calcs": ["mean", "lastNotNull"],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(irate(container_fs_reads_bytes_total{image!=\"\"}[$__rate_interval])) by (name, device)",
+          "instant": false,
+          "legendFormat": "(R) {{device}}: {{name}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(irate(container_fs_writes_bytes_total{image!=\"\"}[$__rate_interval])) by (name, device)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "(W) {{device}}: {{name}}",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Disk I/O (per container)",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "(.*)\\/dev\\/(.*)",
+            "renamePattern": "$1$2"
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": true,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 9,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/Tx.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 28
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": ["mean", "lastNotNull"],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "8 * rate(node_network_receive_bytes_total[$__rate_interval])",
+          "instant": false,
+          "legendFormat": "Rx {{device}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "8 * rate(node_network_transmit_bytes_total[$__rate_interval])",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Tx {{device}}",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Network Traffic",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": true,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bps"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/Tx.*/"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 28
+      },
+      "id": 16,
+      "options": {
+        "legend": {
+          "calcs": ["mean", "lastNotNull"],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Mean",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "8 * sum(rate(container_network_receive_bytes_total{image!=\"\"}[$__rate_interval])) by (name)",
+          "instant": false,
+          "legendFormat": "Rx {{name}}",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "8 * sum(rate(container_network_transmit_bytes_total{image!=\"\"}[$__rate_interval])) by (name)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Tx {{name}}",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Network Traffic (per container)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": 60,
+            "axisSoftMin": 30,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "dashed+area"
+            }
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1063,79 +1438,44 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 12
+        "y": 36
       },
       "id": 10,
       "options": {
         "legend": {
-          "calcs": ["mean", "lastNotNull", "max"],
+          "calcs": ["mean", "lastNotNull"],
           "displayMode": "table",
           "placement": "right",
           "showLegend": true
         },
         "tooltip": {
           "hideZeros": false,
-          "mode": "multi",
+          "mode": "single",
           "sort": "none"
         }
       },
       "pluginVersion": "12.3.1",
       "targets": [
         {
-          "alias": "$tag_sensor",
-          "groupBy": [
-            {
-              "params": ["10s"],
-              "type": "time"
-            },
-            {
-              "params": ["sensor::tag"],
-              "type": "tag"
-            },
-            {
-              "params": ["none"],
-              "type": "fill"
-            }
-          ],
-          "measurement": "temp",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": ["temp"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "max"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "sensor::tag",
-              "operator": "=~",
-              "value": "/coretemp_core/"
-            },
-            {
-              "condition": "AND",
-              "key": "host::tag",
-              "operator": "=~",
-              "value": "/^$server$/"
-            }
-          ]
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "node_hwmon_temp_celsius{chip=~\"platform_coretemp.*\"} * on (chip, sensor) group_left (label) node_hwmon_sensor_label",
+          "instant": false,
+          "legendFormat": "{{label}}",
+          "range": true,
+          "refId": "A"
         }
       ],
-      "title": "CPU temp °C",
+      "title": "CPU Temp °C",
       "transformations": [
         {
           "id": "renameByRegex",
           "options": {
-            "regex": "coretemp_(.*)",
-            "renamePattern": "$1"
+            "regex": "Package id 0",
+            "renamePattern": "As whole"
           }
         }
       ],
@@ -1143,8 +1483,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "influxdb_v2_influxql"
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1162,7 +1502,7 @@
             "barAlignment": 0,
             "barWidthFactor": 0.6,
             "drawStyle": "line",
-            "fillOpacity": 0,
+            "fillOpacity": 10,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -1171,7 +1511,7 @@
             },
             "insertNulls": false,
             "lineInterpolation": "smooth",
-            "lineWidth": 2,
+            "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -1213,73 +1553,44 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 12
+        "y": 36
       },
       "id": 11,
       "options": {
         "legend": {
-          "calcs": ["mean", "lastNotNull", "max"],
+          "calcs": ["mean", "lastNotNull"],
           "displayMode": "table",
           "placement": "right",
           "showLegend": true
         },
         "tooltip": {
           "hideZeros": false,
-          "mode": "multi",
+          "mode": "single",
           "sort": "none"
         }
       },
       "pluginVersion": "12.3.1",
       "targets": [
         {
-          "alias": "$tag_name",
-          "groupBy": [
-            {
-              "params": ["10s"],
-              "type": "time"
-            },
-            {
-              "params": ["name::tag"],
-              "type": "tag"
-            },
-            {
-              "params": ["none"],
-              "type": "fill"
-            }
-          ],
-          "measurement": "smartctl",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": ["temperature"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "max"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host::tag",
-              "operator": "=~",
-              "value": "/^$server$/"
-            }
-          ]
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "smartctl_device_temperature{temperature_type=\"current\"}",
+          "instant": false,
+          "legendFormat": "{{device}}",
+          "range": true,
+          "refId": "A"
         }
       ],
-      "title": "Disks temp °C",
+      "title": "Disk Temp °C",
       "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "influxdb_v2_influxql"
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1295,8 +1606,6 @@
               "reducers": []
             },
             "inspect": false,
-            "minWidth": 100,
-            "wrapHeaderText": true,
             "wrapText": false
           },
           "mappings": [],
@@ -1314,34 +1623,37 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "health_ok"
+              "options": "Power on"
             },
             "properties": [
               {
-                "id": "custom.cellOptions",
-                "value": {
-                  "applyToRow": false,
-                  "mode": "gradient",
-                  "type": "color-background"
-                }
-              },
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Health"
+            },
+            "properties": [
               {
                 "id": "mappings",
                 "value": [
                   {
                     "options": {
-                      "match": "true",
-                      "result": {
+                      "1": {
                         "color": "green",
                         "index": 0,
                         "text": "Good"
                       }
                     },
-                    "type": "special"
+                    "type": "value"
                   },
                   {
                     "options": {
-                      "pattern": "^(?!true$).*",
+                      "pattern": ".*",
                       "result": {
                         "color": "red",
                         "index": 1,
@@ -1351,25 +1663,228 @@
                     "type": "regex"
                   }
                 ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "applyToRow": false,
+                  "mode": "gradient",
+                  "type": "color-background"
+                }
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "power_on_hours"
+              "options": "Capacity"
             },
             "properties": [
               {
                 "id": "unit",
-                "value": "h"
+                "value": "decbytes"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 44
+      },
+      "id": 12,
+      "options": {
+        "cellHeight": "sm",
+        "frozenColumns": {
+          "left": 1
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "12.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(smartctl_device) by (device, model_name)",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Device Info"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(smartctl_device_capacity_bytes) by (device)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Device Capacity"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(smartctl_device_power_on_seconds) by (device)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Power on seconds"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(smartctl_device_smart_status) by (device)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Device Status"
+        }
+      ],
+      "title": "S.M.A.R.T. (Overview)",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value #Device Info": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "Time": 0,
+              "Value #Device Capacity": 3,
+              "Value #Device Info": 6,
+              "Value #Device Status": 5,
+              "Value #Power on seconds": 4,
+              "device": 1,
+              "model_name": 2
+            },
+            "renameByName": {
+              "Time": "",
+              "Value #Device Capacity": "Capacity",
+              "Value #Device Status": "Health",
+              "Value #Power on Seconds": "Power on seconds",
+              "Value #Power on seconds": "Power on",
+              "device": "Device",
+              "model_name": "Model name"
+            }
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "string",
+                "targetField": "Health"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "footer": {
+              "reducers": []
+            },
+            "inspect": false,
+            "minWidth": 100,
+            "wrapHeaderText": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Available spare"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "red",
+                      "value": 0
+                    },
+                    {
+                      "color": "green",
+                      "value": 100
+                    }
+                  ]
+                }
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "capacity"
+              "options": "Bytes read"
             },
             "properties": [
               {
@@ -1381,93 +1896,19 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "temperature"
+              "options": "Bytes written"
             },
             "properties": [
               {
                 "id": "unit",
-                "value": "degree"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "green",
-                      "value": 0
-                    },
-                    {
-                      "color": "#EAB839",
-                      "value": 50
-                    },
-                    {
-                      "color": "red",
-                      "value": 60
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "applyToRow": false,
-                  "mode": "gradient",
-                  "type": "color-background"
-                }
+                "value": "decbytes"
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "available_spare"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "percent"
-              },
-              {
-                "id": "thresholds",
-                "value": {
-                  "mode": "absolute",
-                  "steps": [
-                    {
-                      "color": "transparent",
-                      "value": 0
-                    },
-                    {
-                      "color": "red",
-                      "value": 0
-                    },
-                    {
-                      "color": "orange",
-                      "value": 50
-                    },
-                    {
-                      "color": "yellow",
-                      "value": 70
-                    },
-                    {
-                      "color": "green",
-                      "value": 90
-                    }
-                  ]
-                }
-              },
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "color-background"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "critical_warning"
+              "options": "Critical warning"
             },
             "properties": [
               {
@@ -1481,10 +1922,6 @@
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    {
-                      "color": "transparent",
-                      "value": 0
-                    },
                     {
                       "color": "green",
                       "value": 0
@@ -1501,7 +1938,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "media_errors"
+              "options": "Media errors"
             },
             "properties": [
               {
@@ -1515,10 +1952,6 @@
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    {
-                      "color": "transparent",
-                      "value": 0
-                    },
                     {
                       "color": "green",
                       "value": 0
@@ -1535,7 +1968,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "num_err_log_entries"
+              "options": "Num err log entries"
             },
             "properties": [
               {
@@ -1549,10 +1982,6 @@
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    {
-                      "color": "transparent",
-                      "value": 0
-                    },
                     {
                       "color": "green",
                       "value": 0
@@ -1569,7 +1998,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "percentage_used"
+              "options": "Percentage used"
             },
             "properties": [
               {
@@ -1577,14 +2006,16 @@
                 "value": "percent"
               },
               {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    {
-                      "color": "transparent",
-                      "value": 0
-                    },
                     {
                       "color": "green",
                       "value": 0
@@ -1595,196 +2026,138 @@
                     }
                   ]
                 }
-              },
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "color-background"
-                }
               }
             ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Media Errors"
-            },
-            "properties": []
           }
         ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 5,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 49
       },
       "id": 13,
       "options": {
-        "cellHeight": "md",
+        "cellHeight": "sm",
         "frozenColumns": {
           "left": 1
         },
-        "showHeader": true,
-        "sortBy": []
+        "showHeader": true
       },
-      "pluginVersion": "12.3.0",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
-          "groupBy": [
-            {
-              "params": ["name::tag"],
-              "type": "tag"
-            },
-            {
-              "params": ["serial::tag"],
-              "type": "tag"
-            }
-          ],
-          "measurement": "smartctl",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": ["health_ok"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["health_ok"],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": ["power_on_hours"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["power_on_hours"],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": ["capacity"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["capacity"],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": ["temperature"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["temperature"],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": ["available_spare"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["available_spare"],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": ["critical_warning"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["critical_warning"],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": ["media_errors"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["media_errors"],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": ["num_err_log_entries"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["num_err_log_entries"],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": ["percentage_used"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["percentage_used"],
-                "type": "alias"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host::tag",
-              "operator": "=~",
-              "value": "/^$server$/"
-            }
-          ]
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(smartctl_device_available_spare) by (device)",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Available Spare"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(smartctl_device_bytes_read) by (device)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Bytes Read"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(smartctl_device_bytes_written) by(device)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Bytes Written"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(smartctl_device_critical_warning) by(device)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Critical Warning"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(smartctl_device_media_errors) by(device)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Media Errors"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(smartctl_device_num_err_log_entries) by(device)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Num Err Log Entries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(smartctl_device_percentage_used) by(device)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "Percentage Used"
         }
       ],
-      "title": "SMART",
+      "title": "S.M.A.R.T. (NVMe)",
       "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
         {
           "id": "organize",
           "options": {
@@ -1794,31 +2167,25 @@
             "includeByName": {},
             "indexByName": {
               "Time": 0,
-              "available_spare": 7,
-              "capacity": 3,
-              "critical_warning": 9,
-              "health_ok": 6,
-              "media_errors": 10,
-              "name": 1,
-              "num_err_log_entries": 11,
-              "percentage_used": 8,
-              "power_on_hours": 4,
-              "serial": 2,
-              "temperature": 5
+              "Value #Available Spare": 4,
+              "Value #Bytes Read": 2,
+              "Value #Bytes Written": 3,
+              "Value #Critical Warning": 6,
+              "Value #Media Errors": 7,
+              "Value #Num Err Log Entries": 8,
+              "Value #Percentage Used": 5,
+              "device": 1
             },
             "renameByName": {
-              "available_spare": "Available Spare",
-              "capacity": "Capacity",
-              "critical_warning": "Critical Warning",
-              "health_ok": "Health",
-              "media_errors": "Media Errors",
-              "name": "Device",
-              "num_err_log_entries": "Num Err Log Entries",
-              "percentage_used": "Percentage Used",
-              "power_on_hours": "Power on",
-              "serial": "Serial",
-              "temperature": "Temperature",
-              "wwn": "WWN"
+              "Time": "",
+              "Value #Available Spare": "Available spare",
+              "Value #Bytes Read": "Bytes read",
+              "Value #Bytes Written": "Bytes written",
+              "Value #Critical Warning": "Critical warning",
+              "Value #Media Errors": "Media errors",
+              "Value #Num Err Log Entries": "Num err log entries",
+              "Value #Percentage Used": "Percentage used",
+              "device": "Device"
             }
           }
         }
@@ -1827,8 +2194,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "influxdb_v2_influxql"
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1836,7 +2203,7 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": "auto",
+            "align": "left",
             "cellOptions": {
               "type": "color-background"
             },
@@ -1852,10 +2219,6 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": 0
-              },
-              {
                 "color": "green",
                 "value": 0
               },
@@ -1870,7 +2233,21 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Spin_Up_Time"
+              "options": "device\\attribute_name"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Spin Up Time"
             },
             "properties": [
               {
@@ -1884,145 +2261,56 @@
                 }
               }
             ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "serial\\name"
-            },
-            "properties": [
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "auto"
-                }
-              }
-            ]
           }
         ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 5,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 54
       },
       "id": 14,
       "options": {
-        "cellHeight": "md",
+        "cellHeight": "sm",
         "frozenColumns": {
           "left": 1
         },
-        "showHeader": true
+        "showHeader": true,
+        "sortBy": []
       },
-      "pluginVersion": "12.3.0",
+      "pluginVersion": "12.3.1",
       "targets": [
         {
-          "groupBy": [
-            {
-              "params": ["serial::tag"],
-              "type": "tag"
-            },
-            {
-              "params": ["name::tag"],
-              "type": "tag"
-            }
-          ],
-          "measurement": "smartctl_attributes",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT last(\"raw_value\") AS \"raw_value\"\nFROM \"smartctl_attributes\"\nWHERE \n(\n\"name\"::tag = 'Raw_Read_Error_Rate' OR \n\"name\"::tag = 'Reallocated_Sector_Ct' OR \n\"name\"::tag = 'Seek_Error_Rate' OR \n\"name\"::tag = 'Spin_Retry_Count' OR \n\"name\"::tag = 'Reallocated_Event_Count' OR \n\"name\"::tag = 'Current_Pending_Sector' OR \n\"name\"::tag = 'Offline_Uncorrectable' OR \n\"name\"::tag = 'Spin_Up_Time'\n)\nAND \"host\"::tag =~ /^$server$/ \nAND $timeFilter \nGROUP BY \"serial\"::tag, \"name\"::tag",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": ["raw_value"],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              },
-              {
-                "params": ["raw_value"],
-                "type": "alias"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "name::tag",
-              "operator": "=",
-              "value": "Raw_Read_Error_Rate"
-            },
-            {
-              "condition": "OR",
-              "key": "name::tag",
-              "operator": "=",
-              "value": "Reallocated_Sector_Ct"
-            },
-            {
-              "condition": "OR",
-              "key": "name::tag",
-              "operator": "=",
-              "value": "Seek_Error_Rate"
-            },
-            {
-              "condition": "OR",
-              "key": "name::tag",
-              "operator": "=",
-              "value": "Spin_Retry_Count"
-            },
-            {
-              "condition": "OR",
-              "key": "name::tag",
-              "operator": "=",
-              "value": "Reallocated_Event_Count"
-            },
-            {
-              "condition": "OR",
-              "key": "name::tag",
-              "operator": "=",
-              "value": "Current_Pending_Sector"
-            },
-            {
-              "condition": "OR",
-              "key": "name::tag",
-              "operator": "=",
-              "value": "Offline_Uncorrectable"
-            },
-            {
-              "condition": "OR",
-              "key": "name::tag",
-              "operator": "=",
-              "value": "Spin_Up_Time"
-            },
-            {
-              "condition": "AND",
-              "key": "host::tag",
-              "operator": "=~",
-              "value": "/^$server$/"
-            }
-          ]
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(smartctl_device_attribute{attribute_value_type=\"raw\", attribute_name=~\"Offline_Uncorrectable|Reallocated_Sector_Ct|Spin_Up_Time|Raw_Read_Error_Rate|Spin_Retry_Count|Reallocated_Event_Count|Current_Pending_Sector|Seek_Error_Rate\"}) by (device, attribute_name)",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
         }
       ],
-      "title": "SMART Attributes",
+      "title": "S.M.A.R.T. (SATA)",
       "transformations": [
         {
           "id": "groupBy",
           "options": {
             "fields": {
-              "name": {
+              "Value": {
+                "aggregations": ["lastNotNull"],
+                "operation": "aggregate"
+              },
+              "attribute_name": {
                 "aggregations": [],
                 "operation": "groupby"
               },
-              "raw_value": {
-                "aggregations": ["last"],
-                "operation": "aggregate"
-              },
-              "serial": {
+              "device": {
                 "aggregations": [],
                 "operation": "groupby"
               }
@@ -2032,10 +2320,10 @@
         {
           "id": "groupingToMatrix",
           "options": {
-            "columnField": "name",
+            "columnField": "attribute_name",
             "emptyValue": "zero",
-            "rowField": "serial",
-            "valueField": "raw_value (last)"
+            "rowField": "device",
+            "valueField": "Value (lastNotNull)"
           }
         },
         {
@@ -2051,21 +2339,21 @@
             "excludeByName": {},
             "includeByName": {},
             "indexByName": {
-              "Current Pending Sector": 2,
-              "Offline Uncorrectable": 3,
-              "Raw Read Error Rate": 5,
+              "Current Pending Sector": 7,
+              "Offline Uncorrectable": 2,
+              "Raw Read Error Rate": 4,
               "Reallocated Event Count": 6,
-              "Reallocated Sector Ct": 4,
-              "Seek Error Rate": 7,
-              "Spin Retry Count": 8,
+              "Reallocated Sector Ct": 3,
+              "Seek Error Rate": 8,
+              "Spin Retry Count": 5,
               "Spin Up Time": 1,
-              "serial": 0
+              "device\\attribute name": 0
             },
             "renameByName": {
               "Offline Uncorrectable": "Offline Uncorrectable Sector",
               "Reallocated Sector Ct": "Reallocated Sector",
-              "Spin Retry Count": "",
-              "serial": "Serial"
+              "device\\attribute name": "Device",
+              "device\\attribute_name": "Device"
             }
           }
         }
@@ -2082,31 +2370,18 @@
       {
         "allowCustomValue": false,
         "current": {},
-        "definition": "SHOW TAG VALUES FROM system WITH KEY=host",
-        "includeAll": false,
-        "label": "Server",
-        "name": "server",
-        "options": [],
-        "query": {
-          "query": "SHOW TAG VALUES FROM system WITH KEY=host",
-          "refId": "InfluxVariableQueryEditor-VariableQuery"
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
         },
-        "refresh": 1,
-        "regex": "",
-        "sort": 1,
-        "type": "query"
-      },
-      {
-        "allowCustomValue": false,
-        "current": {},
-        "definition": "SELECT last(\"n_cpus\") AS \"n_cpus\" FROM \"system\" WHERE (\"host\"::tag =~ /^$server$/)",
+        "definition": "query_result(scalar(machine_cpu_cores))",
         "hide": 2,
-        "label": "CPUs count",
-        "name": "n_cpus",
+        "name": "cpu_cores",
         "options": [],
         "query": {
-          "query": "SELECT last(\"n_cpus\") AS \"n_cpus\" FROM \"system\" WHERE (\"host\"::tag =~ /^$server$/)",
-          "refId": "InfluxVariableQueryEditor-VariableQuery"
+          "qryType": 3,
+          "query": "query_result(scalar(machine_cpu_cores))",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
@@ -2115,13 +2390,38 @@
       {
         "allowCustomValue": false,
         "current": {},
-        "definition": "SELECT ceil(last(\"total\") / 1024 / 1024 / 1024) FROM \"mem\" WHERE (\"host\"::tag =~ /^$server$/)",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "query_result(scalar(ceil(node_memory_MemTotal_bytes / 1024 / 1024 / 1024)))",
         "hide": 2,
         "name": "mem_total",
         "options": [],
         "query": {
-          "query": "SELECT ceil(last(\"total\") / 1024 / 1024 / 1024) FROM \"mem\" WHERE (\"host\"::tag =~ /^$server$/)",
-          "refId": "InfluxVariableQueryEditor-VariableQuery"
+          "qryType": 3,
+          "query": "query_result(scalar(ceil(node_memory_MemTotal_bytes / 1024 / 1024 / 1024)))",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "query_result(scalar(ceil(node_memory_SwapTotal_bytes / 1024 / 1024 / 1024)))",
+        "hide": 2,
+        "name": "swap_total",
+        "options": [],
+        "query": {
+          "qryType": 3,
+          "query": "query_result(scalar(ceil(node_memory_SwapTotal_bytes / 1024 / 1024 / 1024)))",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
@@ -2137,6 +2437,5 @@
   "timezone": "browser",
   "title": "System",
   "uid": "aek2tmxcsptz4f",
-  "version": 16,
-  "weekStart": "monday"
+  "version": 20
 }
