@@ -7,30 +7,30 @@ services:
       - ${PATH_TO_MEDIA:?}:/tmp/media
       - ${PATH_TO_FILES:?}:/tmp/files
     command:
-      - /tmp/filebrowser/database
+      - /tmp/filebrowser/data
+      - /tmp/filebrowser/cache
       - /tmp/media
       - /tmp/files
 
-  # https://hub.docker.com/r/filebrowser/filebrowser/tags
-  # https://github.com/filebrowser/filebrowser/releases
+  # https://github.com/gtsteffaniak/filebrowser/pkgs/container/filebrowser
+  # https://github.com/gtsteffaniak/filebrowser/releases
   filebrowser:
-    image: filebrowser/filebrowser:v2.54.0
+    image: ghcr.io/gtsteffaniak/filebrowser:1.1.1-stable-slim
     container_name: filebrowser
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
       - proxy
-    tmpfs:
-      - /srv
+    environment:
+      TZ: ${TZ:?}
     volumes:
-      - ./database:/database
-      - ./config:/config
-      - ..:/srv/homelab
+      - ./data:/home/filebrowser/data
+      - ./cache:/home/filebrowser/cache
+      - ./config.yaml:/home/filebrowser/config.yaml:ro
       - ${PATH_TO_MEDIA:?}:/srv/media
       - ${PATH_TO_FILES:?}:/srv/files
-      - /etc/localtime:/etc/localtime:ro
     labels:
-      glance.icon: di:filebrowser
+      glance.icon: di:filebrowser-quantum
       glance.url: https://filebrowser.${ROOT_DOMAIN:?}
       glance.category: media
 
@@ -38,14 +38,11 @@ services:
 
       wud.watch: true
       wud.watch.digest: true
-      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+      wud.tag.include: ^v?\d+\.\d+\.\d+\-stable\-slim$$
     depends_on:
       init:
         condition: service_completed_successfully
 
 networks:
-  default:
-    driver_opts:
-      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
   proxy:
     external: true

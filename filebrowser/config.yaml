@@ -1,0 +1,20 @@
+server:
+  port: 80
+  database: /home/filebrowser/data/database.db
+  cacheDir: /home/filebrowser/cache
+  sources:
+    - path: /srv
+  filesystem:
+    createFilePermission: 660
+    createDirectoryPermission: 770
+
+frontend:
+  disableUsedPercentage: true
+
+userDefaults:
+  editorQuickSave: true
+  showHidden: true
+  preview:
+    popup: false
+  fileLoading:
+    uploadChunkSizeMb: 50

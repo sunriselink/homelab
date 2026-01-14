@@ -4,5 +4,5 @@
 
 ```
 Username: admin
-Password: <view container logs>
+Password: admin
 ```
