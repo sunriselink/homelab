@@ -1683,6 +1683,10 @@
               {
                 "id": "unit",
                 "value": "decbytes"
+              },
+              {
+                "id": "decimals",
+                "value": 0
               }
             ]
           }
@@ -2437,5 +2441,5 @@
   "timezone": "browser",
   "title": "System",
   "uid": "aek2tmxcsptz4f",
-  "version": 20
+  "version": 21
 }
