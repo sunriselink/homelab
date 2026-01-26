@@ -129,7 +129,7 @@ services:
   # https://github.com/google/cadvisor/pkgs/container/cadvisor
   # https://github.com/google/cadvisor/releases
   cadvisor:
-    image: ghcr.io/google/cadvisor:0.55.1
+    image: ghcr.io/google/cadvisor:0.56.2
     container_name: cadvisor
     restart: unless-stopped
     networks:
@@ -180,7 +180,7 @@ services:
   # https://hub.docker.com/r/prom/alertmanager/tags
   # https://github.com/prometheus/alertmanager/releases
   alertmanager:
-    image: prom/alertmanager:v0.30.0
+    image: prom/alertmanager:v0.30.1
     container_name: alertmanager
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}

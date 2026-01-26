@@ -10,7 +10,7 @@ services:
   # https://hub.docker.com/_/traefik/tags
   # https://github.com/traefik/traefik/releases
   traefik:
-    image: traefik:v3.6.6
+    image: traefik:v3.6.7
     container_name: traefik
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}

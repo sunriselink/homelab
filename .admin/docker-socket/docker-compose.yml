@@ -20,6 +20,7 @@ services:
     networks:
       - readonly-docker-socket
     environment:
+      LOG_LEVEL: warning
       CONTAINERS: 1
       INFO: 1
       IMAGES: 1
@@ -30,6 +31,7 @@ services:
     networks:
       - admin-docker-socket
     environment:
+      LOG_LEVEL: warning
       BUILD: 1
       CONTAINERS: 1
       IMAGES: 1
