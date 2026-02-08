@@ -68,7 +68,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -146,7 +146,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -236,7 +236,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -303,7 +303,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -381,7 +381,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -486,7 +486,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -594,7 +594,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -712,7 +712,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -827,7 +827,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -942,7 +942,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -1070,7 +1070,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.3.2",
       "targets": [
         {
           "datasource": {
@@ -2441,5 +2441,5 @@
   "timezone": "browser",
   "title": "System",
   "uid": "aek2tmxcsptz4f",
-  "version": 23
+  "version": 24
 }

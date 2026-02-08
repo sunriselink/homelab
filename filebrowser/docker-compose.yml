@@ -15,7 +15,7 @@ services:
   # https://github.com/gtsteffaniak/filebrowser/pkgs/container/filebrowser
   # https://github.com/gtsteffaniak/filebrowser/releases
   filebrowser:
-    image: ghcr.io/gtsteffaniak/filebrowser:1.1.1-stable-slim
+    image: ghcr.io/gtsteffaniak/filebrowser:1.1.2-stable-slim
     container_name: filebrowser
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
