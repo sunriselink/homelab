@@ -1,1 +1,1 @@
-docker exec nextcloud php occ $@
+docker exec nextcloud php occ "$@"

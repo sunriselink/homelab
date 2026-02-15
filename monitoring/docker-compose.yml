@@ -13,7 +13,7 @@ services:
   # https://hub.docker.com/r/grafana/grafana/tags
   # https://github.com/grafana/grafana/releases
   grafana:
-    image: grafana/grafana:12.3.2
+    image: grafana/grafana:12.3.3
     container_name: grafana
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -180,7 +180,7 @@ services:
   # https://hub.docker.com/r/prom/alertmanager/tags
   # https://github.com/prometheus/alertmanager/releases
   alertmanager:
-    image: prom/alertmanager:v0.31.0
+    image: prom/alertmanager:v0.31.1
     container_name: alertmanager
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -188,9 +188,6 @@ services:
     command:
       - --config.file=/app/config/alertmanager.yml
       - --storage.path=/app/data
-    networks:
-      - default
-      - proxy
     environment:
       TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?}
       TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:?}
