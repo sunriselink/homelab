@@ -23,9 +23,6 @@ services:
     extends:
       file: external-storage.yml
       service: external-storage
-    networks:
-      - default
-      - proxy
     environment:
       DB_HOSTNAME: immich-db
       DB_DATABASE_NAME: ${DB_DATABASE_NAME:?}
@@ -121,7 +118,5 @@ networks:
   default:
     driver_opts:
       com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
-  proxy:
-    external: true
   database:
     external: true

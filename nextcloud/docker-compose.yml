@@ -24,9 +24,6 @@ services:
     extends:
       file: files-mapping.yml
       service: files-mapping
-    networks:
-      - default
-      - proxy
     environment:
       TZ: ${TZ:?}
       POSTGRES_HOST: nextcloud_db
@@ -89,7 +86,5 @@ networks:
   default:
     driver_opts:
       com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
-  proxy:
-    external: true
   database:
     external: true

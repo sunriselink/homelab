@@ -17,8 +17,6 @@ services:
     container_name: metube
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
-    networks:
-      - proxy
     environment:
       YTDL_OPTIONS_FILE: /ytdl-options/options.json
     volumes:
@@ -41,5 +39,6 @@ services:
         condition: service_completed_successfully
 
 networks:
-  proxy:
-    external: true
+  default:
+    driver_opts:
+      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}

@@ -19,6 +19,8 @@ services:
     container_name: readonly-docker-socket
     networks:
       - readonly-docker-socket
+    ports:
+      - 127.0.0.1:36301:2375
     environment:
       LOG_LEVEL: warning
       CONTAINERS: 1

@@ -14,8 +14,6 @@ services:
     image: mikenye/picard:2.13.3
     container_name: picard
     restart: unless-stopped
-    networks:
-      - proxy
     environment:
       USER_ID: ${NAS_UID:?}
       GROUP_ID: ${NAS_GID:?}
@@ -42,5 +40,3 @@ networks:
   default:
     driver_opts:
       com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
-  proxy:
-    external: true

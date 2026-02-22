@@ -17,8 +17,6 @@ services:
     image: ghcr.io/linuxserver/jellyfin:10.11.6
     container_name: jellyfin
     restart: unless-stopped
-    networks:
-      - proxy
     environment:
       PUID: ${NAS_UID:?}
       PGID: ${NAS_GID:?}
@@ -50,5 +48,3 @@ networks:
   default:
     driver_opts:
       com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
-  proxy:
-    external: true

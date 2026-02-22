@@ -15,7 +15,6 @@ services:
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
-      - proxy
       - readonly-docker-socket
     environment:
       WUD_LOG_LEVEL: ${LOG_LEVEL:?}
@@ -46,10 +45,5 @@ services:
         condition: service_completed_successfully
 
 networks:
-  default:
-    driver_opts:
-      com.docker.network.bridge.name: br-wud
-  proxy:
-    external: true
   readonly-docker-socket:
     external: true

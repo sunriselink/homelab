@@ -1,24 +1,11 @@
 services:
-  init:
-    image: alpine
-    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
-    volumes:
-      - ./:/tmp/traefik
-    command:
-      - /tmp/traefik/letsencrypt
-
   # https://hub.docker.com/_/traefik/tags
   # https://github.com/traefik/traefik/releases
   traefik:
     image: traefik:v3.6.8
     container_name: traefik
     restart: unless-stopped
-    user: ${NAS_UID:?}:${NAS_GID:?}
-    extra_hosts:
-      host.docker.internal: host-gateway
-    networks:
-      - proxy
-      - readonly-docker-socket
+    network_mode: host
     command:
       - --global.checkNewVersion=false
       - --global.sendAnonymousUsage=false
@@ -47,9 +34,8 @@ services:
 
       - --serversTransport.insecureSkipVerify
 
-      - --providers.docker.endpoint=tcp://readonly-docker-socket:2375
+      - --providers.docker.endpoint=tcp://localhost:36301
       - --providers.docker.exposedByDefault=false
-      - --providers.docker.network=proxy
       - --providers.docker.defaultRule=Host(`{{ coalesce (index .Labels "traefik.custom.host") (index .Labels "com.docker.compose.service") }}.${ROOT_DOMAIN:?}`)
 
       - --providers.file.directory=/dynamic-conf
@@ -60,11 +46,6 @@ services:
     environment:
       ROOT_DOMAIN: ${ROOT_DOMAIN:?}
       DYNU_API_KEY: ${DYNU_API_KEY:?}
-    ports:
-      - 80:80
-      - 81:81
-      - 443:443
-      - 444:444
     dns:
       - 9.9.9.10
       - 8.8.8.8
@@ -83,15 +64,3 @@ services:
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
-    depends_on:
-      init:
-        condition: service_completed_successfully
-
-networks:
-  default:
-    driver_opts:
-      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
-  proxy:
-    external: true
-  readonly-docker-socket:
-    external: true

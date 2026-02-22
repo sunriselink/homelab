@@ -6,7 +6,6 @@ services:
     container_name: dbgate
     restart: unless-stopped
     networks:
-      - proxy
       - database
     environment:
       LOGIN: ${LOGIN:?}
@@ -27,7 +26,5 @@ services:
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
 
 networks:
-  proxy:
-    external: true
   database:
     external: true

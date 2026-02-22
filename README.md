@@ -14,7 +14,6 @@
 Create required networks
 
 ```sh
-docker network create proxy
 docker network create database
 docker network create readonly-docker-socket
 docker network create admin-docker-socket
@@ -22,7 +21,7 @@ docker network create admin-docker-socket
 
 > You can override network name
 >
-> `docker network create proxy --opt com.docker.network.bridge.name=br-proxy`
+> `docker network create <name> --opt com.docker.network.bridge.name=br-<name>`
 
 ## Minimum set of services
 

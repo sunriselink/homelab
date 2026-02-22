@@ -3,8 +3,6 @@ services:
     image: openspeedtest/latest:v2.0.6
     container_name: openspeedtest
     restart: unless-stopped
-    networks:
-      - proxy
     tmpfs:
       - /var/log/letsencrypt
     volumes:
@@ -22,5 +20,6 @@ services:
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
 
 networks:
-  proxy:
-    external: true
+  default:
+    driver_opts:
+      com.docker.network.bridge.name: br-speedtest

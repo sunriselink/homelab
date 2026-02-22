@@ -9,4 +9,4 @@ http:
     cockpit:
       loadBalancer:
         servers:
-          - url: https://host.docker.internal:9090
+          - url: https://localhost:9090

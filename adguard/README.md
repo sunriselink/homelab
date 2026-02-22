@@ -1,6 +1,6 @@
 # AdGuard Home
 
-Got to setup page after first run
+Go to setup page after first run
 
 ```
 https://adguard-setup.{ROOT_DOMAIN}

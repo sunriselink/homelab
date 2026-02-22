@@ -18,8 +18,6 @@ services:
     container_name: audiobookshelf
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
-    networks:
-      - proxy
     environment:
       TZ: ${TZ:?}
     volumes:
@@ -45,5 +43,3 @@ networks:
   default:
     driver_opts:
       com.docker.network.bridge.name: br-abs
-  proxy:
-    external: true

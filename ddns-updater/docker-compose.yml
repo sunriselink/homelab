@@ -14,8 +14,6 @@ services:
     container_name: ddns-updater
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
-    networks:
-      - proxy
     environment:
       CONFIG: |
         {
@@ -51,5 +49,6 @@ services:
         condition: service_completed_successfully
 
 networks:
-  proxy:
-    external: true
+  default:
+    driver_opts:
+      com.docker.network.bridge.name: br-ddns

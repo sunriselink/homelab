@@ -7,14 +7,13 @@ services:
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
-      - proxy
       - readonly-docker-socket
     environment:
-      ADGUARD_URL: http://adguard
+      ADGUARD_URL: https://adguard.${ROOT_DOMAIN:?}
       ADGUARD_USERNAME: ${ADGUARD_USERNAME:?}
       ADGUARD_PASSWORD: ${ADGUARD_PASSWORD:?}
       WEATHER_LOCATION: ${WEATHER_LOCATION:?}
-      WUD_URL: http://whats-up-docker:3000
+      WUD_URL: https://wud.${ROOT_DOMAIN:?}
     volumes:
       - ./config:/app/config:ro
       - /etc/localtime:/etc/localtime:ro
@@ -25,7 +24,5 @@ services:
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
 
 networks:
-  proxy:
-    external: true
   readonly-docker-socket:
     external: true

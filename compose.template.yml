@@ -15,7 +15,6 @@ services:
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?} # Rootless mode (if needed)
     networks:
-      - proxy                   # Reverse Proxy support (if needed)
       - database                # Access to database via dbgate (if needed)
       - readonly-docker-socket  # Readonly docker socket access (if needed)
       - admin-docker-socket     # Admin docker socket access (if needed)
@@ -48,8 +47,6 @@ networks:
     driver_opts:
       # length is limited to 15 characters
       com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
-  proxy:
-    external: true
   database:
     external: true
   readonly-docker-socket:
