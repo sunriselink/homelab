@@ -1,8 +1,8 @@
 services:
-  # https://github.com/AdguardTeam/AdGuardHome/releases
   # https://hub.docker.com/r/adguard/adguardhome/tags
+  # https://github.com/AdguardTeam/AdGuardHome/releases
   adguard:
-    image: adguard/adguardhome:v0.107.71
+    image: adguard/adguardhome:v0.107.72
     container_name: adguard
     restart: unless-stopped
     ports:

@@ -2,6 +2,8 @@ server:
   port: 80
   database: /home/filebrowser/data/database.db
   cacheDir: /home/filebrowser/cache
+  cacheDirCleanup: true
+  disableUpdateCheck: true
   sources:
     - path: /srv
   filesystem:

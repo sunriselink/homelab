@@ -19,7 +19,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
   "links": [],
   "panels": [
     {
@@ -68,7 +67,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -146,7 +145,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -168,7 +167,6 @@
           },
           "editorMode": "code",
           "expr": "100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes))",
-          "hide": false,
           "instant": false,
           "legendFormat": "RAM ($mem_total GB)",
           "range": true,
@@ -181,7 +179,6 @@
           },
           "editorMode": "code",
           "expr": "100 * (1 - (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes))",
-          "hide": false,
           "instant": false,
           "legendFormat": "SWAP ($swap_total GB)",
           "range": true,
@@ -236,7 +233,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -303,7 +300,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -381,7 +378,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -390,7 +387,6 @@
           },
           "editorMode": "code",
           "expr": "100 * (1 - node_filesystem_avail_bytes / node_filesystem_size_bytes)",
-          "hide": false,
           "instant": false,
           "legendFormat": "{{mountpoint}}",
           "range": true,
@@ -486,7 +482,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -594,7 +590,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -712,7 +708,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -733,7 +729,6 @@
           },
           "editorMode": "code",
           "expr": "node_memory_SwapTotal_bytes - node_memory_SwapFree_bytes",
-          "hide": false,
           "instant": false,
           "legendFormat": "SWAP",
           "range": true,
@@ -827,7 +822,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -942,7 +937,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -963,7 +958,6 @@
           },
           "editorMode": "code",
           "expr": "irate(node_disk_written_bytes_total[$__rate_interval])",
-          "hide": false,
           "instant": false,
           "legendFormat": "(W) {{device}}",
           "range": true,
@@ -1070,7 +1064,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -1091,7 +1085,6 @@
           },
           "editorMode": "code",
           "expr": "sum(irate(container_fs_writes_bytes_total{image!=\"\"}[$__rate_interval])) by (name, device)",
-          "hide": false,
           "instant": false,
           "legendFormat": "(W) {{device}}: {{name}}",
           "range": true,
@@ -1207,7 +1200,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -1228,7 +1221,6 @@
           },
           "editorMode": "code",
           "expr": "8 * rate(node_network_transmit_bytes_total[$__rate_interval])",
-          "hide": false,
           "instant": false,
           "legendFormat": "Tx {{device}}",
           "range": true,
@@ -1335,7 +1327,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -1356,7 +1348,6 @@
           },
           "editorMode": "code",
           "expr": "8 * sum(rate(container_network_transmit_bytes_total{image!=\"\"}[$__rate_interval])) by (name)",
-          "hide": false,
           "instant": false,
           "legendFormat": "Tx {{name}}",
           "range": true,
@@ -1454,7 +1445,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -1569,7 +1560,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -1706,7 +1697,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "12.3.3",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -1731,7 +1722,6 @@
           "exemplar": false,
           "expr": "max(smartctl_device_capacity_bytes) by (device)",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -1746,7 +1736,6 @@
           "exemplar": false,
           "expr": "max(smartctl_device_power_on_seconds) by (device)",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -1761,7 +1750,6 @@
           "exemplar": false,
           "expr": "max(smartctl_device_smart_status) by (device)",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -2049,7 +2037,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -2074,7 +2062,6 @@
           "exemplar": false,
           "expr": "max(smartctl_device_bytes_read) by (device)",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -2089,7 +2076,6 @@
           "exemplar": false,
           "expr": "max(smartctl_device_bytes_written) by(device)",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -2104,7 +2090,6 @@
           "exemplar": false,
           "expr": "max(smartctl_device_critical_warning) by(device)",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -2119,7 +2104,6 @@
           "exemplar": false,
           "expr": "max(smartctl_device_media_errors) by(device)",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -2134,7 +2118,6 @@
           "exemplar": false,
           "expr": "max(smartctl_device_num_err_log_entries) by(device)",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -2149,7 +2132,6 @@
           "exemplar": false,
           "expr": "max(smartctl_device_percentage_used) by(device)",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -2283,7 +2265,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "12.3.1",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
@@ -2389,6 +2371,7 @@
         },
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
@@ -2409,6 +2392,7 @@
         },
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
@@ -2429,6 +2413,7 @@
         },
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       }
     ]
@@ -2441,5 +2426,6 @@
   "timezone": "browser",
   "title": "System",
   "uid": "aek2tmxcsptz4f",
-  "version": 26
+  "version": 27,
+  "weekStart": ""
 }
