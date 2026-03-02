@@ -116,6 +116,7 @@ services:
 
 networks:
   default:
+    name: ${COMPOSE_PROJECT_NAME:?}
     driver_opts:
       com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
   database:
