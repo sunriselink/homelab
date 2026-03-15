@@ -13,7 +13,7 @@ services:
       - --api.dashboard
       - --api.insecure
 
-      - --log.level=${LOG_LEVEL:?}
+      - --log.level=INFO
 
       - --entrypoints.local.address=:80
       - --entrypoints.local.http.redirections.entrypoint.to=local-secure
@@ -60,6 +60,7 @@ services:
 
       traefik.enable: true
       traefik.http.services.traefik-dashboard.loadbalancer.server.port: 8080
+      traefik.http.routers.traefik-dashboard.middlewares: authelia@file
 
       wud.watch: true
       wud.watch.digest: true

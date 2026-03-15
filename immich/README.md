@@ -16,6 +16,33 @@ services:
 4. Start Immich
 5. Add your library following the [instruction](https://immich.app/docs/features/libraries)
 
+## Open ID Connect with Authelia
+
+> Original: [OIDC Authentication](https://docs.immich.app/administration/oauth/)
+
+Configuration of OAuth in Immich System Settings
+
+| Setting                            | Value                                                             |
+| ---------------------------------- | ----------------------------------------------------------------- |
+| Issuer URL                         | `https://authelia.{ROOT_DOMAIN}/.well-known/openid-configuration` |
+| Client ID                          | Copy from `authelia/secrets/immich/client_id`                     |
+| Client Secret                      | Copy from `authelia/secrets/immich/client_secret`                 |
+| Token Endpoint Auth Method         | `client_secret_post`                                              |
+| Scope                              | `openid email profile`                                            |
+| ID Token Signed Response Algorithm | `RS256`                                                           |
+| Userinfo Signed Response Algorithm | `RS256`                                                           |
+| Storage Label Claim                | `uid`                                                             |
+| Default Storage Quota (GiB)        | `0` (empty for unlimited quota)                                   |
+| Button Text                        | `Sign in with Authelia`                                           |
+| Auto Register                      | Disabled                                                          |
+| Auto Launch                        | Disabled                                                          |
+| Mobile Redirect URI Override       | Disabled                                                          |
+
+After correct login - disable default password authentication:
+
+- OAuth > Auto Launch: Enabled
+- Password Login > Login with email and password: Disabled
+
 ## Upgrade
 
 > https://immich.app/docs/install/upgrading
@@ -26,5 +53,5 @@ To compare the contents of the recommended files, run script
 
 ```sh
 # example
-./versions-diff.sh v1.134.0 v1.135.3
+./immich/versions-diff.sh v1.134.0 v1.135.3
 ```

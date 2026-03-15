@@ -17,7 +17,7 @@ services:
     networks:
       - readonly-docker-socket
     environment:
-      WUD_LOG_LEVEL: ${LOG_LEVEL:?}
+      WUD_LOG_LEVEL: info
       WUD_SERVER_FEATURE_DELETE: false
       WUD_WATCHER_DOCKER_CRON: 41 2,14 * * * # Attempt to bypass TOOMANYREQUESTS for ghcr.io
       WUD_WATCHER_DOCKER_HOST: readonly-docker-socket
@@ -36,6 +36,7 @@ services:
 
       traefik.enable: true
       traefik.custom.host: wud
+traefik.http.routers.whats-up-docker.middlewares: authelia@file
 
       wud.watch: true
       wud.watch.digest: true

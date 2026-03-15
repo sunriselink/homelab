@@ -28,6 +28,7 @@ services:
       glance.category: media_management
 
       traefik.enable: true
+      traefik.http.routers.picard.middlewares: authelia@file
 
       wud.watch: true
       wud.watch.digest: true

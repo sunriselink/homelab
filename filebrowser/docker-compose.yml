@@ -1,16 +1,19 @@
 services:
   init:
-    image: alpine
-    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
+    image: localhost/homelab-init:v1
+    pull_policy: never
+    working_dir: /tmp/filebrowser
+    entrypoint: ./init.sh
+    environment:
+      NAS_UID: ${NAS_UID:?}
+      NAS_GID: ${NAS_GID:?}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:?}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:?}
+      ROOT_DOMAIN: ${ROOT_DOMAIN:?}
     volumes:
       - ./:/tmp/filebrowser
       - ${PATH_TO_MEDIA:?}:/tmp/media
       - ${PATH_TO_FILES:?}:/tmp/files
-    command:
-      - /tmp/filebrowser/data
-      - /tmp/filebrowser/cache
-      - /tmp/media
-      - /tmp/files
 
   # https://github.com/gtsteffaniak/filebrowser/pkgs/container/filebrowser
   # https://github.com/gtsteffaniak/filebrowser/releases
@@ -24,7 +27,6 @@ services:
     volumes:
       - ./data:/home/filebrowser/data
       - ./cache:/home/filebrowser/cache
-      - ./config.yaml:/home/filebrowser/data/config.yaml:ro
       - ${PATH_TO_MEDIA:?}:/srv/media
       - ${PATH_TO_FILES:?}:/srv/files
     labels:

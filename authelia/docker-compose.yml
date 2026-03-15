@@ -1,0 +1,85 @@
+# https://github.com/authelia/authelia/pkgs/container/authelia
+# https://github.com/authelia/authelia/releases
+x-authelia-image: &authelia-image
+  image: ghcr.io/authelia/authelia:4.39.15
+
+services:
+  init:
+    <<: *authelia-image
+    entrypoint: ./init.sh
+    working_dir: /tmp/authelia
+    environment:
+      PUID: ${NAS_UID:?}
+      PGID: ${NAS_GID:?}
+      ROOT_DOMAIN: ${ROOT_DOMAIN:?}
+    volumes:
+      - ./:/tmp/authelia
+
+  authelia:
+    <<: *authelia-image
+    container_name: authelia
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    ports:
+      - 127.0.0.1:43024:9091
+    environment:
+      ROOT_DOMAIN: ${ROOT_DOMAIN:?}
+      TOTP_ISSUER: ${TOTP_ISSUER:?}
+      SMTP_ADDRESS: ${SMTP_ADDRESS:?}
+      SMTP_USERNAME: ${SMTP_USERNAME:?}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:?}
+      SMTP_SENDER: ${SMTP_SENDER:?}
+      AUTHELIA_SESSION_SECRET_FILE: /secrets/session_secret
+      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /secrets/storage_encryption_key
+      AUTHELIA_IDENTITY_PROVIDERS_OIDC_HMAC_SECRET_FILE: /secrets/hmac_secret
+      X_AUTHELIA_CONFIG_FILTERS: template
+      TZ: ${TZ:?}
+    volumes:
+      - ./data:/config
+      - ./secrets:/secrets:ro
+      - ./configuration.yml:/config/configuration.yml:ro
+      - ./users.yml:/config/users.yml
+    labels:
+      glance.icon: di:authelia
+      glance.url: https://authelia.${ROOT_DOMAIN:?}
+      glance.category: admin
+
+      traefik.enable: true
+      traefik.http.routers.authelia.entrypoints: local-secure,external-secure
+
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+  # https://hub.docker.com/r/valkey/valkey/tags
+  redis:
+    image: valkey/valkey:8.1.6-alpine
+    container_name: authelia_redis
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    command: valkey-server --save 60 1 --loglevel warning
+    environment:
+      TZ: ${TZ:?}
+    volumes:
+      - ./redis:/data
+    labels:
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+\-alpine$$
+    healthcheck:
+      test: redis-cli ping || exit 1
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+
+networks:
+  default:
+    name: ${COMPOSE_PROJECT_NAME:?}
+    driver_opts:
+      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}

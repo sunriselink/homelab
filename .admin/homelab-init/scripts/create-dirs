@@ -1,0 +1,5 @@
+#!/bin/sh
+
+set -e
+
+install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770 $@

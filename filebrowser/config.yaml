@@ -9,6 +9,10 @@ server:
   filesystem:
     createFilePermission: 660
     createDirectoryPermission: 770
+  logging:
+    - output: stdout
+      levels: info|warning|error
+      apiLevels: disabled
 
 frontend:
   disableUsedPercentage: true
@@ -20,3 +24,21 @@ userDefaults:
     popup: false
   fileLoading:
     uploadChunkSizeMb: 50
+  permissions:
+    modify: true
+    delete: true
+    create: true
+
+auth:
+  methods:
+    password:
+      enabled: false
+    oidc:
+      enabled: true
+      clientId: ${OIDC_CLIENT_ID}
+      clientSecret: ${OIDC_CLIENT_SECRET}
+      issuerUrl: https://authelia.${ROOT_DOMAIN}
+      scopes: email openid profile groups
+      userIdentifier: preferred_username
+      adminGroup: admins
+      createUser: false

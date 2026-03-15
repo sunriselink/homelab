@@ -25,8 +25,18 @@ docker network create admin-docker-socket
 
 ## Minimum set of services
 
-1. Docker Socket Proxy: `./compose.sh .admin/docker-socket up -d`
-2. Traefik: `./compose.sh traefik up -d`
+> Before running any stack, please read `<stack-path>/README.md` file
+
+```sh
+# Docker Socket Proxy
+./compose.sh .admin/docker-socket up -d
+
+# Authelia
+./compose.sh authelia up -d
+
+# Traefik
+./compose.sh traefik up -d
+```
 
 ## Container management
 

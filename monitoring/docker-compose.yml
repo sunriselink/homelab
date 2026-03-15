@@ -68,6 +68,7 @@ services:
       glance.category: monitoring
 
       traefik.enable: true
+      traefik.http.routers.prometheus.middlewares: authelia@file
 
       wud.watch: true
       wud.watch.digest: true

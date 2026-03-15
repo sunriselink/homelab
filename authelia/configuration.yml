@@ -1,0 +1,164 @@
+# yaml-language-server: $schema=https://www.authelia.com/schemas/latest/json-schema/configuration.json
+
+theme: oled
+
+storage:
+  local:
+    path: /config/db.sqlite3
+
+access_control:
+  default_policy: deny
+  rules:
+    - domain: '*.{{ env "ROOT_DOMAIN" }}'
+      policy: bypass
+      resources:
+        - /manifest\.json([?].*)?$
+        - /manifest\.webmanifest([?].*)?$
+
+    - domain: '*.{{ env "ROOT_DOMAIN" }}'
+      policy: two_factor
+
+session:
+  redis:
+    host: redis
+    port: 6379
+  cookies:
+    - name: authelia_session
+      same_site: lax
+      domain: '{{ env "ROOT_DOMAIN" }}'
+      authelia_url: 'https://authelia.{{ env "ROOT_DOMAIN" }}'
+
+regulation:
+  max_retries: 3
+  ban_time: 5m
+  modes: [ip]
+
+password_policy:
+  standard:
+    enabled: true
+    min_length: 8
+    max_length: 0
+    require_uppercase: true
+    require_lowercase: true
+    require_number: true
+    require_special: true
+
+authentication_backend:
+  refresh_interval: 5m
+  password_reset:
+    disable: true
+  file:
+    path: /config/users.yml
+    watch: false
+    password:
+      algorithm: argon2
+      argon2:
+        variant: argon2id
+        iterations: 3
+        memory: 65536
+        parallelism: 4
+        key_length: 32
+        salt_length: 16
+
+totp:
+  issuer: '{{ env "TOTP_ISSUER" }}'
+  algorithm: SHA1
+  digits: 6
+  period: 30
+  skew: 1
+  secret_size: 32
+  disable_reuse_security_policy: false
+
+notifier:
+  smtp:
+    address: '{{ env "SMTP_ADDRESS" }}'
+    username: '{{ env "SMTP_USERNAME" }}'
+    password: '{{ env "SMTP_PASSWORD" }}'
+    sender: '{{ env "SMTP_SENDER" }}'
+    identifier: Authelia
+    timeout: 30s
+
+identity_providers:
+  oidc:
+    jwks:
+      - key_id: authelia
+        algorithm: RS256
+        use: sig
+        # prettier-ignore
+        key: {{ secret "/secrets/private.pem" | mindent 10 "|" | msquote }}
+        # prettier-ignore
+        certificate_chain: {{ secret "/secrets/public.crt" | mindent 10 "|" | msquote }}
+    clients:
+      - client_name: audiobookshelf
+        authorization_policy: two_factor
+        # prettier-ignore
+        client_id: {{ secret "/secrets/audiobookshelf/client_id" | mindent 10 "|" | msquote }}
+        # prettier-ignore
+        client_secret: {{ secret "/secrets/audiobookshelf/client_secret_digest" | mindent 10 "|" | msquote }}
+        public: false
+        require_pkce: true
+        pkce_challenge_method: S256
+        redirect_uris:
+          - https://audiobookshelf.{{ env "ROOT_DOMAIN" }}/auth/openid/callback
+          - https://audiobookshelf.{{ env "ROOT_DOMAIN" }}/auth/openid/mobile-redirect
+          - audiobookshelf://oauth
+        scopes:
+          - openid
+          - profile
+          - groups
+          - email
+        response_types:
+          - code
+        grant_types:
+          - authorization_code
+        access_token_signed_response_alg: none
+        userinfo_signed_response_alg: none
+        token_endpoint_auth_method: client_secret_basic
+
+      - client_name: filebrowser
+        authorization_policy: two_factor
+        # prettier-ignore
+        client_id: {{ secret "/secrets/filebrowser/client_id" | mindent 10 "|" | msquote }}
+        # prettier-ignore
+        client_secret: {{ secret "/secrets/filebrowser/client_secret_digest" | mindent 10 "|" | msquote }}
+        public: false
+        require_pkce: false
+        pkce_challenge_method: ''
+        redirect_uris:
+          - https://filebrowser.{{ env "ROOT_DOMAIN" }}/api/auth/oidc/callback
+        scopes:
+          - openid
+          - profile
+          - groups
+          - email
+        response_types:
+          - code
+        grant_types:
+          - authorization_code
+        access_token_signed_response_alg: none
+        userinfo_signed_response_alg: none
+        token_endpoint_auth_method: client_secret_basic
+
+      - client_name: 'immich'
+        authorization_policy: 'two_factor'
+        # prettier-ignore
+        client_id: {{ secret "/secrets/immich/client_id" | mindent 10 "|" | msquote }}
+        # prettier-ignore
+        client_secret: {{ secret "/secrets/immich/client_secret_digest" | mindent 10 "|" | msquote }}
+        public: false
+        require_pkce: false
+        redirect_uris:
+          - https://immich.{{ env "ROOT_DOMAIN" }}/auth/login
+          - https://immich.{{ env "ROOT_DOMAIN" }}/user-settings
+          - app.immich:///oauth-callback
+        scopes:
+          - openid
+          - profile
+          - email
+        response_types:
+          - code
+        grant_types:
+          - authorization_code
+        id_token_signed_response_alg: RS256
+        userinfo_signed_response_alg: RS256
+        token_endpoint_auth_method: client_secret_post

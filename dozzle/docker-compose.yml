@@ -19,6 +19,7 @@ services:
       glance.category: monitoring
 
       traefik.enable: true
+traefik.http.routers.dozzle.middlewares: authelia@file
 
       wud.watch: true
       wud.watch.digest: true

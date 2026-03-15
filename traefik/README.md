@@ -6,7 +6,7 @@
 
 ```yaml
 services:
-  my-service:
+  <my-service>:
     labels:
       traefik.enable: true
 ```
@@ -17,10 +17,10 @@ Service will be available at `https://my-service.{ROOT_DOMAIN}` on the internal 
 
 ```yaml
 services:
-  my-service:
+  <my-service>:
     labels:
       traefik.enable: true
-      traefik.http.routers.my-service.entrypoints: local-secure,external-secure
+      traefik.http.routers.<my-service>.entrypoints: local-secure,external-secure
 ```
 
 ## Change default service port
@@ -31,10 +31,10 @@ services:
 
 ```yaml
 services:
-  my-service:
+  <my-service>:
     labels:
       traefik.enable: true
-      traefik.http.services.my-service.loadbalancer.server.port: 8080
+      traefik.http.services.<my-service>.loadbalancer.server.port: 8080
 ```
 
 ## Change host name
@@ -47,6 +47,16 @@ services:
     labels:
       traefik.enable: true
       traefik.custom.host: my-service
+```
+
+## Use Forward Auth with Authelia
+
+```yaml
+services:
+  <my-service>:
+    labels:
+      traefik.enable: true
+      traefik.http.routers.<my-service>.middlewares: authelia@file
 ```
 
 Service will be available at `https://my-service.{ROOT_DOMAIN}` instead of `https://my-super-duper-service.{ROOT_DOMAIN}`. For more details see `defaultRule` option in [traefik settings](./docker-compose.yml).
