@@ -8,4 +8,4 @@ create-dirs         \
     /tmp/media      \
     /tmp/files
 
-cat ./config.yaml | envsubst > ./data/config.yaml
+render-env ./config.yaml ./data/config.yaml

@@ -1,14 +1,16 @@
 services:
   init:
-    image: alpine
-    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
+    image: localhost/homelab-init:v1
+    pull_policy: never
+    working_dir: /tmp/monitoring
+    entrypoint: ./init.sh
+    environment:
+      NAS_UID: ${NAS_UID:?}
+      NAS_GID: ${NAS_GID:?}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:?}
     volumes:
       - ./:/tmp/monitoring
-    command:
-      - /tmp/monitoring/grafana/data
-      - /tmp/monitoring/prometheus/data
-      - /tmp/monitoring/alertmanager/data
-      - /tmp/monitoring/alertmanager/config
 
   # https://hub.docker.com/r/grafana/grafana/tags
   # https://github.com/grafana/grafana/releases
@@ -169,13 +171,9 @@ services:
     container_name: alertmanager
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
-    entrypoint: /app/docker-entrypoint.sh
     command:
       - --config.file=/app/config/alertmanager.yml
       - --storage.path=/app/data
-    environment:
-      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?}
-      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:?}
     tmpfs:
       - /alertmanager
     volumes:

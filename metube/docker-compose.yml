@@ -1,6 +1,7 @@
 services:
   init:
-    image: alpine
+    image: localhost/homelab-init:v1
+    pull_policy: never
     working_dir: /tmp/metube
     entrypoint: ./init.sh
     environment:

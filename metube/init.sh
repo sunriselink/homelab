@@ -2,9 +2,7 @@
 
 set -e
 
-install -d -o $NAS_UID -g $NAS_GID -m 770       \
-    /tmp/media                                  \
-    /tmp/media/downloads
+create-dirs /tmp/media /tmp/media/downloads
 
 options_file="ytdl-options/options.json"
 

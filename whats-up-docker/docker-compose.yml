@@ -1,7 +1,11 @@
 services:
   init:
-    image: alpine
-    entrypoint: install -d -o ${NAS_UID:?} -g ${NAS_GID:?} -m 770
+    image: localhost/homelab-init:v1
+    pull_policy: never
+    entrypoint: create-dirs
+    environment:
+      NAS_UID: ${NAS_UID:?}
+      NAS_GID: ${NAS_GID:?}
     volumes:
       - ./:/tmp/whats-up-docker
     command:

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+source_file=$1
+dest_file=$2
+
+if [ ! -f "$source_file" ]; then
+    echo "File $source_file not exists"
+    exit 1
+fi
+
+cat $source_file | envsubst > $dest_file
+chown ${NAS_UID:?}:${NAS_GID:?} $dest_file
+chmod 660 $dest_file
