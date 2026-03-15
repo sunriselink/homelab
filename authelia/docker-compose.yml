@@ -1,7 +1,7 @@
 # https://github.com/authelia/authelia/pkgs/container/authelia
 # https://github.com/authelia/authelia/releases
 x-authelia-image: &authelia-image
-  image: ghcr.io/authelia/authelia:4.39.15
+  image: ghcr.io/authelia/authelia:4.39.16
 
 services:
   init:
@@ -57,8 +57,9 @@ services:
         condition: service_healthy
 
   # https://hub.docker.com/r/valkey/valkey/tags
+  # https://github.com/valkey-io/valkey/releases
   redis:
-    image: valkey/valkey:8.1.6-alpine
+    image: valkey/valkey:9.0.3-alpine
     container_name: authelia_redis
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
