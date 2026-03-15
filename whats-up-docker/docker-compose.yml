@@ -15,7 +15,8 @@ services:
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
-      - readonly-docker-socket
+      - docker-socket
+      - glance
     environment:
       WUD_LOG_LEVEL: info
       WUD_SERVER_FEATURE_DELETE: false
@@ -36,7 +37,7 @@ services:
 
       traefik.enable: true
       traefik.custom.host: wud
-traefik.http.routers.whats-up-docker.middlewares: authelia@file
+      traefik.http.routers.whats-up-docker.middlewares: authelia@file
 
       wud.watch: true
       wud.watch.digest: true
@@ -46,5 +47,10 @@ traefik.http.routers.whats-up-docker.middlewares: authelia@file
         condition: service_completed_successfully
 
 networks:
-  readonly-docker-socket:
+  docker-socket:
+    name: docker-readonly_wud
     external: true
+  glance:
+    name: wud_glance
+    driver_opts:
+      com.docker.network.bridge.name: br-wud_glance

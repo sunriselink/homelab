@@ -11,17 +11,11 @@
 - Set up static DNS on your router
   - `*.${ROOT_DOMAIN} -> <nas ip>`
 
-Create required networks
+Build `homelab-init` image
 
 ```sh
-docker network create database
-docker network create readonly-docker-socket
-docker network create admin-docker-socket
+./.admin/homelab-init/build.sh
 ```
-
-> You can override network name
->
-> `docker network create <name> --opt com.docker.network.bridge.name=br-<name>`
 
 ## Minimum set of services
 

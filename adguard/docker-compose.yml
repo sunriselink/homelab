@@ -8,6 +8,9 @@ services:
     ports:
       - 53:53/tcp
       - 53:53/udp
+    networks:
+      - default
+      - glance
     volumes:
       - ./config:/opt/adguardhome/conf
       - ./data:/opt/adguardhome/work
@@ -35,3 +38,7 @@ networks:
     name: ${COMPOSE_PROJECT_NAME:?}
     driver_opts:
       com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
+  glance:
+    name: adguard_glance
+    driver_opts:
+      com.docker.network.bridge.name: br-adg_glance

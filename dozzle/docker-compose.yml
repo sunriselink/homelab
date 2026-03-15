@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
-      - readonly-docker-socket
+      - docker-socket
     environment:
       DOZZLE_NO_ANALYTICS: true
       DOZZLE_REMOTE_HOST: tcp://readonly-docker-socket:2375
@@ -19,12 +19,13 @@ services:
       glance.category: monitoring
 
       traefik.enable: true
-traefik.http.routers.dozzle.middlewares: authelia@file
+      traefik.http.routers.dozzle.middlewares: authelia@file
 
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
 
 networks:
-  readonly-docker-socket:
+  docker-socket:
+    name: docker-readonly_dozzle
     external: true

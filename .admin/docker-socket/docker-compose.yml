@@ -18,7 +18,9 @@ services:
     <<: *common-opts
     container_name: readonly-docker-socket
     networks:
-      - readonly-docker-socket
+      - dozzle
+      - glance
+      - wud
     ports:
       - 127.0.0.1:36301:2375
     environment:
@@ -31,7 +33,7 @@ services:
     <<: *common-opts
     container_name: admin-docker-socket
     networks:
-      - admin-docker-socket
+      - dockge
     environment:
       LOG_LEVEL: warning
       BUILD: 1
@@ -44,7 +46,19 @@ services:
       VOLUMES: 1
 
 networks:
-  readonly-docker-socket:
-    external: true
-  admin-docker-socket:
-    external: true
+  dockge:
+    name: docker-admin_dockge
+    driver_opts:
+      com.docker.network.bridge.name: br-sock_dockge
+  dozzle:
+    name: docker-readonly_dozzle
+    driver_opts:
+      com.docker.network.bridge.name: br-sock_dozzle
+  glance:
+    name: docker-readonly_glance
+    driver_opts:
+      com.docker.network.bridge.name: br-sock_glance
+  wud:
+    name: docker-readonly_wud
+    driver_opts:
+      com.docker.network.bridge.name: br-sock_wud

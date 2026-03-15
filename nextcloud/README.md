@@ -3,7 +3,7 @@
 ## Execute `occ` tasks
 
 ```sh
-./occ.sh [params]
+./nextcloud/occ.sh [params]
 ```
 
 ## Cron job

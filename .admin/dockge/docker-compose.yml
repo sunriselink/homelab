@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
-      - admin-docker-socket
+      - docker-socket
     ports:
       - 5001:5001
     env_file:
@@ -43,5 +43,6 @@ services:
         condition: service_completed_successfully
 
 networks:
-  admin-docker-socket:
+  docker-socket:
+    name: docker-admin_dockge
     external: true

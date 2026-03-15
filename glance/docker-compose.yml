@@ -7,24 +7,33 @@ services:
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
-      - readonly-docker-socket
+      - docker-socket
+      - adguard
+      - wud
     environment:
-      ADGUARD_URL: https://adguard.${ROOT_DOMAIN:?}
+      ADGUARD_URL: http://adguard:80
       ADGUARD_USERNAME: ${ADGUARD_USERNAME:?}
       ADGUARD_PASSWORD: ${ADGUARD_PASSWORD:?}
       WEATHER_LOCATION: ${WEATHER_LOCATION:?}
-      WUD_URL: https://wud.${ROOT_DOMAIN:?}
+      WUD_URL: http://whats-up-docker:3000
     volumes:
       - ./config:/app/config:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
       traefik.enable: true
-traefik.http.routers.glance.middlewares: authelia@file
+      traefik.http.routers.glance.middlewares: authelia@file
 
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
 
 networks:
-  readonly-docker-socket:
+  docker-socket:
+    name: docker-readonly_glance
+    external: true
+  adguard:
+    name: adguard_glance
+    external: true
+  wud:
+    name: wud_glance
     external: true
