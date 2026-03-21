@@ -1,0 +1,9 @@
+LogLevel: info
+
+DefaultTheme: Spotify-ish
+DefaultUIVolume: 100
+ImageCacheSize: 1GB
+
+AutoTranscodeDownload: false
+DefaultPlaylistPublicVisibility: false
+EnableInsightsCollector: false

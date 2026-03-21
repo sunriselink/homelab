@@ -7,42 +7,38 @@ services:
       NAS_UID: ${NAS_UID:?}
       NAS_GID: ${NAS_GID:?}
     volumes:
+      - ./:/tmp/navidrome
       - ${PATH_TO_MEDIA:?}:/tmp/media
     command:
+      - /tmp/navidrome/data
       - /tmp/media
-      - /tmp/media/movies
-      - /tmp/media/tv
       - /tmp/media/music
 
-  # https://github.com/linuxserver/docker-jellyfin/pkgs/container/jellyfin
-  # https://github.com/linuxserver/docker-jellyfin/releases
-  # https://github.com/jellyfin/jellyfin/releases
-  jellyfin:
-    image: ghcr.io/linuxserver/jellyfin:10.11.6
-    container_name: jellyfin
+  # https://github.com/navidrome/navidrome/pkgs/container/navidrome
+  # https://github.com/navidrome/navidrome/releases
+  navidrome:
+    image: ghcr.io/navidrome/navidrome:0.60.3
+    container_name: navidrome
     restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
     environment:
-      PUID: ${NAS_UID:?}
-      PGID: ${NAS_GID:?}
-      TZ: ${TZ:?}
-      DOCKER_MODS: linuxserver/mods:jellyfin-opencl-intel
+      ND_CONFIGFILE: /navidrome.yml
     volumes:
-      - ./config:/config
-      - ./modcache:/modcache
-      - ${PATH_TO_MEDIA:?}:/data
-    devices:
-      - /dev/dri:/dev/dri
+      - ./data:/data
+      - ./navidrome.yml:/navidrome.yml:ro
+      - ${PATH_TO_MEDIA:?}/music:/music:ro
+      - /etc/localtime:/etc/localtime:ro
     labels:
-      glance.icon: di:jellyfin
-      glance.url: https://jellyfin.${ROOT_DOMAIN:?}
+      glance.icon: di:navidrome
+      glance.url: https://navidrome.${ROOT_DOMAIN:?}
       glance.category: media
 
       traefik.enable: true
+      traefik.http.routers.navidrome.entrypoints: local-secure,external-secure
 
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
-      wud.tag.exclude: ^2021.\d+\.\d+$$
     depends_on:
       init:
         condition: service_completed_successfully

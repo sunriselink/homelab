@@ -10,6 +10,23 @@ if [ "$1" = "test" ]; then
     secrets_dir="./secrets_test"
 fi
 
+main() {
+    create_dirs         \
+        $data_dir       \
+        $secrets_dir    \
+        ./redis
+
+    create_rand_secret_file session_secret
+    create_rand_secret_file storage_encryption_key
+    create_rand_secret_file hmac_secret
+
+    create_keys
+
+    create_oidc_files audiobookshelf
+    create_oidc_files filebrowser
+    create_oidc_files immich
+}
+
 create_dirs() {
     install -d -o ${PUID:?} -g ${PGID:?} -m 770 $@
 }
@@ -69,17 +86,4 @@ create_oidc_files() {
     set_permissions $client_id $client_secret $client_secret_digest
 }
 
-create_dirs         \
-    $data_dir       \
-    $secrets_dir    \
-    ./redis
-
-create_rand_secret_file session_secret
-create_rand_secret_file storage_encryption_key
-create_rand_secret_file hmac_secret
-
-create_keys
-
-create_oidc_files audiobookshelf
-create_oidc_files filebrowser
-create_oidc_files immich
+main "$@"
