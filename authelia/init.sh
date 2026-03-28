@@ -11,9 +11,9 @@ if [ "$1" = "test" ]; then
 fi
 
 main() {
-    create_dirs         \
-        $data_dir       \
-        $secrets_dir    \
+    create_dirs \
+        $data_dir \
+        $secrets_dir \
         ./redis
 
     create_rand_secret_file session_secret
