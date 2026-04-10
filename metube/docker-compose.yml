@@ -14,14 +14,15 @@ services:
   # https://github.com/alexta69/metube/pkgs/container/metube
   # https://github.com/alexta69/metube/releases
   metube:
-    image: ghcr.io/alexta69/metube:2026.03.21
+    image: ghcr.io/alexta69/metube:2026.04.10
     container_name: metube
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     environment:
-      YTDL_OPTIONS_FILE: /ytdl-options/options.json
+      LOGLEVEL: INFO
+      YTDL_OPTIONS_PRESETS_FILE: /config/presets.json
     volumes:
-      - ./ytdl-options:/ytdl-options:ro
+      - ./config:/config:ro
       - ${PATH_TO_MEDIA:?}/downloads:/downloads
       - /etc/localtime:/etc/localtime:ro
     labels:
@@ -42,6 +43,6 @@ services:
 
 networks:
   default:
-    name: ${COMPOSE_PROJECT_NAME:?}
+    name: metube
     driver_opts:
-      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
+      com.docker.network.bridge.name: br-metube

@@ -46,7 +46,7 @@ services:
   # https://hub.docker.com/r/prom/prometheus/tags
   # https://github.com/prometheus/prometheus/releases
   prometheus:
-    image: prom/prometheus:v3.10.0
+    image: prom/prometheus:v3.11.1
     container_name: prometheus
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -90,7 +90,7 @@ services:
   # https://hub.docker.com/r/prom/node-exporter/tags
   # https://github.com/prometheus/node_exporter/releases
   node-exporter:
-    image: prom/node-exporter:v1.10.2
+    image: prom/node-exporter:v1.11.1
     container_name: node-exporter
     restart: unless-stopped
     network_mode: host
@@ -167,7 +167,7 @@ services:
   # https://hub.docker.com/r/prom/alertmanager/tags
   # https://github.com/prometheus/alertmanager/releases
   alertmanager:
-    image: prom/alertmanager:v0.31.1
+    image: prom/alertmanager:v0.32.0
     container_name: alertmanager
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -196,6 +196,6 @@ services:
 
 networks:
   default:
-    name: ${COMPOSE_PROJECT_NAME:?}
+    name: monitoring
     driver_opts:
-      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
+      com.docker.network.bridge.name: br-monitoring

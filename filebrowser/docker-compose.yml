@@ -18,7 +18,7 @@ services:
   # https://github.com/gtsteffaniak/filebrowser/pkgs/container/filebrowser
   # https://github.com/gtsteffaniak/filebrowser/releases
   filebrowser:
-    image: ghcr.io/gtsteffaniak/filebrowser:1.2.3-stable-slim
+    image: ghcr.io/gtsteffaniak/filebrowser:1.2.4-stable-slim
     container_name: filebrowser
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -45,6 +45,6 @@ services:
 
 networks:
   default:
-    name: ${COMPOSE_PROJECT_NAME:?}
+    name: filebrowser
     driver_opts:
-      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
+      com.docker.network.bridge.name: br-filebrowser

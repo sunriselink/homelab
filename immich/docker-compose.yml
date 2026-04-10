@@ -20,7 +20,7 @@ services:
 
   # https://github.com/immich-app/immich/releases
   immich:
-    image: ghcr.io/immich-app/immich-server:v2.6.3
+    image: ghcr.io/immich-app/immich-server:v2.7.4
     container_name: immich
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -59,7 +59,7 @@ services:
         condition: service_healthy
 
   immich-machine-learning:
-    image: ghcr.io/immich-app/immich-machine-learning:v2.6.3-openvino
+    image: ghcr.io/immich-app/immich-machine-learning:v2.7.4-openvino
     container_name: immich_ml
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -83,7 +83,7 @@ services:
         condition: service_completed_successfully
 
   immich-redis:
-    image: docker.io/valkey/valkey:9@sha256:3eeb09785cd61ec8e3be35f8804c8892080f3ca21934d628abc24ee4ed1698f6
+    image: docker.io/valkey/valkey:9@sha256:3b55fbaa0cd93cf0d9d961f405e4dfcc70efe325e2d84da207a0a8e6d8fde4f9
     container_name: immich_redis
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -117,6 +117,6 @@ services:
 
 networks:
   default:
-    name: ${COMPOSE_PROJECT_NAME:?}
+    name: immich
     driver_opts:
-      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
+      com.docker.network.bridge.name: br-immich

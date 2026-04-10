@@ -35,9 +35,9 @@ services:
 
 networks:
   default:
-    name: ${COMPOSE_PROJECT_NAME:?}
+    name: adguard
     driver_opts:
-      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
+      com.docker.network.bridge.name: br-adguard
   glance:
     name: adguard_glance
     driver_opts:

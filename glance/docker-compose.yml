@@ -7,6 +7,7 @@ services:
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
+      - default
       - docker-socket
       - adguard
       - wud
@@ -28,6 +29,10 @@ services:
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
 
 networks:
+  default:
+    name: glance
+    driver_opts:
+      com.docker.network.bridge.name: br-glance
   docker-socket:
     name: docker-readonly_glance
     external: true

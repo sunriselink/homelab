@@ -18,7 +18,7 @@ services:
   # https://github.com/linuxserver/docker-jellyfin/releases
   # https://github.com/jellyfin/jellyfin/releases
   jellyfin:
-    image: ghcr.io/linuxserver/jellyfin:10.11.6
+    image: ghcr.io/linuxserver/jellyfin:10.11.8
     container_name: jellyfin
     restart: unless-stopped
     environment:
@@ -49,6 +49,6 @@ services:
 
 networks:
   default:
-    name: ${COMPOSE_PROJECT_NAME:?}
+    name: jellyfin
     driver_opts:
-      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
+      com.docker.network.bridge.name: br-jellyfin

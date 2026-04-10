@@ -2,10 +2,15 @@
 
 set -e
 
-create-dirs /tmp/media /tmp/media/downloads
+create-dirs \
+    ./config \
+    /tmp/media \
+    /tmp/media/downloads
 
-options_file="ytdl-options/options.json"
+presets_file="config/presets.json"
 
-if [ ! -f "$options_file" ]; then
-    install -o $NAS_UID -g $NAS_GID -m 660 ${options_file}.example $options_file
+if [ ! -f "$presets_file" ]; then
+    echo "{}" > $presets_file
+    chown ${NAS_UID?}:${NAS_GID:?} $presets_file
+    chmod 660 $presets_file
 fi

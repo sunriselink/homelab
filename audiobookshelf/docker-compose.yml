@@ -44,6 +44,6 @@ services:
 
 networks:
   default:
-    name: ${COMPOSE_PROJECT_NAME:?}
+    name: audiobookshelf
     driver_opts:
       com.docker.network.bridge.name: br-abs

@@ -19,6 +19,7 @@ services:
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
+      - default
       - docker-socket
       - glance
     environment:
@@ -51,6 +52,10 @@ services:
         condition: service_completed_successfully
 
 networks:
+  default:
+    name: wud
+    driver_opts:
+      com.docker.network.bridge.name: br-wud
   docker-socket:
     name: docker-readonly_wud
     external: true
