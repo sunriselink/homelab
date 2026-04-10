@@ -44,7 +44,7 @@ services:
 
 networks:
   default:
-    name: ${COMPOSE_PROJECT_NAME:?}
+    name: <service-name>
     driver_opts:
       # length is limited to 15 characters
-      com.docker.network.bridge.name: br-${COMPOSE_PROJECT_NAME:?}
+      com.docker.network.bridge.name: br-<service-name>

@@ -1,4 +1,20 @@
 services:
+  init:
+    image: localhost/homelab-init:v1
+    pull_policy: never
+    working_dir: /tmp/traefik
+    entrypoint: render-env
+    environment:
+      NAS_UID: ${NAS_UID:?}
+      NAS_GID: ${NAS_GID:?}
+      ROOT_DOMAIN: ${ROOT_DOMAIN:?}
+      ACME_EMAIL: ${ACME_EMAIL:?}
+    command:
+      - ./traefik.tpl.yml
+      - ./config/traefik.yml
+    volumes:
+      - ./:/tmp/traefik
+
   # https://hub.docker.com/_/traefik/tags
   # https://github.com/traefik/traefik/releases
   traefik:
@@ -6,52 +22,17 @@ services:
     container_name: traefik
     restart: unless-stopped
     network_mode: host
-    command:
-      - --global.checkNewVersion=false
-      - --global.sendAnonymousUsage=false
-
-      - --api.dashboard
-      - --api.insecure
-
-      - --log.level=INFO
-
-      - --entrypoints.local.address=:80
-      - --entrypoints.local.http.redirections.entrypoint.to=local-secure
-
-      - --entrypoints.local-secure.address=:443
-      - --entrypoints.local-secure.asDefault=true
-      - --entrypoints.local-secure.http.middlewares=security-headers@file
-      - --entrypoints.local-secure.http.tls.certResolver=dynu
-      - --entrypoints.local-secure.http.tls.domains[0].main=*.${ROOT_DOMAIN:?}
-
-      - --entrypoints.external.address=:81
-      - --entrypoints.external.http.redirections.entrypoint.to=local-secure # 81 -> 443 -> 444 (by router)
-
-      - --entrypoints.external-secure.address=:444
-      - --entrypoints.external-secure.http.middlewares=security-headers@file
-      - --entrypoints.external-secure.http.tls.certResolver=dynu
-      - --entrypoints.external-secure.http.tls.domains[0].main=*.${ROOT_DOMAIN:?}
-
-      - --serversTransport.insecureSkipVerify
-
-      - --providers.docker.endpoint=tcp://localhost:36301
-      - --providers.docker.exposedByDefault=false
-      - --providers.docker.defaultRule=Host(`{{ coalesce (index .Labels "traefik.custom.host") (index .Labels "com.docker.compose.service") }}.${ROOT_DOMAIN:?}`)
-
-      - --providers.file.directory=/dynamic-conf
-
-      - --certificatesResolvers.dynu.acme.email=${ACME_EMAIL:?}
-      - --certificatesResolvers.dynu.acme.storage=/letsencrypt/acme.json
-      - --certificatesResolvers.dynu.acme.dnsChallenge.provider=dynu
     environment:
       ROOT_DOMAIN: ${ROOT_DOMAIN:?}
       DYNU_API_KEY: ${DYNU_API_KEY:?}
+      CROWDSEC_LAPI_KEY: ${CROWDSEC_LAPI_KEY:?}
     dns:
       - 9.9.9.10
       - 8.8.8.8
     volumes:
+      - ./config:/etc/traefik:ro
+      - ./logs:/var/log/traefik
       - ./letsencrypt:/letsencrypt
-      - ./dynamic-conf:/dynamic-conf:ro
       - /etc/localtime:/etc/localtime:ro
     labels:
       glance.icon: di:traefik
@@ -65,3 +46,12 @@ services:
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+networks:
+  default:
+    name: traefik
+    driver_opts:
+      com.docker.network.bridge.name: br-traefik

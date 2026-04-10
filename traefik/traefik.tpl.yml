@@ -1,0 +1,89 @@
+# yaml-language-server: $schema=https://www.schemastore.org/traefik-v3.json
+
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+api:
+  dashboard: true
+  insecure: true
+
+log:
+  level: INFO
+
+accessLog:
+  filePath: /var/log/traefik/access.log
+  format: json
+  bufferingSize: 0
+  filters:
+    statusCodes:
+      - 200-299
+      - 400-599
+  fields:
+    headers:
+      defaultMode: drop
+      names:
+        User-Agent: keep
+
+serversTransport:
+  insecureSkipVerify: true
+
+entryPoints:
+  local:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: local-secure
+
+  local-secure:
+    address: :443
+    asDefault: true
+    http:
+      middlewares:
+        - security-headers@file
+        - crowdsec@file
+      tls:
+        certResolver: dynu
+        domains:
+          - main: '*.${ROOT_DOMAIN}'
+
+  external:
+    address: :81
+    http:
+      redirections:
+        entryPoint:
+          to: local-secure # 81 -> 443 -> 444 (by router)
+
+  external-secure:
+    address: :444
+    http:
+      middlewares:
+        - security-headers@file
+        - crowdsec@file
+      tls:
+        certResolver: dynu
+        domains:
+          - main: '*.${ROOT_DOMAIN}'
+
+providers:
+  docker:
+    endpoint: tcp://localhost:36301 # readonly-docker-socket
+    exposedByDefault: false
+    defaultRule: Host(`{{ coalesce (index .Labels "traefik.custom.host") (index .Labels "com.docker.compose.service") }}.${ROOT_DOMAIN}`)
+  file:
+    directory: /etc/traefik/dynamic
+
+certificatesResolvers:
+  dynu:
+    acme:
+      email: ${ACME_EMAIL}
+      storage: /letsencrypt/acme.json
+      dnsChallenge:
+        provider: dynu
+
+experimental:
+  plugins:
+    bouncer:
+      moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+      version: v1.5.1

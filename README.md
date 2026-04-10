@@ -25,10 +25,13 @@ Build `homelab-init` image
 # Docker Socket Proxy
 ./compose.sh .admin/docker-socket up -d
 
-# Authelia
+# Authelia (authentication server)
 ./compose.sh authelia up -d
 
-# Traefik
+# Crowdsec (firewall)
+./compose.sh crowdsec up -d
+
+# Traefik (reverse proxy)
 ./compose.sh traefik up -d
 ```
 
@@ -69,3 +72,8 @@ When the versions of Docker images have been changed in the stack (in docker-com
 ```sh
 ./update.sh <stack_path>
 ```
+
+## Additional features
+
+- [Send notifications to Telegram about power events](./.admin/power-events/)
+- [Logrotate configurations](./.admin/logrotate/)

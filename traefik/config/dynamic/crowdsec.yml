@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://www.schemastore.org/traefik-v3-file-provider.json
+
+http:
+  middlewares:
+    crowdsec:
+      plugin:
+        bouncer:
+          enabled: true
+          defaultDecisionSeconds: 60
+          crowdsecMode: live
+          crowdsecAppsecEnabled: true
+          crowdsecAppsecHost: localhost:25151
+          crowdsecAppsecFailureBlock: true
+          crowdsecAppsecUnreachableBlock: true
+          crowdsecLapiKey: '{{ env "CROWDSEC_LAPI_KEY" }}'
+          crowdsecLapiHost: localhost:45597
+          crowdsecLapiScheme: http
+          forwardedHeadersTrustedIPs:
+            - 10.0.0.0/8
+            - 172.16.0.0/12
+            - 192.168.0.0/16
+          clientTrustedIPs:
+            - 10.0.0.0/8
+            - 172.16.0.0/12
+            - 192.168.0.0/16

@@ -34,7 +34,6 @@ services:
       glance.category: media
 
       traefik.enable: true
-      traefik.http.routers.navidrome.entrypoints: local-secure,external-secure
 
       wud.watch: true
       wud.watch.digest: true

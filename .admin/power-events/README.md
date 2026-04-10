@@ -1,4 +1,4 @@
-## Send notifications to Telegram about power events
+# Send notifications to Telegram about power events
 
 Copy files
 

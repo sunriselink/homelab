@@ -1,0 +1,10 @@
+${PATH_TO_ROOT}/traefik/logs/*.log {
+    daily
+    minsize 10M
+    rotate 10
+    missingok
+    notifempty
+    postrotate
+        docker kill --signal="USR1" traefik
+    endscript
+}

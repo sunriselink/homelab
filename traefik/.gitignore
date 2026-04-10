@@ -1,1 +1,3 @@
 /letsencrypt
+/logs
+/config/traefik.yml

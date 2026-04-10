@@ -45,7 +45,6 @@ services:
       glance.category: media
 
       traefik.enable: true
-      traefik.http.routers.nextcloud.entrypoints: local-secure,external-secure
       traefik.http.routers.nextcloud.middlewares: nextcloud_redirectregex@docker
       traefik.http.middlewares.nextcloud_redirectregex.redirectregex.permanent: true
       traefik.http.middlewares.nextcloud_redirectregex.redirectregex.regex: https://(.*)/.well-known/(?:card|cal)dav

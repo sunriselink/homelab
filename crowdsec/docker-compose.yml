@@ -1,0 +1,42 @@
+services:
+  # https://github.com/crowdsecurity/crowdsec/pkgs/container/crowdsec
+  # https://github.com/crowdsecurity/crowdsec/releases
+  crowdsec:
+    image: ghcr.io/crowdsecurity/crowdsec:v1.7.7
+    container_name: crowdsec
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 127.0.0.1:25151:7422
+      - 127.0.0.1:45597:8080
+    environment:
+      COLLECTIONS: >-
+        crowdsecurity/linux
+        crowdsecurity/traefik
+        crowdsecurity/http-cve
+        crowdsecurity/base-http-scenarios
+        crowdsecurity/appsec-virtual-patching
+        crowdsecurity/appsec-generic-rules
+        crowdsecurity/appsec-crs
+      GID: ${NAS_GID:?}
+      TZ: ${TZ:?}
+    volumes:
+      - ./data:/var/lib/crowdsec/data
+      - ./config:/etc/crowdsec
+      - ./appsec.yaml:/etc/crowdsec/acquis.d/appsec.yaml:ro
+      - ../traefik/logs:/var/log/traefik:ro
+    labels:
+      glance.icon: di:crowdsec
+      glance.url: https://app.crowdsec.net/security-engines
+      glance.category: monitoring
+
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+
+networks:
+  default:
+    name: crowdsec
+    driver_opts:
+      com.docker.network.bridge.name: br-crowdsec
