@@ -20,7 +20,7 @@ services:
 
   # https://github.com/immich-app/immich/releases
   immich:
-    image: ghcr.io/immich-app/immich-server:v2.7.4
+    image: ghcr.io/immich-app/immich-server:v2.7.5
     container_name: immich
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -59,7 +59,7 @@ services:
         condition: service_healthy
 
   immich-machine-learning:
-    image: ghcr.io/immich-app/immich-machine-learning:v2.7.4-openvino
+    image: ghcr.io/immich-app/immich-machine-learning:v2.7.5-openvino
     container_name: immich_ml
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}

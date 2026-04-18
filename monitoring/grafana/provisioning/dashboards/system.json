@@ -75,10 +75,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "node_time_seconds - node_boot_time_seconds",
-          "instant": false,
+          "instant": true,
           "legendFormat": "__auto",
-          "range": true,
+          "range": false,
           "refId": "A"
         }
       ],
@@ -155,9 +156,9 @@
           "editorMode": "code",
           "exemplar": false,
           "expr": "100 * (1 - avg(irate(node_cpu_seconds_total{mode=\"idle\"}[30s])))",
-          "instant": false,
+          "instant": true,
           "legendFormat": "CPU ($cpu_cores cores)",
-          "range": true,
+          "range": false,
           "refId": "A"
         },
         {
@@ -166,10 +167,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "100 * (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes))",
-          "instant": false,
+          "instant": true,
           "legendFormat": "RAM ($mem_total GB)",
-          "range": true,
+          "range": false,
           "refId": "B"
         },
         {
@@ -178,10 +180,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "100 * (1 - (node_memory_SwapFree_bytes / node_memory_SwapTotal_bytes))",
-          "instant": false,
+          "instant": true,
           "legendFormat": "SWAP ($swap_total GB)",
-          "range": true,
+          "range": false,
           "refId": "C"
         }
       ],
@@ -241,10 +244,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "engine_daemon_container_states_containers{state=\"running\"}",
-          "instant": false,
+          "instant": true,
           "legendFormat": "__auto",
-          "range": true,
+          "range": false,
           "refId": "A"
         }
       ],
@@ -308,10 +312,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "engine_daemon_container_states_containers{state=\"stopped\"}",
-          "instant": false,
+          "instant": true,
           "legendFormat": "__auto",
-          "range": true,
+          "range": false,
           "refId": "A"
         }
       ],
@@ -386,10 +391,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
+          "exemplar": false,
           "expr": "100 * (1 - node_filesystem_avail_bytes / node_filesystem_size_bytes)",
-          "instant": false,
+          "instant": true,
           "legendFormat": "{{mountpoint}}",
-          "range": true,
+          "range": false,
           "refId": "A"
         }
       ],
@@ -1684,7 +1690,7 @@
         ]
       },
       "gridPos": {
-        "h": 5,
+        "h": 6,
         "w": 24,
         "x": 0,
         "y": 44
@@ -2027,7 +2033,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 49
+        "y": 50
       },
       "id": 13,
       "options": {
@@ -2254,7 +2260,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 54
+        "y": 55
       },
       "id": 14,
       "options": {
@@ -2348,7 +2354,7 @@
     }
   ],
   "preload": false,
-  "refresh": "10s",
+  "refresh": "30s",
   "schemaVersion": 42,
   "tags": [],
   "templating": {
@@ -2419,13 +2425,13 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-12h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "System",
   "uid": "aek2tmxcsptz4f",
-  "version": 29,
+  "version": 32,
   "weekStart": ""
 }

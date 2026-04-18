@@ -17,7 +17,7 @@ services:
   # https://github.com/navidrome/navidrome/pkgs/container/navidrome
   # https://github.com/navidrome/navidrome/releases
   navidrome:
-    image: ghcr.io/navidrome/navidrome:0.61.1
+    image: ghcr.io/navidrome/navidrome:0.61.2
     container_name: navidrome
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
