@@ -17,7 +17,7 @@ Navigate to `Settings -> Authentication`, then select the check box for `OpenID 
 | Client ID                    | Copy from `authelia/secrets/audiobookshelf/client_id`           |
 | Client Secret                | Copy from `authelia/secrets/audiobookshelf/client_secret`       |
 | Signing Algorithm            | `RS256`                                                         |
-| Allowed Mobile Redirect URIs | `audiobookshelf://oauth`                                        |
+| Allowed Mobile Redirect URIs | `audiobookshelf://oauth`, `lissen://oauth`                      |
 | Subfolder for Redirect URLs  | `None`                                                          |
 | Button Text                  | `Login with Authelia`                                           |
 | Match existing users by      | `Match by username`                                             |
@@ -33,6 +33,7 @@ docker restart audiobookshelf
 After correct login - disable default password authentication.
 
 Navigate to `Settings -> Authentication`:
+
 - Password Authentication: Disabled
 - OpenID Connect Authentication > Auto Launch: Enabled
 

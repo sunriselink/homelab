@@ -102,6 +102,7 @@ identity_providers:
           - https://audiobookshelf.{{ env "ROOT_DOMAIN" }}/auth/openid/callback
           - https://audiobookshelf.{{ env "ROOT_DOMAIN" }}/auth/openid/mobile-redirect
           - audiobookshelf://oauth
+          - lissen://oauth
         scopes:
           - openid
           - profile
