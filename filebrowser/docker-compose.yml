@@ -15,10 +15,9 @@ services:
       - ${PATH_TO_MEDIA:?}:/tmp/media
       - ${PATH_TO_FILES:?}:/tmp/files
 
-  # https://github.com/gtsteffaniak/filebrowser/pkgs/container/filebrowser
   # https://github.com/gtsteffaniak/filebrowser/releases
   filebrowser:
-    image: ghcr.io/gtsteffaniak/filebrowser:1.2.4-stable-slim
+    image: ghcr.io/gtsteffaniak/filebrowser:1.3.0-stable-slim
     container_name: filebrowser
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}

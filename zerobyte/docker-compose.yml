@@ -1,13 +1,13 @@
 services:
-  # https://github.com/nicotsx/zerobyte/pkgs/container/zerobyte
   # https://github.com/nicotsx/zerobyte/releases
   zerobyte:
-    image: ghcr.io/nicotsx/zerobyte:v0.29.2
+    image: ghcr.io/nicotsx/zerobyte:v0.35.0
     container_name: zerobyte
     restart: unless-stopped
     environment:
       APP_SECRET: ${APP_SECRET:?}
       BASE_URL: https://zerobyte.${ROOT_DOMAIN:?}
+      LOG_LEVEL: info
       TZ: ${TZ:?}
     volumes:
       - ./data:/var/lib/zerobyte

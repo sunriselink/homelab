@@ -14,7 +14,6 @@ services:
       - /tmp/media/tv
       - /tmp/media/music
 
-  # https://github.com/linuxserver/docker-jellyfin/pkgs/container/jellyfin
   # https://github.com/linuxserver/docker-jellyfin/releases
   # https://github.com/jellyfin/jellyfin/releases
   jellyfin:
