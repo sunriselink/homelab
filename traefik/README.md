@@ -49,6 +49,8 @@ services:
       traefik.custom.host: my-service
 ```
 
+Service will be available at `https://my-service.{ROOT_DOMAIN}` instead of `https://my-super-duper-service.{ROOT_DOMAIN}`. For more details see `defaultRule` option in [traefik settings](./traefik.tpl.yml).
+
 ## Use Forward Auth with Authelia
 
 ```yaml
@@ -58,5 +60,3 @@ services:
       traefik.enable: true
       traefik.http.routers.<my-service>.middlewares: authelia@file
 ```
-
-Service will be available at `https://my-service.{ROOT_DOMAIN}` instead of `https://my-super-duper-service.{ROOT_DOMAIN}`. For more details see `defaultRule` option in [traefik settings](./traefik.tpl.yml).
