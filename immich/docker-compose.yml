@@ -43,7 +43,7 @@ services:
       glance.category: media
 
       traefik.enable: true
-      traefik.http.routers.immich.entrypoints: local-secure,external-secure
+      traefik.http.routers.immich.entrypoints: local-secure
 
       wud.watch: true
       wud.watch.digest: true
