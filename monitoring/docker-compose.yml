@@ -14,7 +14,7 @@ services:
 
   # https://github.com/grafana/grafana/releases
   grafana:
-    image: grafana/grafana:13.0.1
+    image: grafana/grafana:13.0.2
     container_name: grafana
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -44,7 +44,7 @@ services:
 
   # https://github.com/prometheus/prometheus/releases
   prometheus:
-    image: prom/prometheus:v3.11.3
+    image: prom/prometheus:v3.12.0
     container_name: prometheus
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -122,7 +122,7 @@ services:
 
   # https://github.com/google/cadvisor/releases
   cadvisor:
-    image: ghcr.io/google/cadvisor:0.56.2
+    image: ghcr.io/google/cadvisor:v0.57.0
     container_name: cadvisor
     restart: unless-stopped
     command:
@@ -161,7 +161,7 @@ services:
 
   # https://github.com/prometheus/alertmanager/releases
   alertmanager:
-    image: prom/alertmanager:v0.32.1
+    image: prom/alertmanager:v0.32.2
     container_name: alertmanager
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}

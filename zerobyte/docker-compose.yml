@@ -1,7 +1,7 @@
 services:
   # https://github.com/nicotsx/zerobyte/releases
   zerobyte:
-    image: ghcr.io/nicotsx/zerobyte:v0.35.0
+    image: ghcr.io/nicotsx/zerobyte:v0.38.1
     container_name: zerobyte
     restart: unless-stopped
     networks:
@@ -10,6 +10,7 @@ services:
     environment:
       APP_SECRET: ${APP_SECRET:?}
       BASE_URL: https://zerobyte.${ROOT_DOMAIN:?}
+      WEBHOOK_ALLOWED_ORIGINS: http://apprise:8000
       LOG_LEVEL: info
       TZ: ${TZ:?}
     volumes:
