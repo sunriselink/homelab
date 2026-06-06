@@ -1,0 +1,14 @@
+route:
+  receiver: apprise
+  group_by: ['alertname']
+  group_wait: 10s
+
+templates:
+  - /app/templates/*.tmpl
+
+receivers:
+  - name: apprise
+    webhook_configs:
+      - url: http://apprise:8000/notify/${APPRISE_CONFIG_KEY}?tags=${APPRISE_TAG}
+        send_resolved: false
+        payload: '{{ template "apprise.message" . }}'

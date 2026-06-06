@@ -9,5 +9,5 @@ create-dirs \
     ./alertmanager/config
 
 render-env \
-    ./alertmanager/alertmanager.yml \
+    ./alertmanager/alertmanager.tpl.yml \
     ./alertmanager/config/alertmanager.yml

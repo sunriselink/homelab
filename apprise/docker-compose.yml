@@ -1,0 +1,80 @@
+services:
+  init:
+    image: localhost/homelab-init:v1
+    pull_policy: never
+    entrypoint: create-dirs
+    environment:
+      NAS_UID: ${NAS_UID:?}
+      NAS_GID: ${NAS_GID:?}
+    volumes:
+      - ./:/tmp/apprise
+    command:
+      - /tmp/apprise/config
+      - /tmp/apprise/attach
+      - /tmp/apprise/notifications
+
+  # https://github.com/caronc/apprise-api/releases
+  apprise:
+    image: ghcr.io/caronc/apprise:v1.5.0
+    container_name: apprise
+    restart: unless-stopped
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    networks:
+      - default
+      - alertmanager
+      - torrent
+      - uptime-kuma
+      - zerobyte
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    environment:
+      APPRISE_STATEFUL_MODE: simple
+      APPRISE_WORKER_COUNT: 1
+      APPRISE_ADMIN: yes
+      APPRISE_CONFIG_LOCK: yes
+      APPRISE_DEFAULT_THEME: dark
+      LOG_LEVEL: INFO
+      TZ: ${TZ:?}
+    volumes:
+      - ./config:/config
+      - ./attach:/attach
+      - ./plugin:/plugin
+      - ./notifications:/notifications
+    labels:
+      glance.icon: di:apprise.png
+      glance.url: https://apprise.${ROOT_DOMAIN:?}
+      glance.category: admin
+
+      traefik.enable: true
+      traefik.http.routers.apprise.middlewares: authelia@file
+
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+networks:
+  default:
+    name: apprise
+    driver_opts:
+      com.docker.network.bridge.name: br-apprise
+  alertmanager:
+    name: apprise_alertmanager
+    driver_opts:
+      com.docker.network.bridge.name: br-apprise_am
+  torrent:
+    name: apprise_torrent
+    driver_opts:
+      com.docker.network.bridge.name: br-apprise_to
+  uptime-kuma:
+    name: apprise_uptime-kuma
+    driver_opts:
+      com.docker.network.bridge.name: br-apprise_uk
+  zerobyte:
+    name: apprise_zerobyte
+    driver_opts:
+      com.docker.network.bridge.name: br-apprise_zb

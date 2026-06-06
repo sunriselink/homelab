@@ -4,6 +4,9 @@ services:
     image: ghcr.io/nicotsx/zerobyte:v0.35.0
     container_name: zerobyte
     restart: unless-stopped
+    networks:
+      - default
+      - apprise
     environment:
       APP_SECRET: ${APP_SECRET:?}
       BASE_URL: https://zerobyte.${ROOT_DOMAIN:?}
@@ -32,3 +35,6 @@ networks:
     name: zerobyte
     driver_opts:
       com.docker.network.bridge.name: br-zerobyte
+  apprise:
+    name: apprise_zerobyte
+    external: true

@@ -44,16 +44,25 @@ services:
     image: ghcr.io/linuxserver/qbittorrent:5.1.4
     container_name: qbittorrent
     restart: unless-stopped
+    networks:
+      - default
+      - apprise
     environment:
       PUID: ${NAS_UID:?}
       PGID: ${NAS_GID:?}
       TZ: ${TZ:?}
+      APPRISE_CONFIG_KEY: ${APPRISE_CONFIG_KEY:?}
+      APPRISE_TAG: ${APPRISE_TAG:?}
       WEBUI_PORT: 8080
       # https://github.com/VueTorrent/VueTorrent/releases
-      DOCKER_MODS: ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.32.1
+      DOCKER_MODS: >-
+        ghcr.io/vuetorrent/vuetorrent-lsio-mod:2.32.1
+        |
+        linuxserver/mods:universal-apprise
     volumes:
       - ./qbittorrent:/config
       - ./modcache:/modcache
+      - ./scripts:/scripts:ro
       - ${PATH_TO_MEDIA:?}/downloads:/downloads
     labels:
       glance.name: qBittorrent
@@ -77,3 +86,6 @@ networks:
     name: torrent
     driver_opts:
       com.docker.network.bridge.name: br-torrent
+  apprise:
+    name: apprise_torrent
+    external: true

@@ -7,8 +7,8 @@ services:
     environment:
       NAS_UID: ${NAS_UID:?}
       NAS_GID: ${NAS_GID:?}
-      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:?}
-      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:?}
+      APPRISE_CONFIG_KEY: ${APPRISE_CONFIG_KEY:?}
+      APPRISE_TAG: ${APPRISE_TAG:?}
     volumes:
       - ./:/tmp/monitoring
 
@@ -165,7 +165,11 @@ services:
     container_name: alertmanager
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
+    networks:
+      - default
+      - apprise
     command:
+      - --log.level=info
       - --config.file=/app/config/alertmanager.yml
       - --storage.path=/app/data
     tmpfs:
@@ -193,3 +197,6 @@ networks:
     name: monitoring
     driver_opts:
       com.docker.network.bridge.name: br-monitoring
+  apprise:
+    name: apprise_alertmanager
+    external: true

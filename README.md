@@ -5,7 +5,7 @@
 - Create `global.env` file from `global.env.example` and fill missing variables
   - To fill variable `ROOT_DOMAIN`, register your domain on https://dynu.com/
 - Create `.env` files from `.env.example` for each stack that you need and fill missing variables
-- Set up port forwarding on your router
+- Set up port forwarding on your router for external access to some service (if needed)
   - `:80 -> <nas ip>:81`
   - `:443 -> <nas ip>:444`
 - Set up static DNS on your router
@@ -75,5 +75,4 @@ When the versions of Docker images have been changed in the stack (in docker-com
 
 ## Additional features
 
-- [Send notifications to Telegram about power events](./.admin/power-events/)
 - [Logrotate configurations](./.admin/logrotate/)

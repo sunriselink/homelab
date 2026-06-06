@@ -1,0 +1,29 @@
+{{- define "apprise.message" -}}
+{"body":"{{ template "apprise.body" . }}"}
+{{- end -}}
+
+{{- define "apprise.body" -}}
+  {{- $hasFiring := gt (len .Alerts.Firing) 0 -}}
+  {{- $hasResolved := gt (len .Alerts.Resolved) 0 -}}
+  {{- if $hasFiring -}}🔥 Alerts Firing\n \n
+    {{- template "apprise.alert_list" .Alerts.Firing -}}
+  {{- end -}}
+  {{- if and $hasFiring $hasResolved -}}\n \n{{- end -}}
+  {{- if $hasResolved -}}✅ Alerts Resolved\n \n
+    {{- template "apprise.alert_list" .Alerts.Resolved -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "apprise.alert_list" -}}
+  {{- range $i, $el := . -}}
+    {{- if ne $i 0 -}}\n \n{{- end -}}
+    {{- if eq .Labels.severity "critical" -}}🚨 CRITICAL{{- end -}}
+    {{- if eq .Labels.severity "warning" -}}⚠️ WARNING{{- end -}}
+    {{- if .Annotations.summary -}}\n📝 {{ template "apprise.text" .Annotations.summary }}{{- end -}}
+    {{- if .Annotations.description -}}\n📖 {{ template "apprise.text" .Annotations.description }}{{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "apprise.text" -}}
+  {{- . | reReplaceAll "\"" "\\\"" -}}
+{{- end -}}

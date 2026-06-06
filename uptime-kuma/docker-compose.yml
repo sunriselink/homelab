@@ -4,6 +4,9 @@ services:
     image: louislam/uptime-kuma:2.3.0
     container_name: uptime-kuma
     restart: unless-stopped
+    networks:
+      - default
+      - apprise
     environment:
       PUID: ${NAS_UID:?}
       PGID: ${NAS_GID:?}
@@ -26,3 +29,6 @@ networks:
     name: uptime-kuma
     driver_opts:
       com.docker.network.bridge.name: br-uptime-kuma
+  apprise:
+    name: apprise_uptime-kuma
+    external: true
