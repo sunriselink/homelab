@@ -62,18 +62,22 @@ networks:
     name: apprise
     driver_opts:
       com.docker.network.bridge.name: br-apprise
+
   alertmanager:
     name: apprise_alertmanager
     driver_opts:
       com.docker.network.bridge.name: br-apprise_am
+
   torrent:
     name: apprise_torrent
     driver_opts:
       com.docker.network.bridge.name: br-apprise_to
+
   uptime-kuma:
     name: apprise_uptime-kuma
     driver_opts:
       com.docker.network.bridge.name: br-apprise_uk
+
   zerobyte:
     name: apprise_zerobyte
     driver_opts:

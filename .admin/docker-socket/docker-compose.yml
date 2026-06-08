@@ -49,14 +49,17 @@ networks:
     name: docker-admin_dockge
     driver_opts:
       com.docker.network.bridge.name: br-sock_dockge
+
   dozzle:
     name: docker-readonly_dozzle
     driver_opts:
       com.docker.network.bridge.name: br-sock_dozzle
+
   glance:
     name: docker-readonly_glance
     driver_opts:
       com.docker.network.bridge.name: br-sock_glance
+
   wud:
     name: docker-readonly_wud
     driver_opts:

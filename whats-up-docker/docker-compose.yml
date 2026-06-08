@@ -56,9 +56,11 @@ networks:
     name: wud
     driver_opts:
       com.docker.network.bridge.name: br-wud
+
   docker-socket:
     name: docker-readonly_wud
     external: true
+
   glance:
     name: wud_glance
     driver_opts:

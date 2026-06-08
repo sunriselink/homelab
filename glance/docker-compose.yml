@@ -32,12 +32,15 @@ networks:
     name: glance
     driver_opts:
       com.docker.network.bridge.name: br-glance
+
   docker-socket:
     name: docker-readonly_glance
     external: true
+
   adguard:
     name: adguard_glance
     external: true
+
   wud:
     name: wud_glance
     external: true
