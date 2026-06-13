@@ -17,11 +17,43 @@ Build `homelab-init` image
 ./.admin/homelab-init/build.sh
 ```
 
+## Increase your Docker IP space
+
+To extend Docker’s available network ranges, configure daemon settings.
+
+```sh
+sudo nano /etc/docker/daemon.json
+```
+
+Add IP pools. For example:
+
+```json
+{
+  "default-address-pools": [
+    { "base": "172.20.0.0/16", "size": 24 },
+    { "base": "172.21.0.0/16", "size": 24 }
+  ]
+}
+```
+
+Restart Docker
+
+```sh
+sudo service docker restart
+```
+
+If networks already exist in these ranges, you must either:
+- remove them
+- or choose different IP ranges in daemon.json
+
 ## Minimum set of services
 
 > Before running any stack, please read `<stack-path>/README.md` file
 
 ```sh
+# If you use adguard as primary DNS server
+./compose.sh adguard up -d
+
 # Docker Socket Proxy
 ./compose.sh .admin/docker-socket up -d
 
