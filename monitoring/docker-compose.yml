@@ -1,6 +1,6 @@
 services:
   init:
-    image: localhost/homelab-init:v1
+    image: localhost/homelab-init:v2
     pull_policy: never
     working_dir: /tmp/monitoring
     entrypoint: ./init.sh

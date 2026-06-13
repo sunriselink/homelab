@@ -1,6 +1,6 @@
 services:
   init:
-    image: localhost/homelab-init:v1
+    image: localhost/homelab-init:v2
     pull_policy: never
     working_dir: /tmp/filebrowser
     entrypoint: ./init.sh
@@ -14,6 +14,7 @@ services:
       - ./:/tmp/filebrowser
       - ${PATH_TO_MEDIA:?}:/tmp/media
       - ${PATH_TO_FILES:?}:/tmp/files
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
   # https://github.com/gtsteffaniak/filebrowser/releases
   filebrowser:

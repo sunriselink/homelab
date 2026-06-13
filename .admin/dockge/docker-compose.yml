@@ -1,17 +1,16 @@
 services:
   init:
-    image: localhost/homelab-init:v1
+    image: localhost/homelab-init:v2
     pull_policy: never
-    entrypoint: create-dirs
+    entrypoint: ./init.sh
+    working_dir: /tmp/dockge
     environment:
       NAS_UID: ${NAS_UID:?}
       NAS_GID: ${NAS_GID:?}
     volumes:
       - ./:/tmp/dockge
-    command:
-      - /tmp/dockge/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
-  # https://hub.docker.com/r/louislam/dockge/tags
   # https://github.com/louislam/dockge/releases
   dockge:
     image: louislam/dockge:1.5.0

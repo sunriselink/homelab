@@ -1,19 +1,17 @@
 services:
   init:
-    image: localhost/homelab-init:v1
+    image: localhost/homelab-init:v2
     pull_policy: never
     working_dir: /tmp/traefik
-    entrypoint: render-env
+    entrypoint: ./init.sh
     environment:
       NAS_UID: ${NAS_UID:?}
       NAS_GID: ${NAS_GID:?}
       ROOT_DOMAIN: ${ROOT_DOMAIN:?}
       ACME_EMAIL: ${ACME_EMAIL:?}
-    command:
-      - ./traefik.tpl.yml
-      - ./config/traefik.yml
     volumes:
       - ./:/tmp/traefik
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
   # https://github.com/traefik/traefik/releases
   traefik:

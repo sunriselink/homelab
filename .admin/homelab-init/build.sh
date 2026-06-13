@@ -2,12 +2,7 @@
 
 set -e
 
-tag=localhost/homelab-init:v1
+tag=localhost/homelab-init:v2
 cwd=$(dirname $0)
 
-docker build \
-    --file $cwd/Dockerfile \
-    --force-rm \
-    --pull \
-    --tag $tag \
-    $cwd
+docker build --force-rm --pull --tag $tag $cwd
