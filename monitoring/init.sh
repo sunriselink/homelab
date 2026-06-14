@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 set -e
 
@@ -11,3 +11,5 @@ create-dirs \
 render-env \
     ./alertmanager/alertmanager.tpl.yml \
     ./alertmanager/config/alertmanager.yml
+
+wait-for-container apprise

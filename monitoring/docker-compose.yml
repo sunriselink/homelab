@@ -11,6 +11,7 @@ services:
       APPRISE_TAG: ${APPRISE_TAG:?}
     volumes:
       - ./:/tmp/monitoring
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
   # https://github.com/grafana/grafana/releases
   grafana:
