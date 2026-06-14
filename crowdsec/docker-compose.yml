@@ -26,10 +26,6 @@ services:
       - ./appsec.yaml:/etc/crowdsec/acquis.d/appsec.yaml:ro
       - ../traefik/logs:/var/log/traefik:ro
     labels:
-      glance.icon: di:crowdsec
-      glance.url: https://app.crowdsec.net/security-engines
-      glance.category: monitoring
-
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$

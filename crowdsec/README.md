@@ -1,25 +1,11 @@
 # Crowdsec
 
-## Enroll Security Engine
-
-After spawning up the CrowdSec container, we have to enroll it to our CrowdSec cloud account as security engine. To do so, visit the [CrowdSec homepage](https://app.crowdsec.net) below and register your account.
-
-```sh
-docker exec crowdsec cscli console enroll <key>
-```
-
-Then head back to CrowdSec's web console and approve the new security engine added to your cloud account. After that restart container.
-
-```sh
-docker restart crowdsec
-```
-
 ## Crowdsec hub autoupdate
 
 ```sh
 sudo crontab -e
 
-0 5 * * * docker exec crowdsec sh -c "cscli hub update && cscli hub upgrade"
+0 0 * * * docker exec crowdsec sh -c "cscli hub update && cscli hub upgrade"
 ```
 
 ## CLI commands
