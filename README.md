@@ -104,7 +104,3 @@ When the versions of Docker images have been changed in the stack (in docker-com
 ```sh
 ./update.sh <stack_path>
 ```
-
-## Additional features
-
-- [Logrotate configurations](./.admin/logrotate/)

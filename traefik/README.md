@@ -1,6 +1,14 @@
 # Traefik
 
-> Don't forget to change all occurrences of "my-service" to the name of your service (including label names)
+## Log Rotation
+
+To configure automatic log rotation, run:
+
+```bash
+sudo ./traefik/logrotate.sh
+```
+
+This script will automatically generate and install logrotate configuration at `/etc/logrotate.d/homelab.traefik`
 
 ## Default settings for reverse proxy activation
 
