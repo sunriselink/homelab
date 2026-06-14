@@ -140,8 +140,8 @@ identity_providers:
         userinfo_signed_response_alg: none
         token_endpoint_auth_method: client_secret_basic
 
-      - client_name: 'immich'
-        authorization_policy: 'two_factor'
+      - client_name: immich
+        authorization_policy: two_factor
         # prettier-ignore
         client_id: {{ secret "/secrets/immich/client_id" | mindent 10 "|" | msquote }}
         # prettier-ignore
