@@ -11,7 +11,6 @@ services:
     command:
       - /tmp/ddns-updater/data
 
-  # https://github.com/qdm12/ddns-updater/pkgs/container/ddns-updater
   # https://github.com/qdm12/ddns-updater/releases
   ddns-updater:
     image: ghcr.io/qdm12/ddns-updater:2.9.0

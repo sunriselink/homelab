@@ -14,10 +14,9 @@ services:
       - /tmp/media
       - /tmp/media/music
 
-  # https://github.com/navidrome/navidrome/pkgs/container/navidrome
   # https://github.com/navidrome/navidrome/releases
   navidrome:
-    image: ghcr.io/navidrome/navidrome:0.61.2
+    image: ghcr.io/navidrome/navidrome:0.62.0
     container_name: navidrome
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}

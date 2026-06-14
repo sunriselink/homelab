@@ -162,7 +162,7 @@ services:
 
   # https://github.com/prometheus/alertmanager/releases
   alertmanager:
-    image: prom/alertmanager:v0.32.2
+    image: prom/alertmanager:v0.33.0
     container_name: alertmanager
     restart: unless-stopped
     user: ${NAS_UID:?}:${NAS_GID:?}
