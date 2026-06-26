@@ -33,3 +33,9 @@ sudo chown <NAS_UID>:<NAS_GID> authelia/users.yml
 ```
 
 For more information, read the [instructions](https://www.authelia.com/reference/guides/passwords/).
+
+## Testing "init" script
+
+```bash
+./compose.sh authelia run --rm init test
+```

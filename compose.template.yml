@@ -16,7 +16,7 @@ services:
   <service-name>:
     image: <service-name>:<service-version>
     container_name: <service-name>
-    restart: unless-stopped
+    restart: always
     user: ${NAS_UID:?}:${NAS_GID:?} # Rootless mode (if needed)
     security_opt:
       - no-new-privileges:true

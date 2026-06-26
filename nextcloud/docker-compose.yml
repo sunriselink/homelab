@@ -23,7 +23,7 @@ services:
       context: .docker
       dockerfile: nextcloud.dockerfile
     container_name: nextcloud
-    restart: unless-stopped
+    restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
     extends:
       file: files-mapping.yml
@@ -59,7 +59,7 @@ services:
   nextcloud_db:
     image: postgres:17.9
     container_name: nextcloud_db
-    restart: unless-stopped
+    restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
     volumes:
       - ./postgres_data:/var/lib/postgresql/data

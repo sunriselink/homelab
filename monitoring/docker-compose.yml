@@ -17,7 +17,7 @@ services:
   grafana:
     image: grafana/grafana:13.0.2
     container_name: grafana
-    restart: unless-stopped
+    restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
     environment:
       TZ: ${TZ:?}
@@ -47,7 +47,7 @@ services:
   prometheus:
     image: prom/prometheus:v3.12.0
     container_name: prometheus
-    restart: unless-stopped
+    restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
     extra_hosts:
       host.docker.internal: host-gateway
@@ -90,7 +90,7 @@ services:
   node-exporter:
     image: prom/node-exporter:v1.11.1
     container_name: node-exporter
-    restart: unless-stopped
+    restart: always
     network_mode: host
     pid: host
     command:
@@ -125,7 +125,7 @@ services:
   cadvisor:
     image: ghcr.io/google/cadvisor:v0.57.0
     container_name: cadvisor
-    restart: unless-stopped
+    restart: always
     command:
       - --docker_only
       - --store_container_labels=false
@@ -145,7 +145,7 @@ services:
   smartctl-exporter:
     image: prometheuscommunity/smartctl-exporter:v0.14.0
     container_name: smartctl-exporter
-    restart: unless-stopped
+    restart: always
     user: root
     privileged: true
     healthcheck:
@@ -164,7 +164,7 @@ services:
   alertmanager:
     image: prom/alertmanager:v0.33.0
     container_name: alertmanager
-    restart: unless-stopped
+    restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
       - default

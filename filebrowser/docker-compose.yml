@@ -20,7 +20,7 @@ services:
   filebrowser:
     image: ghcr.io/gtsteffaniak/filebrowser:1.3.3-stable-slim
     container_name: filebrowser
-    restart: unless-stopped
+    restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
     environment:
       TZ: ${TZ:?}

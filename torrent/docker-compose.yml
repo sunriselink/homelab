@@ -17,7 +17,7 @@ services:
   prowlarr:
     image: ghcr.io/linuxserver/prowlarr:2.4.0
     container_name: prowlarr
-    restart: unless-stopped
+    restart: always
     environment:
       PUID: ${NAS_UID:?}
       PGID: ${NAS_GID:?}
@@ -43,7 +43,7 @@ services:
   qbittorrent:
     image: ghcr.io/linuxserver/qbittorrent:5.2.1
     container_name: qbittorrent
-    restart: unless-stopped
+    restart: always
     networks:
       - default
       - apprise

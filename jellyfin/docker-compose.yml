@@ -18,7 +18,7 @@ services:
   jellyfin:
     image: ghcr.io/linuxserver/jellyfin:10.11.11
     container_name: jellyfin
-    restart: unless-stopped
+    restart: always
     environment:
       PUID: ${NAS_UID:?}
       PGID: ${NAS_GID:?}

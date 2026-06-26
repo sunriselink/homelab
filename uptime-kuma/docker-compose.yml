@@ -3,7 +3,7 @@ services:
   uptime-kuma:
     image: louislam/uptime-kuma:2.4.0
     container_name: uptime-kuma
-    restart: unless-stopped
+    restart: always
     networks:
       - default
       - apprise

@@ -17,7 +17,7 @@ services:
   picard:
     image: mikenye/picard:2.13.3
     container_name: picard
-    restart: unless-stopped
+    restart: always
     environment:
       USER_ID: ${NAS_UID:?}
       GROUP_ID: ${NAS_GID:?}

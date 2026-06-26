@@ -15,7 +15,7 @@ services:
   dockge:
     image: louislam/dockge:1.5.0
     container_name: dockge
-    restart: unless-stopped
+    restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
       - docker-socket
