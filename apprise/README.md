@@ -72,3 +72,17 @@ The numeric prefix defines the delivery priority. If a notification provider is 
 By default, the Apprise configuration is stored under the key `apprise`.
 
 If the configuration is recreated through the web interface, the key may change to a custom value. When integrating Apprise with other services, make sure the correct configuration key is used in notification settings.
+
+## Local notification script
+
+```sh
+# Minimal
+./apprise/notify.sh --body "Message"
+
+# Full example
+./apprise/notify.sh \
+    --config apprise \
+    --tag alerts \
+    --title "Title" \
+    --body "Message"
+```
