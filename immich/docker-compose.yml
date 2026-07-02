@@ -8,26 +8,34 @@ services:
       NAS_GID: ${NAS_GID:?}
     volumes:
       - ./:/tmp/immich
+      - ${PATH_TO_FILES:?}:/tmp/files
     command:
-      - /tmp/immich/data
-      - /tmp/immich/data2
+      - /tmp/immich/thumbs
       - /tmp/immich/ml
       - /tmp/immich/ml/cache
       - /tmp/immich/ml/config
       - /tmp/immich/ml/models
       - /tmp/immich/postgres
       - /tmp/immich/redis
+      - /tmp/files
+      - /tmp/files/immich
+      - /tmp/files/immich-ext
 
   # https://github.com/immich-app/immich/releases
   immich:
     image: ghcr.io/immich-app/immich-server:v2.7.5
     container_name: immich
-    restart: unless-stopped
+    restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
-    extends:
-      file: external-storage.yml
-      service: external-storage
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - NET_RAW
+    group_add:
+      - ${RENDER_GID:?}
     environment:
+      IMMICH_LOG_LEVEL: log # verbose, debug, log, warn, error
+      IMMICH_LOG_FORMAT: json
       DB_HOSTNAME: immich-db
       DB_DATABASE_NAME: ${DB_DATABASE_NAME:?}
       DB_USERNAME: ${DB_USERNAME:?}
@@ -35,15 +43,17 @@ services:
       REDIS_HOSTNAME: immich-redis
       TZ: ${TZ:?}
     volumes:
-      - ./data:/usr/src/app/upload
-      - ./data2:/data # Fix anonymous volume creating
+      - ${PATH_TO_FILES:?}/immich:/data
+      - ${PATH_TO_FILES:?}/immich-ext:/mnt/media/immich-ext:ro
+      - ./thumbs:/data/thumbs
+    devices:
+      - /dev/dri:/dev/dri
     labels:
       glance.icon: di:immich
       glance.url: https://immich.${ROOT_DOMAIN:?}
       glance.category: media
 
       traefik.enable: true
-      traefik.http.routers.immich.entrypoints: local-secure
 
       wud.watch: true
       wud.watch.digest: true
@@ -61,8 +71,12 @@ services:
   immich-machine-learning:
     image: ghcr.io/immich-app/immich-machine-learning:v2.7.5-openvino
     container_name: immich_ml
-    restart: unless-stopped
+    restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - NET_RAW
     group_add:
       - ${RENDER_GID:?}
     environment:
@@ -85,8 +99,12 @@ services:
   immich-redis:
     image: docker.io/valkey/valkey:9@sha256:3b55fbaa0cd93cf0d9d961f405e4dfcc70efe325e2d84da207a0a8e6d8fde4f9
     container_name: immich_redis
-    restart: unless-stopped
+    restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - NET_RAW
     environment:
       TZ: ${TZ:?}
     volumes:
@@ -100,9 +118,13 @@ services:
   immich-db:
     image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
     container_name: immich_db
-    restart: unless-stopped
+    restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
     shm_size: 128mb
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - NET_RAW
     environment:
       POSTGRES_USER: ${DB_USERNAME:?}
       POSTGRES_DB: ${DB_DATABASE_NAME:?}

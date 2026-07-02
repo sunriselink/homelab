@@ -1,21 +1,5 @@
 # Immich
 
-## External storage
-
-1. Comment out the `extends` section in `docker-compose.yml` if it is the first run
-2. Create an `external-storage.yml` file with the following contents (or add a new entry in the `volumes` section)
-
-```yml
-services:
-  external-storage:
-    volumes:
-      - ${PATH_TO_FILES:?}/nextcloud/username/files:/mnt/media/nextcloud/username:ro
-```
-
-3. Uncomment the `extends` section in `docker-compose.yml`
-4. Start Immich
-5. Add your library following the [instruction](https://immich.app/docs/features/libraries)
-
 ## Open ID Connect with Authelia
 
 > Original: [OIDC Authentication](https://docs.immich.app/administration/oauth/)
@@ -52,6 +36,8 @@ You can see versions that had breaking changes [here](https://github.com/immich-
 To compare the contents of the recommended files, run script
 
 ```sh
+./immich/versions-diff.sh <old_version> <new_version>
+
 # example
 ./immich/versions-diff.sh v1.134.0 v1.135.3
 ```

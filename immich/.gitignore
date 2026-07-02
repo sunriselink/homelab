@@ -1,7 +1,4 @@
-/data
-/data2
 /ml
 /postgres
 /redis
-
-external-storage.yml
+/thumbs

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 old_version=$1
 new_version=$2
 
@@ -11,17 +9,34 @@ if [[ -z "${old_version}" || -z "${new_version}" ]]; then
 fi
 
 declare -a files=(
-    "docker-compose.yml"
+    "docker-compose.rootless.yml"
     "example.env"
     "hwaccel.ml.yml"
     "hwaccel.transcoding.yml"
 )
 
-for file in "${files[@]}"; do
-    old_file="https://github.com/immich-app/immich/releases/download/${old_version}/${file}"
-    new_file="https://github.com/immich-app/immich/releases/download/${new_version}/${file}"
+download_file() {
+    local version=$1
+    local file=$2
+    local url="https://github.com/immich-app/immich/releases/download/${version}/${file}"
 
+    wget -qO- "$url" || {
+        echo "Failed to download ${url}" >&2
+        return 1
+    }
+}
+
+for file in "${files[@]}"; do
     echo "$file:"
-    diff --color=auto <(wget -qO- ${old_file}) <(wget -qO- ${new_file}) || true
-    echo ""
+
+    old_content=$(download_file "${old_version}" "${file}") || exit $?
+    new_content=$(download_file "${new_version}" "${file}") || exit $?
+
+    diff --color=auto \
+        <(printf '%s' "$old_content") \
+        <(printf '%s' "$new_content") \
+        && echo "No changes" \
+        || true
+
+    echo
 done
