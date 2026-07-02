@@ -31,3 +31,8 @@ scrape_configs:
   - job_name: smartctl
     static_configs:
       - targets: ['smartctl-exporter:9633']
+
+  - job_name: nut
+    metrics_path: /api/v1/metrics
+    static_configs:
+      - targets: ['peanut:8080']

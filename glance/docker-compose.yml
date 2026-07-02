@@ -9,6 +9,7 @@ services:
       - default
       - docker-socket
       - adguard
+      - nut
       - wud
     environment:
       ADGUARD_URL: http://adguard:80
@@ -16,6 +17,8 @@ services:
       ADGUARD_PASSWORD: ${ADGUARD_PASSWORD:?}
       WEATHER_LOCATION: ${WEATHER_LOCATION:?}
       WUD_URL: http://whats-up-docker:3000
+      NUT_URL: http://peanut:8080
+      NUT_UPS_NAME: ${NUT_UPS_NAME:?}
     volumes:
       - ./config:/app/config:ro
       - /etc/localtime:/etc/localtime:ro
@@ -39,6 +42,10 @@ networks:
 
   adguard:
     name: adguard_glance
+    external: true
+
+  nut:
+    name: nut_glance
     external: true
 
   wud:

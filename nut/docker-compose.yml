@@ -1,0 +1,64 @@
+services:
+  init:
+    image: localhost/homelab-init:v2
+    pull_policy: never
+    entrypoint: create-dirs
+    environment:
+      NAS_UID: ${NAS_UID:?}
+      NAS_GID: ${NAS_GID:?}
+    volumes:
+      - ./:/tmp/nut
+    command:
+      - /tmp/nut/config
+
+  peanut:
+    image: brandawg93/peanut:6.0.0
+    container_name: peanut
+    restart: always
+    user: ${NAS_UID:?}:${NAS_GID:?}
+    extra_hosts:
+      host.docker.internal: host-gateway
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - default
+      - glance
+      - monitoring
+    environment:
+      AUTH_DISABLED: true
+      TZ: ${TZ:?}
+    volumes:
+      - ./config:/config
+    labels:
+      glance.name: PeaNUT
+      glance.icon: di:peanut
+      glance.url: https://peanut.${ROOT_DOMAIN:?}
+      glance.category: monitoring
+
+      traefik.enable: true
+      traefik.http.routers.peanut.middlewares: authelia@file
+
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+networks:
+  default:
+    name: nut
+    driver_opts:
+      com.docker.network.bridge.name: br-nut
+
+  glance:
+    name: nut_glance
+    driver_opts:
+      com.docker.network.bridge.name: br-nut_glance
+
+  monitoring:
+    name: nut_monitoring
+    driver_opts:
+      com.docker.network.bridge.name: br-nut_mon

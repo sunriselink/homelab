@@ -51,6 +51,9 @@ services:
     user: ${NAS_UID:?}:${NAS_GID:?}
     extra_hosts:
       host.docker.internal: host-gateway
+    networks:
+      - default
+      - nut
     volumes:
       - ./prometheus/data:/prometheus
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
@@ -198,6 +201,11 @@ networks:
     name: monitoring
     driver_opts:
       com.docker.network.bridge.name: br-monitoring
+
   apprise:
     name: apprise_alertmanager
+    external: true
+
+  nut:
+    name: nut_monitoring
     external: true
