@@ -56,6 +56,14 @@ groups:
         annotations:
           summary: Container "{{ $labels.name }}" was killed
 
+      - alert: ContainerUnhealthy
+        expr: container_health_state == 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Container "{{ $labels.name }}" is unhealthy
+
   - name: smartctl
     rules:
       - alert: SmartDeviceTemperatureCritical
