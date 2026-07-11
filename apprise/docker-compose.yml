@@ -14,8 +14,9 @@ services:
       - /tmp/apprise/notifications
 
   # https://github.com/caronc/apprise-api/releases
+  # https://github.com/caronc/apprise/releases
   apprise:
-    image: ghcr.io/caronc/apprise:v1.5.0
+    image: ghcr.io/caronc/apprise:v1.5.1
     container_name: apprise
     restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}

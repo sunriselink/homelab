@@ -18,16 +18,19 @@ frontend:
   disableUsedPercentage: true
 
 userDefaults:
-  editorQuickSave: true
-  showHidden: true
+  account:
+    permissions:
+      modify: true
+      delete: true
+      create: true
+  fileViewer:
+    editorQuickSave: true
+  listing:
+    showHidden: true
   preview:
     popup: false
   fileLoading:
     uploadChunkSizeMb: 50
-  permissions:
-    modify: true
-    delete: true
-    create: true
 
 auth:
   methods:

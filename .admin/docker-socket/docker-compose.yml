@@ -1,6 +1,6 @@
 # https://github.com/linuxserver/docker-socket-proxy/releases
 x-docker-socket: &common-opts
-  image: ghcr.io/linuxserver/socket-proxy:3.2.19
+  image: ghcr.io/linuxserver/socket-proxy:3.4.2
   restart: always
   read_only: true
   volumes:

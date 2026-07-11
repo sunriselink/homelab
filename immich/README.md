@@ -39,5 +39,5 @@ To compare the contents of the recommended files, run script
 ./immich/versions-diff.sh <old_version> <new_version>
 
 # example
-./immich/versions-diff.sh v1.134.0 v1.135.3
+./immich/versions-diff.sh v2.7.5 v3.0.1
 ```
