@@ -44,7 +44,6 @@ services:
       glance.category: admin
 
       traefik.enable: true
-      traefik.http.routers.authelia.entrypoints: local-secure
 
       wud.watch: true
       wud.watch.digest: true
