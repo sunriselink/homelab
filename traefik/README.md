@@ -68,3 +68,12 @@ services:
       traefik.enable: true
       traefik.http.routers.<my-service>.middlewares: authelia@file
 ```
+
+## Traefik whoami
+
+```bash
+docker run -d --pull always --name whoami \
+  --label traefik.enable=true \
+  --label traefik.custom.host=whoami \
+  traefik/whoami
+```

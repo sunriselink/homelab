@@ -47,6 +47,10 @@ entryPoints:
         certResolver: dynu
         domains:
           - main: '*.${ROOT_DOMAIN}'
+    transport:
+      respondingTimeouts:
+        readTimeout: 10m
+        idleTimeout: 10m
 
   external:
     address: :81
@@ -65,6 +69,10 @@ entryPoints:
         certResolver: dynu
         domains:
           - main: '*.${ROOT_DOMAIN}'
+    transport:
+      respondingTimeouts:
+        readTimeout: 10m
+        idleTimeout: 10m
 
 providers:
   docker:
