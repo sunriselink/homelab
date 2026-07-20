@@ -42,6 +42,7 @@ services:
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$ # supported 5.0.1 and v5.0.1 formats
+      wud.link.template: <releases page url> # https://getwud.github.io/wud/#/configuration/watchers/?id=associate-a-link-to-the-container-version
     depends_on:
       init:
         condition: service_completed_successfully

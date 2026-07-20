@@ -80,7 +80,6 @@
     {{/* ======================= MENU ======================= */}}
     {{ $showInfo := true }}         {{/* Show the overall info summary (Updates, Total, Running) */}}
     {{ $showList := true }}         {{/* Show the container list section */}}
-    {{ $showAll := false }}         {{/* Show all containers (not just ones with updates) */}}
     {{ $showUpdateKind := true }}   {{/* Toggle this to false to hide the Update Kind row */}}
     {{ $showUpdateTypes := false }} {{/* Toggle this to false to hide the Update Types breakdown */}}
     {{ $showLocalVersion := true }} {{/* Toggle this to true to show local version instead of update status */}}
@@ -175,7 +174,9 @@
                 {{ $registryName := $container.String "image.registry.name" }}
                 {{ $imageName := $container.String "image.name" }}
                 {{ $hubSource := "#" }}
-                {{ if eq $registryName "hub.public" }}
+                {{ if $container.String "link" }}
+                  {{ $hubSource = $container.String "link" }}
+                {{ else if eq $registryName "hub.public" }}
                   {{ $hubSource = concat "https://hub.docker.com/r/" $imageName }}
                 {{ else if eq $registryName "ghcr.public" }}
                   {{ $hubSource = concat "https://github.com/" $imageName }}
@@ -261,80 +262,6 @@
           <li class="flex items-center justify-center">
             <span class="color-positive size-h4">All containers are up to date!</span>
           </li>
-        {{ end }}
-
-        {{ if $showAll }}
-          {{ range $index, $container := $containers }}
-            {{ if not ($container.Bool "updateAvailable") }}
-              <li>
-                <div class="flex flex-column">
-                  {{ $registryName := $container.String "image.registry.name" }}
-                  {{ $imageName := $container.String "image.name" }}
-                  {{ $hubSource := "#" }}
-                  {{ if eq $registryName "hub.public" }}
-                    {{ $hubSource = concat "https://hub.docker.com/r/" $imageName }}
-                  {{ else if eq $registryName "ghcr.public" }}
-                    {{ $hubSource = concat "https://github.com/" $imageName }}
-                  {{ end }}
-
-                  <div class="size-h4">
-                    {{ if eq ($container.String "status") "running" }}
-                      <span class="status-dot color-positive">●</span>
-                    {{ else }}
-                      <span class="status-dot color-negative">●</span>
-                    {{ end }}
-                    <a class="color-highlight text-truncate" href="{{ $hubSource }}" target="_blank" rel="noreferrer">{{ $container.String "name" }}</a>
-                  </div>
-
-                  <div class="container-info">
-                    <div class="info-column">
-                      <div class="info-label">Watcher</div>
-                      <div class="info-value">{{ $container.String "watcher" }}</div>
-                    </div>
-
-                    <div class="vertical-separator"></div>
-
-                    {{ if $showLocalVersion }}
-                      <div class="info-column">
-                        <div class="info-label">Version</div>
-                        <div class="info-value">
-                          {{ $localValue := $container.String "updateKind.localValue" }}
-                          {{ if eq $localValue "" }}
-                            {{ $localValue = $container.String "updatekind.remoteValue" }}
-                            {{ if eq $localValue "" }}
-                              {{ $imageDigest := $container.String "image.digest.repo" }}
-                              {{ $isSha256 := eq (slice $imageDigest 0 7) "sha256:" }}
-                              {{ if $isSha256 }}
-                                {{ $shortDigest := slice $imageDigest 7 11 }}
-                                <span>dig: {{ $shortDigest }}</span>
-                              {{ else }}
-                                <span>-</span>
-                              {{ end }}
-                            {{ else }}
-                              <span>{{ $localValue }}</span>
-                            {{ end }}
-                          {{ else }}
-                            {{ $isSha256 := eq (slice $localValue 0 7) "sha256:" }}
-                            {{ if $isSha256 }}
-                              {{ $shortDigest := slice $localValue 7 11 }}
-                              <span>dig: {{ $shortDigest }}</span>
-                            {{ else }}
-                              <span>{{ $localValue }}</span>
-                            {{ end }}
-                          {{ end }}
-                        </div>
-                      </div>
-                    {{ else }}
-                      <div class="info-column">
-                        <div class="info-label">Update</div>
-                        <div class="info-value"><span class="color-negative">Not Found</span></div>
-                      </div>
-                    {{ end }}
-                  </div>
-                </div>
-              </li>
-            {{ end }}
-          {{ end }}
         {{ end }}
       </ul>
     {{ end }}
