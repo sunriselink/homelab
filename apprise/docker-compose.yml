@@ -21,8 +21,8 @@ services:
     restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
-      - default
       - alertmanager
+      - gatus
       - torrent
       - uptime-kuma
       - zerobyte
@@ -60,15 +60,15 @@ services:
         condition: service_completed_successfully
 
 networks:
-  default:
-    name: apprise
-    driver_opts:
-      com.docker.network.bridge.name: br-apprise
-
   alertmanager:
     name: apprise_alertmanager
     driver_opts:
       com.docker.network.bridge.name: br-apprise_am
+
+  gatus:
+    name: apprise_gatus
+    driver_opts:
+      com.docker.network.bridge.name: br-apprise_gat
 
   torrent:
     name: apprise_torrent

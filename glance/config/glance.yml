@@ -55,8 +55,5 @@ pages:
 
       - size: small
         widgets:
-          - type: weather
-            hour-format: 24h
-            location: ${WEATHER_LOCATION}
-
           - $include: extensions/nut.yml
+          - $include: extensions/gatus.yml

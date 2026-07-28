@@ -1,0 +1,28 @@
+storage:
+  type: memory
+
+alerting:
+  custom:
+    url: http://apprise:8000/notify/${APPRISE_CONFIG_KEY}?tags=${APPRISE_TAG}
+    method: POST
+    headers:
+      Content-Type: application/json
+    body: |
+      {
+        "title": "Gatus",
+        "body": "[ALERT_TRIGGERED_OR_RESOLVED]: [ENDPOINT_NAME] - [RESULT_ERRORS]"
+      }
+    default-alert:
+      enabled: true
+      failure-threshold: 3
+      success-threshold: 1
+      send-on-resolved: true
+
+endpoints:
+  - name: HomeLab HTTPS certificate expiration
+    url: https://gatus.${ROOT_DOMAIN}
+    interval: 5m
+    conditions:
+      - '[CERTIFICATE_EXPIRATION] > 72h'
+    alerts:
+      - type: custom
