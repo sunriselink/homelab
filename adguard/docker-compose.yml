@@ -8,7 +8,6 @@ services:
       - 53:53/tcp
       - 53:53/udp
     networks:
-      - default
       - glance
     volumes:
       - ./config:/opt/adguardhome/conf
@@ -34,10 +33,6 @@ services:
       wud.link.template: https://github.com/AdguardTeam/AdGuardHome/releases
 
 networks:
-  default:
-    name: adguard
-    driver_opts:
-      com.docker.network.bridge.name: br-adguard
   glance:
     name: adguard_glance
     driver_opts:

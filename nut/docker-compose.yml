@@ -24,7 +24,6 @@ services:
     cap_drop:
       - ALL
     networks:
-      - default
       - glance
       - monitoring
     environment:
@@ -50,11 +49,6 @@ services:
         condition: service_completed_successfully
 
 networks:
-  default:
-    name: nut
-    driver_opts:
-      com.docker.network.bridge.name: br-nut
-
   glance:
     name: nut_glance
     driver_opts:

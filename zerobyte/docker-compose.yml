@@ -5,7 +5,6 @@ services:
     container_name: zerobyte
     restart: always
     networks:
-      - default
       - apprise
     environment:
       APP_SECRET: ${APP_SECRET:?}
@@ -33,10 +32,6 @@ services:
       wud.link.template: https://github.com/nicotsx/zerobyte/releases
 
 networks:
-  default:
-    name: zerobyte
-    driver_opts:
-      com.docker.network.bridge.name: br-zerobyte
   apprise:
     name: apprise_zerobyte
     external: true
