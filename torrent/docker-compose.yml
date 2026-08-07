@@ -34,8 +34,11 @@ services:
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
+      wud.link.template: https://github.com/Prowlarr/Prowlarr/releases
     depends_on:
       qbittorrent:
+        condition: service_started
+      flaresolverr:
         condition: service_started
 
   # https://github.com/linuxserver/docker-qbittorrent/releases
@@ -74,9 +77,26 @@ services:
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$
       wud.tag.exclude: ^20.04.1|14.3.9$$
+      wud.link.template: https://www.qbittorrent.org/news
     depends_on:
       init:
         condition: service_completed_successfully
+
+  # https://github.com/FlareSolverr/FlareSolverr/releases
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:v3.5.0
+    container_name: flaresolverr
+    restart: always
+    environment:
+      LOG_LEVEL: info
+      TZ: ${TZ:?}
+    volumes:
+      - ./flaresolver:/config
+    labels:
+      wud.watch: true
+      wud.watch.digest: true
+      wud.tag.include: ^v?\d+\.\d+\.\d+$$
+      wud.link.template: https://github.com/FlareSolverr/FlareSolverr/releases
 
 networks:
   default:

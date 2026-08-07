@@ -24,3 +24,33 @@ Password: <view container logs>
 ```bash
 /scripts/torrent_finished.sh %N
 ```
+
+## Prowlarr
+
+### Settings
+
+**Indexers > Add Indexer Proxy > FlareSolverr**
+
+| Property | Value                       |
+| -------- | --------------------------- |
+| Name     | `FlareSolverr`              |
+| Tags     | `flaresolverr`              |
+| Host     | `http://flaresolverr:8191/` |
+
+**Download Clients > Add Download Client > qBittorrent**
+
+| Property | Value         |
+| -------- | ------------- |
+| Name     | `qBittorrent` |
+| Host     | `qbittorrent` |
+| Port     | `8080`        |
+| Username | `<username>`  |
+| Password | `<password>`  |
+
+### Using FlareSolverr
+
+**Indexers > Add Indexer > Select some indexer**
+
+| Property | Value          |
+| -------- | -------------- |
+| Tags     | `flaresolverr` |
