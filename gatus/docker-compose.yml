@@ -16,7 +16,7 @@ services:
       APPRISE_CONFIG_KEY: ${APPRISE_CONFIG_KEY:?}
       APPRISE_TAG: ${APPRISE_TAG:?}
       GATUS_CONFIG_PATH: /config
-      GATUS_LOG_LEVEL: INFO
+      GATUS_LOG_LEVEL: DEBUG
       ROOT_DOMAIN: ${ROOT_DOMAIN:?}
       TZ: ${TZ:?}
     volumes:

@@ -20,9 +20,10 @@ alerting:
 
 endpoints:
   - name: HomeLab HTTPS certificate expiration
-    url: https://gatus.${ROOT_DOMAIN}
+    url: tls://gatus.${ROOT_DOMAIN}:443
     interval: 5m
     conditions:
+      - '[CONNECTED] == true'
       - '[CERTIFICATE_EXPIRATION] > 72h'
     alerts:
       - type: custom
