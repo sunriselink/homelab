@@ -2,7 +2,8 @@ LogLevel: info
 
 DefaultTheme: Spotify-ish
 DefaultUIVolume: 100
-ImageCacheSize: 1GB
+ImageCacheSize: 5GB
+SessionTimeout: 360h
 
 AutoTranscodeDownload: false
 DefaultPlaylistPublicVisibility: false
