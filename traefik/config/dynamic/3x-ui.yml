@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://www.schemastore.org/traefik-v3-file-provider.json
+
+http:
+  routers:
+    3x-ui:
+      service: 3x-ui
+      rule: Host(`3x-ui.{{env `ROOT_DOMAIN`}}`)
+      entryPoints:
+        - local-secure
+  services:
+    3x-ui:
+      loadBalancer:
+        servers:
+          - url: http://localhost:2053
