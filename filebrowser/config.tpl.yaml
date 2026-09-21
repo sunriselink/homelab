@@ -33,6 +33,7 @@ userDefaults:
     uploadChunkSizeMb: 50
 
 auth:
+  tokenExpirationHours: 360
   methods:
     password:
       enabled: false
