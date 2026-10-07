@@ -5,17 +5,17 @@
 Before first launch, temporarily enable user creation
 
 ```yml
-# filebrowser/config.yaml
+# ./config.tpl.yaml
 auth:
   methods:
     oidc:
       createUser: true
 ```
 
-After successful authorization with the Authelia provider, disable user creation and restart Filebrowser
+After successful authorization with the OIDC provider, disable user creation and recreate Filebrowser stack
 
 ```yml
-# filebrowser/config.yaml
+# config.tpl.yaml
 auth:
   methods:
     oidc:
@@ -23,6 +23,5 @@ auth:
 ```
 
 ```sh
-./compose.sh filebrowser down
-./compose.sh filebrowser up -d
+./compose.sh filebrowser up -d --force-recreate
 ```
