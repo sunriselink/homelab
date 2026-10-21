@@ -1,7 +1,7 @@
 services:
   # https://github.com/crowdsecurity/crowdsec/releases
   crowdsec:
-    image: ghcr.io/crowdsecurity/crowdsec:v1.7.8
+    image: ghcr.io/crowdsecurity/crowdsec:v1.8.1
     container_name: crowdsec
     restart: always
     security_opt:

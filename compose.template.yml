@@ -33,16 +33,17 @@ services:
       glance.name: Service Name # Customize service name (by default used normalized container name)
       glance.icon: di:<service-name> # https://github.com/glanceapp/glance/blob/main/docs/configuration.md#icons
       glance.url: https://<service-name>.${ROOT_DOMAIN:?}
-      glance.category: <service-category> # See glance/config/glance.yml (docker-containers widget type)
+      glance.category: <service-category> # One of: media, media_management, monitoring, admin
 
       # Reverse Proxy support (see traefik/README.md for more examples)
       traefik.enable: true
 
-      # Updates watcher via What's up Docker
+      # Updates watcher via What's up Docker (https://getwud.app/docs/configuration/watchers/labels)
       wud.watch: true
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+$$ # supported 5.0.1 and v5.0.1 formats
-      wud.link.template: <releases page url> # https://getwud.github.io/wud/#/configuration/watchers/?id=associate-a-link-to-the-container-version
+      wud.link.template: <releases page url>
+      wud.trigger.apprise.notify.enabled: true # Send notification about a new version
     depends_on:
       init:
         condition: service_completed_successfully

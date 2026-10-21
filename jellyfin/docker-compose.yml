@@ -16,7 +16,7 @@ services:
   # https://github.com/linuxserver/docker-jellyfin/releases
   # https://github.com/jellyfin/jellyfin/releases
   jellyfin:
-    image: ghcr.io/linuxserver/jellyfin:10.11.11
+    image: ghcr.io/linuxserver/jellyfin:12.2ubu2604-ls55
     container_name: jellyfin
     restart: always
     environment:
@@ -39,9 +39,10 @@ services:
 
       wud.watch: true
       wud.watch.digest: true
-      wud.tag.include: ^v?\d+\.\d+\.\d+$$
-      wud.tag.exclude: ^2021.\d+\.\d+$$
+      wud.tag.include: ^\d+(?:\.\d+)*ubu\d+\-ls\d+$$
+      wud.tag.transform: ^(\d+(?:\.\d+)*)ubu\d+\-ls(\d+)$$ => $$1-$$2
       wud.link.template: https://github.com/jellyfin/jellyfin/releases
+      wud.trigger.apprise.notify.enabled: true
     depends_on:
       init:
         condition: service_completed_successfully

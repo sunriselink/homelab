@@ -13,34 +13,49 @@ services:
 
   # https://github.com/getwud/wud/releases
   whats-up-docker:
-    image: ghcr.io/getwud/wud:8.3.0
+    image: ghcr.io/getwud/wud:9.5.0
     container_name: whats-up-docker
     restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
     networks:
+      - apprise
       - docker-socket
       - glance
     environment:
       WUD_LOG_LEVEL: info
+      WUD_LOG_FORMAT: json
       WUD_SERVER_FEATURE_DELETE: false
-      WUD_WATCHER_DOCKER_CRON: 41 2,14 * * * # Attempt to bypass TOOMANYREQUESTS for ghcr.io
-      WUD_WATCHER_DOCKER_HOST: readonly-docker-socket
-      WUD_WATCHER_DOCKER_PORT: 2375
-      WUD_WATCHER_DOCKER_SOCKET: tcp://readonly-docker-socket
-      WUD_WATCHER_DOCKER_WATCHBYDEFAULT: false
-      WUD_WATCHER_DOCKER_WATCHEVENTS: false
+      WUD_WATCHER_LOCAL_CRON: 41 2 * * *
+      WUD_WATCHER_LOCAL_HOST: readonly-docker-socket
+      WUD_WATCHER_LOCAL_PORT: 2375
+      WUD_WATCHER_LOCAL_WATCHALL: false
+      WUD_WATCHER_LOCAL_WATCHATSTART: false
+      WUD_WATCHER_LOCAL_WATCHBYDEFAULT: false
+      WUD_WATCHER_LOCAL_WATCHEVENTS: false
+      WUD_AUTH_OIDC_AUTHELIA_CLIENTID: ${OIDC_CLIENT_ID:?}
+      WUD_AUTH_OIDC_AUTHELIA_CLIENTSECRET: ${OIDC_CLIENT_SECRET:?}
+      WUD_AUTH_OIDC_AUTHELIA_DISCOVERY: https://authelia.${ROOT_DOMAIN:?}/.well-known/openid-configuration
+      WUD_AUTH_OIDC_AUTHELIA_GROUPSCLAIM: groups
+      WUD_AUTH_OIDC_AUTHELIA_USERNAMECLAIM: email
+      WUD_AUTH_OIDC_AUTHELIA_ADMINGROUP: admins
+      WUD_AUTH_OIDC_AUTHELIA_DEFAULTROLE: none
+      WUD_AUTH_OIDC_AUTHELIA_REDIRECT: true
+      WUD_TRIGGER_APPRISE_NOTIFY_URL: http://apprise:8000
+      WUD_TRIGGER_APPRISE_NOTIFY_CONFIG: ${APPRISE_CONFIG_KEY:?}
+      WUD_TRIGGER_APPRISE_NOTIFY_TAG: ${APPRISE_TAG:?}
+      WUD_TRIGGER_APPRISE_NOTIFY_INCLUDEBYDEFAULT: false
+      WUD_TRIGGER_APPRISE_NOTIFY_ONDIGEST: false
       TZ: ${TZ:?}
     volumes:
       - ./data:/store
     labels:
       glance.name: What's Up Docker
       glance.icon: sh:wud
-      glance.url: https://wud.${ROOT_DOMAIN:?}/containers?update-available=true&group-by-label=com.docker.compose.project
+      glance.url: https://wud.${ROOT_DOMAIN:?}/containers?update-available=true
       glance.category: monitoring
 
       traefik.enable: true
       traefik.custom.host: wud
-      traefik.http.routers.whats-up-docker.middlewares: authelia@file
 
       wud.watch: true
       wud.watch.digest: true
@@ -51,6 +66,10 @@ services:
         condition: service_completed_successfully
 
 networks:
+  apprise:
+    name: apprise_wud
+    external: true
+
   docker-socket:
     name: docker-readonly_wud
     external: true

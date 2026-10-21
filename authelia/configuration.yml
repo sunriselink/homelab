@@ -164,3 +164,31 @@ identity_providers:
         id_token_signed_response_alg: RS256
         userinfo_signed_response_alg: RS256
         token_endpoint_auth_method: client_secret_post
+
+      - client_name: wud
+        authorization_policy: two_factor
+        # prettier-ignore
+        client_id: {{ secret "/secrets/wud/client_id" | mindent 10 "|" | msquote }}
+        # prettier-ignore
+        client_secret: {{ secret "/secrets/wud/client_secret_digest" | mindent 10 "|" | msquote }}
+        public: false
+        require_pkce: false
+        pkce_challenge_method: ''
+        scopes:
+          - openid
+          - profile
+          - email
+          - groups
+        redirect_uris:
+          - https://wud.{{ env "ROOT_DOMAIN" }}/auth/oidc/authelia/cb
+        grant_types:
+          - authorization_code
+        response_types:
+          - code
+        response_modes:
+          - form_post
+          - query
+          - fragment
+        access_token_signed_response_alg: none
+        userinfo_signed_response_alg: none
+        token_endpoint_auth_method: client_secret_post

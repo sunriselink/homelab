@@ -6,6 +6,8 @@
   cache: 10s
   url: ${WUD_URL}/api/containers
   method: GET
+  headers:
+    Authorization: Bearer ${WUD_TOKEN}
   template: |
     <style>
       .vertical-separator {

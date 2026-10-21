@@ -2,15 +2,28 @@
 
 set -e
 
+users_file="./users.yml"
 data_dir="./data"
 secrets_dir="./secrets"
 
 if [ "$1" = "test" ]; then
+    users_file="./users_test.yml"
     data_dir="./data_test"
     secrets_dir="./secrets_test"
 fi
 
 main() {
+    if [ ! -e $users_file ]; then
+        echo "ERROR: The $users_file file does not exist."
+        exit 1
+    elif [ -d $users_file ]; then
+        echo "ERROR: The $users_file file was not created. Due to Docker mount behavior, a directory named $users_file was created instead."
+        echo "Please remove the $users_file directory, create the $users_file file according to the instructions in README, and recreate the stack."
+        exit 1
+    elif [ -f $users_file ]; then
+        set_permissions -m 660 $users_file
+    fi
+
     create_dirs \
         $data_dir \
         $secrets_dir \
@@ -25,6 +38,7 @@ main() {
     create_oidc_files audiobookshelf
     create_oidc_files filebrowser
     create_oidc_files immich
+    create_oidc_files wud
 }
 
 create_dirs() {
@@ -32,8 +46,15 @@ create_dirs() {
 }
 
 set_permissions() {
+    local permissions="440"
+
+    if [ "$1" = "-m" ]; then
+        permissions="$2"
+        shift 2
+    fi
+
     chown ${PUID:?}:${PGID:?} $@
-    chmod 440 $@
+    chmod $permissions $@
 }
 
 create_rand_secret_file() {

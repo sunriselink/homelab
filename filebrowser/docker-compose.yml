@@ -7,9 +7,6 @@ services:
     environment:
       NAS_UID: ${NAS_UID:?}
       NAS_GID: ${NAS_GID:?}
-      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:?}
-      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:?}
-      ROOT_DOMAIN: ${ROOT_DOMAIN:?}
     volumes:
       - ./:/tmp/filebrowser
       - ${PATH_TO_MEDIA:?}:/tmp/media
@@ -18,15 +15,19 @@ services:
 
   # https://github.com/gtsteffaniak/filebrowser/releases
   filebrowser:
-    image: ghcr.io/gtsteffaniak/filebrowser:1.4.0-stable-slim
+    image: ghcr.io/gtsteffaniak/filebrowser:2.0.1-stable-slim
     container_name: filebrowser
     restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
     environment:
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:?}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:?}
+      ROOT_DOMAIN: ${ROOT_DOMAIN:?}
       TZ: ${TZ:?}
     volumes:
       - ./data:/home/filebrowser/data
       - ./cache:/home/filebrowser/cache
+      - ./config.yaml:/home/filebrowser/data/config.yaml:ro
       - ${PATH_TO_MEDIA:?}:/srv/media
       - ${PATH_TO_FILES:?}:/srv/files
     labels:
@@ -40,6 +41,7 @@ services:
       wud.watch.digest: true
       wud.tag.include: ^v?\d+\.\d+\.\d+\-stable\-slim$$
       wud.link.template: https://github.com/gtsteffaniak/filebrowser/releases
+      wud.trigger.apprise.notify.enabled: true
     depends_on:
       init:
         condition: service_completed_successfully

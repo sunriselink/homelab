@@ -1,6 +1,10 @@
-server:
+http:
   port: 80
-  database: /home/filebrowser/data/database.db
+  trustProxyHeaders: true
+
+server:
+  database:
+    path: /home/filebrowser/data/filebrowser.sqlite
   cacheDir: /home/filebrowser/cache
   cacheDirCleanup: true
   disableUpdateCheck: true
@@ -16,21 +20,6 @@ server:
 
 frontend:
   disableUsedPercentage: true
-
-userDefaults:
-  account:
-    permissions:
-      modify: true
-      delete: true
-      create: true
-  fileViewer:
-    editorQuickSave: true
-  listing:
-    showHidden: true
-  preview:
-    popup: false
-  fileLoading:
-    uploadChunkSizeMb: 50
 
 auth:
   tokenExpirationHours: 360

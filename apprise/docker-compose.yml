@@ -16,7 +16,7 @@ services:
   # https://github.com/caronc/apprise-api/releases
   # https://github.com/caronc/apprise/releases
   apprise:
-    image: ghcr.io/caronc/apprise:v1.5.1
+    image: ghcr.io/caronc/apprise:2.0.1
     container_name: apprise
     restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}
@@ -25,6 +25,7 @@ services:
       - gatus
       - torrent
       - uptime-kuma
+      - wud
       - zerobyte
     security_opt:
       - no-new-privileges:true
@@ -79,6 +80,11 @@ networks:
     name: apprise_uptime-kuma
     driver_opts:
       com.docker.network.bridge.name: br-apprise_uk
+
+  wud:
+    name: apprise_wud
+    driver_opts:
+      com.docker.network.bridge.name: br-apprise_wud
 
   zerobyte:
     name: apprise_zerobyte

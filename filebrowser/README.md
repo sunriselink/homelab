@@ -5,17 +5,17 @@
 Before first launch, temporarily enable user creation
 
 ```yml
-# ./config.tpl.yaml
+# config.yaml
 auth:
   methods:
     oidc:
       createUser: true
 ```
 
-After successful authorization with the OIDC provider, disable user creation and recreate Filebrowser stack
+After successful authorization with the OIDC provider, disable user creation and restart Filebrowser
 
 ```yml
-# config.tpl.yaml
+# config.yaml
 auth:
   methods:
     oidc:
@@ -23,5 +23,5 @@ auth:
 ```
 
 ```sh
-./compose.sh filebrowser up -d --force-recreate
+docker restart filebrowser
 ```

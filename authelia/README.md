@@ -22,13 +22,6 @@ To generate a password hash, run the command:
 ./authelia-cli.sh crypto hash generate argon2
 ```
 
-If values ​​in the `NAS_UID` and `NAS_GID` environment variables do not match the current user's data, you need to change file permissions.
-
-```sh
-chmod 660 users.yml
-sudo chown <NAS_UID>:<NAS_GID> users.yml
-```
-
 For more information, read the [instructions](https://www.authelia.com/reference/guides/passwords/).
 
 ## Testing "init" script

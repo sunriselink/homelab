@@ -13,7 +13,7 @@ services:
 
   # https://github.com/Brandawg93/PeaNUT/releases
   peanut:
-    image: brandawg93/peanut:6.0.0
+    image: brandawg93/peanut:6.1.2
     container_name: peanut
     restart: always
     user: ${NAS_UID:?}:${NAS_GID:?}

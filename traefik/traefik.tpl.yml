@@ -32,6 +32,7 @@ entryPoints:
   local:
     address: :80
     http:
+      aliasHeadersStrategy: keep
       redirections:
         entryPoint:
           to: local-secure
@@ -40,6 +41,7 @@ entryPoints:
     address: :443
     asDefault: true
     http:
+      aliasHeadersStrategy: keep
       middlewares:
         - security-headers@file
         - crowdsec@file
@@ -55,6 +57,7 @@ entryPoints:
   external:
     address: :81
     http:
+      aliasHeadersStrategy: keep
       redirections:
         entryPoint:
           to: local-secure # 81 -> 443 -> 444 (by router)
@@ -62,6 +65,7 @@ entryPoints:
   external-secure:
     address: :444
     http:
+      aliasHeadersStrategy: keep
       middlewares:
         - security-headers@file
         - crowdsec@file
