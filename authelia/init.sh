@@ -39,6 +39,7 @@ main() {
     create_oidc_files filebrowser
     create_oidc_files immich
     create_oidc_files wud
+    create_oidc_files zerobyte
 }
 
 create_dirs() {

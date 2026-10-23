@@ -10,6 +10,8 @@ services:
       APP_SECRET: ${APP_SECRET:?}
       BASE_URL: https://zerobyte.${ROOT_DOMAIN:?}
       WEBHOOK_ALLOWED_ORIGINS: http://apprise:8000
+      TRUSTED_ORIGINS: https://authelia.${ROOT_DOMAIN:?}
+      TRUST_PROXY: true
       LOG_LEVEL: info
       TZ: ${TZ:?}
     volumes:
